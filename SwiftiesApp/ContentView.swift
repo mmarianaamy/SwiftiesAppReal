@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var logged = false
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        if !logged{
+            LoginPage(logged: $logged)
+        }else{
+            Text("Content")
         }
-        .padding()
     }
 }
 

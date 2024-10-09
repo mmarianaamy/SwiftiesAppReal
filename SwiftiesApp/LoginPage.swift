@@ -22,45 +22,65 @@ struct LoginPage: View {
     
     var body: some View {
         ZStack{
-            Color.blue
+            Color.background
             VStack{
                 Text("New Spot").font(.largeTitle)
-                VStack{
-                    Text("Username")
+                VStack(alignment: .leading){
+                    Text("Username").padding(.horizontal)
                     TextField("Username", text: $username)
                         .focused($usernameFieldFocused)
                         .padding()
-                        .border(Color.white)
+                        .background(Color.white)
+                        .foregroundStyle(Color.black)
+                        .cornerRadius(10)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10).stroke(.gray, lineWidth: 1)
+                        )
                         .zIndex(1)
                         .autocorrectionDisabled()
                         .textInputAutocapitalization(.never)
                     
                 }.padding()
                 
-                VStack{
-                    Text("Password")
+                VStack(alignment: .leading){
+                    Text("Password").padding(.horizontal)
                     SecureField("Password", text: $password)
                         .focused($usernameFieldFocused)
                         .padding()
-                        .border(Color.white)
-                        .zIndex(1)
+                        .background(Color.white)
+                        .foregroundStyle(Color.black)
+                        .cornerRadius(10)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10).stroke(.gray, lineWidth: 1)
+                        )
                         .autocorrectionDisabled()
                         .textInputAutocapitalization(.never)
                     
                 }.padding()
-                Button("Submit", action: {
+                HStack{
+                    Spacer()
+                    Text("Forgot password?").padding(.horizontal)
+                }
+                Button("Log in", action: {
                     validation(username: username, password: password)
                 })
-                Divider()
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.button)
+                    .cornerRadius(10)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10).stroke(.button, lineWidth: 1)
+                    ).padding()
+                Divider().overlay(Color.white).padding()
                 VStack{
                     Text("Login using the following").padding()
                 }
-            }
+            }.zIndex(1)
             
         }.ignoresSafeArea().foregroundStyle(Color.white)
     }
 }
 
 #Preview {
-    //LoginPage(logg)
+    ContentView()
 }

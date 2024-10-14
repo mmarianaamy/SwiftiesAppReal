@@ -13,7 +13,7 @@ struct ContentView: View {
         if !logged{
             LoginPage(logged: $logged)
         }else{
-            Text("Ya entraste")
+            MenuView()
         }
     }
 }

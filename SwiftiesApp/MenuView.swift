@@ -11,7 +11,8 @@ struct MenuView: View {
     var body: some View {
         TabView{
             DatosView().tabItem{
-                Label("Datos", systemImage: "square.and.pencil")            }
+                Label("Datos", systemImage: "chart.bar.fill")
+            }
         }
     }
 }

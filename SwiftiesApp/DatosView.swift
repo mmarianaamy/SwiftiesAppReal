@@ -13,20 +13,38 @@ struct DatosView: View {
     let month = Calendar.current.component(.month, from: Date())
     
     var monthDict = [1: "Enero",
-                            2: "Febrero",
-                            3: "Marzo",
-                            9: "Octubre"]
+                        2: "Febrero",
+                        3: "Marzo",
+                     4: "Abril",
+                     5: "Mayo",
+                     6: "Junio",
+                     7: "Julio",
+                     8: "Agosto",
+                    9: "Septiembre",
+                     10: "Octubre",
+                     11: "Noviembre",
+                     12: "Diciembre"]
+    let habits: [Habit]  = [Habit(id: 1, frecuency: 1, name: "Habit1"), Habit(id: 2, frecuency: 1, name: "Habit2")]
 
     var body: some View {
-        Picker("What is your favorite color?", selection: $selection) {
-            Text("Hábitos").tag(0)
-            Text("Diario").tag(1)
-        }
-        .pickerStyle(.segmented).padding()
-        if (selection == 0){
-            Text("Hábitos").font(.largeTitle)
-        }else{
-            Text(String(day) + " " + (monthDict[month] ?? "Octubre")).font(.largeTitle)
+        NavigationStack{
+            VStack {
+                Picker("What is your favorite color?", selection: $selection) {
+                    Text("Hábitos").tag(0)
+                    Text("Diario").tag(1)
+                }
+                .pickerStyle(.segmented).padding()
+                if (selection == 0){
+                    Text("Hábitos").font(.largeTitle)
+                    List{
+                        ForEach(habits) { habit in
+                            HabitListItem(habit: habit)
+                        }
+                    }.listStyle(PlainListStyle())
+                }else{
+                    Text((monthDict[month] ?? "Octubre") + " " + String(day)).font(.largeTitle)
+                }
+            }
         }
     }
 }

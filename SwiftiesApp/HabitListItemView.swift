@@ -36,7 +36,7 @@ struct HabitListItem : View {
 #Preview {
     NavigationStack{
         List{
-            HabitListItem(habit: Habit(id: 1, frecuency: 1, name: "Habit1"))
+            HabitListItem(habit: Habit(id: 1, frecuency: 1, name: "Habit1", date: Date()))
         }
     }
 }

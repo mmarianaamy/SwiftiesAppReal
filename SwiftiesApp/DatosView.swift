@@ -7,10 +7,23 @@
 
 import SwiftUI
 
+func getDaysSimple(for month: Date) -> [Date] {
+    let cal = Calendar.current
+    let monthRange = cal.range(of: .day, in: .month, for: month)!
+    let comps = cal.dateComponents([.year, .month], from: month)
+    var date = cal.date(from: comps)!
+
+    var dates: [Date] = []
+    for _ in monthRange {
+        dates.append(date)
+        date = cal.date(byAdding: .day, value: 1, to: date)!
+    }
+    
+    return dates
+}
+
 struct DatosView: View {
     @State var selection = 0
-    let day = Calendar.current.component(.day, from: Date())
-    let month = Calendar.current.component(.month, from: Date())
     
     var monthDict = [1: "Enero",
                         2: "Febrero",
@@ -24,25 +37,73 @@ struct DatosView: View {
                      10: "Octubre",
                      11: "Noviembre",
                      12: "Diciembre"]
-    let habits: [Habit]  = [Habit(id: 1, frecuency: 1, name: "Habit1"), Habit(id: 2, frecuency: 1, name: "Habit2")]
+    let habits: [Habit]  = [Habit(id: 1, frecuency: 1, name: "Habit1", date: Date()), Habit(id: 2, frecuency: 1, name: "Habit2", date: Date())]
+    let dates : [Date] = getDaysSimple(for: Date())
+    
+    @State var currentMonth : Int = Calendar.current.component(.month, from: Date())
+    @State var current : Int = Calendar.current.component(.day, from: Date())
 
     var body: some View {
         NavigationStack{
-            VStack {
-                Picker("What is your favorite color?", selection: $selection) {
+            VStack () {
+                Picker("Habitos o diario", selection: $selection) {
                     Text("Hábitos").tag(0)
                     Text("Diario").tag(1)
                 }
                 .pickerStyle(.segmented).padding()
                 if (selection == 0){
-                    Text("Hábitos").font(.largeTitle)
-                    List{
-                        ForEach(habits) { habit in
-                            HabitListItem(habit: habit)
+                    VStack{
+                        Text("Hábitos").font(.largeTitle)
+                        List{
+                            ForEach(habits) { habit in
+                                HabitListItem(habit: habit)
+                            }
+                        }.listStyle(PlainListStyle())
+                        Button{
+                            print()
+                        } label: {
+                            Text("Agregar hábito")
+                        }.padding()
+                        
+                        NavigationLink{
+                            CuestionarioView()
+                        }label: {
+                            Text("Contestar cuestionario")
                         }
-                    }.listStyle(PlainListStyle())
+                    }
                 }else{
-                    Text((monthDict[month] ?? "Octubre") + " " + String(day)).font(.largeTitle)
+                    VStack{
+                        
+                        HStack{
+                            Text((monthDict[currentMonth] ?? "Octubre") + " " + String(current)).font(.largeTitle)
+                            Spacer()
+                            Button{
+                                if (current > 1){
+                                    current -= 1
+                                }
+                            } label: {
+                                Image(systemName: "chevron.left")
+                            }
+                            Button{
+                                if (current < 31){
+                                    current += 1
+                                }
+                            } label: {
+                                Image(systemName: "chevron.right")
+                            }
+                        }.padding()
+                        
+                        HStack{
+                            Text("Uso de baño").foregroundStyle(Color.white).padding()
+                            Spacer()
+                            Text("30 minutos").foregroundStyle(Color.white).padding()
+                        }.frame(width: .infinity, height: 30).background(Color.blue).padding()
+                        Button(){
+                            print("hi")
+                        }label: {
+                            Text("Agregar")
+                        }
+                    }
                 }
             }
         }

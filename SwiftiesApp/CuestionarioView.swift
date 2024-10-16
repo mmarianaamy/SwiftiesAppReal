@@ -8,22 +8,21 @@
 import SwiftUI
 
 struct CuestionarioView : View {
-    @State private var progress = 0.5
-    @State private var current = 0
+    @Binding var current : Int
     var body : some View {
         VStack{
-            ProgressView(value: progress).padding()
+            ProgressView(value: Float(current) / 10).padding()
             Text("¿De qué capacidad es tu lavadora?").font(.largeTitle)
-            //Picker and Slider
+            MultipleResponseView()
             Button{
                 current += 1
             } label: {
                 Text("Next")
-            }
+            }.padding()
         }
     }
 }
 
 #Preview {
-    CuestionarioView()
+    //CuestionarioView(current: 0)
 }

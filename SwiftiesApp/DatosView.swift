@@ -24,6 +24,7 @@ func getDaysSimple(for month: Date) -> [Date] {
 
 struct DatosView: View {
     @State var selection = 0
+    @State var cuestionarioProgress : Int = 0
     
     var monthDict = [1: "Enero",
                         2: "Febrero",
@@ -66,7 +67,7 @@ struct DatosView: View {
                         }.padding()
                         
                         NavigationLink{
-                            CuestionarioView()
+                            CuestionarioView(current: $cuestionarioProgress)
                         }label: {
                             Text("Contestar cuestionario")
                         }
@@ -98,11 +99,16 @@ struct DatosView: View {
                             Spacer()
                             Text("30 minutos").foregroundStyle(Color.white).padding()
                         }.frame(width: .infinity, height: 30).background(Color.blue).padding()
-                        Button(){
-                            print("hi")
+                        NavigationLink{
+                            AddEventView()
                         }label: {
-                            Text("Agregar")
+                            Button(){
+                                print("hi")
+                            }label: {
+                                Text("Agregar")
+                            }
                         }
+                        Spacer()
                     }
                 }
             }

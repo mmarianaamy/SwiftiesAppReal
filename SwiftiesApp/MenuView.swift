@@ -13,6 +13,9 @@ struct MenuView: View {
             DatosView().tabItem{
                 Label("Datos", systemImage: "chart.bar.fill")
             }
+            LeaderboardView().tabItem{
+                Label("Friends", systemImage: "person")
+            }
         }
     }
 }

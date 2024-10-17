@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Intents
 
 struct MenuView: View {
     var body: some View {
@@ -13,9 +14,10 @@ struct MenuView: View {
             DatosView().tabItem{
                 Label("Datos", systemImage: "chart.bar.fill")
             }
-            LeaderboardView().tabItem{
+            /* Parte de segundo sprint
+             LeaderboardView().tabItem{
                 Label("Friends", systemImage: "person")
-            }
+            }*/
         }
     }
 }

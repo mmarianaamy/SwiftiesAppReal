@@ -38,12 +38,16 @@ struct DatosView: View {
                      10: "Octubre",
                      11: "Noviembre",
                      12: "Diciembre"]
-    let habits: [Habit]  = [Habit(id: 1, frecuency: 1, name: "Habit1", date: Date()), Habit(id: 2, frecuency: 1, name: "Habit2", date: Date())]
+    @State var habits: [Habit]  = [Habit(id: 1, frecuency: 1, name: "Habit1", date: Date()), Habit(id: 2, frecuency: 1, name: "Habit2", date: Date())]
+    
     let dates : [Date] = getDaysSimple(for: Date())
+    
     
     @State var currentMonth : Int = Calendar.current.component(.month, from: Date())
     @State var current : Int = Calendar.current.component(.day, from: Date())
 
+    @State private var isShowingSearch: Bool = false
+    
     var body: some View {
         NavigationStack{
             VStack () {
@@ -60,8 +64,17 @@ struct DatosView: View {
                                 HabitListItem(habit: habit)
                             }
                         }.listStyle(PlainListStyle())
+                        /*NavigationLink {
+                            //DetallesActividadView(habitName: "")
+                            ActividadesView()
+                        } label: {
+                            Text("Agregar hábito")
+                        }.padding()
+                         */
                         Button{
-                            print()
+                            //habits.append(Habit(id: 3, frecuency: 1, name: "Habit3", date: Date()))
+                            isShowingSearch=true
+                           
                         } label: {
                             Text("Agregar hábito")
                         }.padding()
@@ -72,7 +85,12 @@ struct DatosView: View {
                             Text("Contestar cuestionario")
                         }
                     }
-                }else{
+                }else/*{
+                    HoyView()
+                        .padding(.horizontal)
+                }*/
+                
+                {
                     VStack{
                         
                         HStack{
@@ -103,14 +121,20 @@ struct DatosView: View {
                             AddEventView()
                         }label: {
                             Button(){
-                                print("hi")
+                                
                             }label: {
-                                Text("Agregar")
+                                NavigationLink(destination: ActividadesView()) {
+                                        Text("Agregar")
+                                    }
                             }
                         }
                         Spacer()
                     }
                 }
+            }
+            .fullScreenCover(isPresented: $isShowingSearch) {
+                ActividadesView()
+                    
             }
         }
     }

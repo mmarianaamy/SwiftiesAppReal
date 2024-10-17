@@ -1,0 +1,58 @@
+import SwiftUI
+
+struct SimuladorView: View {
+    @State private var selectedTime = "12 meses" // Estado para el botón seleccionado
+    
+    var body: some View {
+        VStack {
+            // Título
+            Text("Simulador")
+                .font(.title)
+                .padding()
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .background(Color.blue)
+            
+            // Botones de tiempo
+            TimeButtonsView(selectedTime: $selectedTime)
+                .padding()
+            
+            // Gráfico (Imagen)
+            GraphView(imageName: "graph_image") // Aquí debes poner el nombre de tu imagen
+                .frame(height: 200)
+                .padding(.horizontal, 20)
+            
+            // Texto informativo
+            Text("¿Sabías que?")
+                .font(.headline)
+                .padding(.top, 20)
+            
+            Text("Si cambias tus hábitos puedes reducir tu impacto ecológico por un 50%")
+                .font(.body)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 40)
+                .padding(.bottom, 20)
+            
+            Spacer()
+            
+            // Barra de pestañas inferior (Simulada)
+            HStack {
+                Spacer()
+                Image(systemName: "chart.bar")
+                Spacer()
+                Image(systemName: "globe")
+                Spacer()
+                Image(systemName: "person.circle")
+                Spacer()
+            }
+            .padding()
+            .background(Color(.systemGray6))
+        }
+    }
+}
+
+struct SimuladorView_Previews: PreviewProvider {
+    static var previews: some View {
+        SimuladorView()
+    }
+}

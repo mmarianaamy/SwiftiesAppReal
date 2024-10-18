@@ -2,6 +2,7 @@ import SwiftUI
 
 struct Recomendaciones: View {
     @State var selectedTab = "Hídrico"
+    @State var boton = "Simulador"
     @Binding var hideBar: Bool
     
     /*
@@ -11,47 +12,52 @@ struct Recomendaciones: View {
      */
     
     var body: some View {
-        NavigationView {
-            VStack {
-                topView(title: "Recomendaciones")
-                // Picker para seleccionar la tab en la parte superior
-                Picker("Recomendaciones", selection: $selectedTab) {
-                    Text("Hídrico").tag("Hídrico")
-                    Text("Energético").tag("Energético")
-                    Text("Carbono").tag("Carbono")
-                    Text("Residuos").tag("Residuos")
+        VStack{
+            
+            if(boton == "Simulador"){
+                VStack {
+                    topView(title: "Recomendaciones")
+                    // Picker para seleccionar la tab en la parte superior
+                    Picker("Recomendaciones", selection: $selectedTab) {
+                        Text("Hídrico").tag("Hídrico")
+                        Text("Energético").tag("Energético")
+                        Text("Carbono").tag("Carbono")
+                        Text("Residuos").tag("Residuos")
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .padding()
+                    
+                    // Mostrar la vista correspondiente a la tab seleccionada
+                    if selectedTab == "Hídrico" {
+                        RecomendacionesView(tipo: "Hídrico")
+                    } else if selectedTab == "Energético" {
+                        RecomendacionesView(tipo: "Energético")
+                    } else if selectedTab == "Carbono" {
+                        RecomendacionesView(tipo: "Carbono")
+                    } else if selectedTab == "Residuos" {
+                        RecomendacionesView(tipo: "Residuos")
+                    }
+                    
+                    Spacer()
+                    
                 }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding()
-                
-                // Mostrar la vista correspondiente a la tab seleccionada
-                if selectedTab == "Hídrico" {
-                    RecomendacionesView(tipo: "Hídrico")
-                } else if selectedTab == "Energético" {
-                    RecomendacionesView(tipo: "Energético")
-                } else if selectedTab == "Carbono" {
-                    RecomendacionesView(tipo: "Carbono")
-                } else if selectedTab == "Residuos" {
-                    RecomendacionesView(tipo: "Residuos")
+            }else{
+                SimuladorView()
+            }
+            
+            Button{
+                if(boton == "Simulador"){
+                    boton = "Listo"
+                }else{
+                    boton = "Simulador"
                 }
-                
-                Spacer()
-                
-                // Botón de tomar hábitos
-                NavigationLink(destination: SimuladorView().navigationBarTitle("")
-                    //.navigationBarHidden(true)) {
-                    ) {
-                        Text("Simulador")
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.blue)
-                            .cornerRadius(10)
-                            .padding(.top, 40)
-                    }.simultaneousGesture(TapGesture().onEnded {
-                        hideBar = false
-                     })
-                
-                
+            } label: {
+                Text(boton)
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.blue)
+                    .cornerRadius(10)
+                    .padding(.top, 40)
             }
         }
     }

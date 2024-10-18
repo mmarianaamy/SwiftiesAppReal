@@ -45,5 +45,5 @@ struct EditHabit : View {
 }
 
 #Preview {
-    EditHabit.init(habit: Habit(id: 1, frecuency: 1, name: "Habit1", date: Date()))
+    EditHabit.init(habit: Habit(frecuency: 1, name: "Habit1", date: Date()))
 }

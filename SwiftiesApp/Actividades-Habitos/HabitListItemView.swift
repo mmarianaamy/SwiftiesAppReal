@@ -19,7 +19,7 @@ struct HabitListItem : View {
             }
             
             NavigationLink{
-                EditHabit(habit: habit)
+                DetallesActividadView(habitName: habit.name)
             } label: {
                 Button {
                     print("Edit")

@@ -16,12 +16,10 @@ struct RecomendacionItemView: View {
                     .font(.headline)
                     .foregroundColor(.black)
                 Spacer()
-                Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
-                    .foregroundColor(.blue)
             }
         }
         .padding()
-        .background(Color(.systemGray6))
+        .background(Color.white)
         .cornerRadius(10)
         .overlay(
             RoundedRectangle(cornerRadius: 10)

@@ -28,10 +28,6 @@ struct RecomendacionesView: View {
                     }
                     .padding()
                 }
-
-
-               
-                .padding(.horizontal)
             }
         }
     }

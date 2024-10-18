@@ -20,6 +20,17 @@ struct HuellasView: View {
                         HuellaCard(title: "Residuos", value: 1575, imageName: "grafica_residuos")
                     }
                 }.padding(.vertical, 40)
+                
+                NavigationLink(destination: RecomendacionesAIView()
+                ) {
+                    Text("Sugerencias de Inteligencia Artificial")
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                        .padding(.top, 40)
+                }
+                
                 NavigationLink(destination: Recomendaciones(hideBar: $hideBar).navigationBarTitle("")
                     .navigationBarHidden(hideBar)
                 ) {

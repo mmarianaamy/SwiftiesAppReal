@@ -26,7 +26,7 @@ struct RecomendacionesAIView: View {
     
     func respond() async -> String {
         do{
-            response = try await self.generativeModel.generateContent("Respondeme en 10 lineas. Puedes incluir formato markdown." + pregunta)
+            response = try await self.generativeModel.generateContent("Respondeme en 10 lineas. Puedes incluir formato markdown para bold y italics." + pregunta)
             guard (response?.text != nil) else {
                 throw MyError.runtimeError("some message")
                 
@@ -53,7 +53,7 @@ struct RecomendacionesAIView: View {
             }
             
             HStack{
-                TextField("Que deseas preguntar?", text: $pregunta).lineLimit(nil).padding().border(Color.button).padding().keyboardType(.default)
+                TextField("Que deseas preguntar?", text: $pregunta, axis: .vertical).padding().border(Color.button).padding().keyboardType(.default)
                 Button{
                     loading = true
                     Task{

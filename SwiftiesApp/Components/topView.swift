@@ -14,7 +14,7 @@ struct topView: View {
     var body: some View {
         ZStack(alignment: .top) {
             GeometryReader { reader in
-                Color.background
+                Color.white
                 //.frame(height: reader.safeAreaInsets.top, alignment: .top)
                     .ignoresSafeArea()
                     .frame(height: 75)
@@ -23,7 +23,7 @@ struct topView: View {
                 Text(title)
                     .font(.largeTitle)
                     .bold()
-                    .foregroundColor(.white)
+                    .foregroundColor(.button)
                 Spacer()
             }.padding()
                 .padding(.horizontal)

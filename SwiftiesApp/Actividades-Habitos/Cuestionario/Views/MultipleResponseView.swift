@@ -20,7 +20,6 @@ struct Choice : View{
                 Spacer()
             }.foregroundStyle(Color.black)
                 .background(self.selection == id ? .button : Color(.clear))
-                .frame(width: .infinity)
                 .border(self.selection != id ? .button : Color(.clear))
         }.padding(EdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 20))
             
@@ -33,7 +32,7 @@ struct MultipleResponseView: View {
         VStack{
             Choice(selection: $selection, id: 0)
             Choice(selection: $selection, id: 1)
-        }.frame(width: .infinity, height: .infinity)
+        }
     }
 }
 

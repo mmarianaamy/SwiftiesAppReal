@@ -98,7 +98,6 @@ struct DatosView: View {
                 
                 {
                     VStack{
-                        
                         HStack{
                             Text((monthDict[currentMonth] ?? "Octubre") + " " + String(current)).font(.largeTitle)
                             Spacer()

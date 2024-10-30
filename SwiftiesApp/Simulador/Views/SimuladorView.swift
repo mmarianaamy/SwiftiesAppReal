@@ -1,67 +1,76 @@
+//
+//  SiteView.swift
+//  SwiftiesApp
+//
+//  Created by Jorge Salcedo on 30/10/24.
+//
+
 import SwiftUI
 
 struct SimuladorView: View {
-    @State private var selectedTime = "12 meses" // Estado para el botón seleccionado
     @State var selection = 0
-    
+    @State var currentTab: String = "7 Days" // Add state for currentTab
+
     var body: some View {
         VStack {
-            
             topView(title: "Simulador")
-            
             
             HStack {
                 HStack {
                     Circle().frame(width: 10, height: 10)
-                        .foregroundStyle(Color.purple)
+                        .foregroundStyle(Color.background)
                         
                     Text("Actual")
-                }.padding(.all, 5)
+                }
+                .padding(.all, 5)
                 .overlay(
                     RoundedRectangle(cornerRadius: 6).stroke(.button, lineWidth: 0.4)
                         .stroke(Color.gray)
                         .opacity(0.2)
                 )
+                
                 HStack {
                     Circle().frame(width: 10, height: 10)
                         .foregroundStyle(Color.red.opacity(0.8))
                         
                     Text("Cambio")
-                }.padding(.all, 5)
+                }
+                .padding(.all, 5)
                 .overlay(
                     RoundedRectangle(cornerRadius: 6).stroke(.button, lineWidth: 0.4)
                         .stroke(Color.gray)
                         .opacity(0.2)
                 )
                 
-                Picker("Habitos o diario", selection: $selection) {
-                    Text("7 días").tag(0)
-                    Text("30 días").tag(1)
-                    Text("12 meses").tag(1)
+                Picker("", selection: $currentTab) {
+                    Text("Día").tag("7 Days")
+                    Text("Mes").tag("Month")
+                    Text("Año").tag("Year")
                 }
-                .pickerStyle(.segmented).padding()
+                .pickerStyle(.segmented)
+                .padding(.leading, 20)
             }.padding(.horizontal)
             
-            // Gráfico (Imagen)
-            GraphView(imageName: "graph_image") // Aquí debes poner el nombre de tu imagen
-                .frame(height: 200)
-                .padding(.horizontal, 20)
-            
-            // Texto informativo
-            VStack (alignment: .leading){
-                Text("¿Sabías que?")
-                    .font(.headline)
-                    .padding(.bottom, 20)
-                
-                Text("Si cambias tus hábitos puedes reducir tu impacto ecológico por un 50%")
-                    .font(.body)
-                    .padding(.bottom, 20)
-            }.padding()
+            ScrollView {
+                VStack {
+                    GraphsView(currentTab: $currentTab)
+                    GraphSimulationView(currentTab: $currentTab)
+                        .padding(.top, -20)
+                    VStack(alignment: .leading) {
+                        Text("¿Sabías que?")
+                            .font(.headline)
+                        
+                        Text("Si cambias tus hábitos puedes reducir tu impacto ecológico por un 50%")
+                            .font(.body)
+                            .padding(.bottom, 20)
+                    }
+                    .padding()
+                }
+            }
             
             
             
             Spacer()
-    
         }
     }
 }

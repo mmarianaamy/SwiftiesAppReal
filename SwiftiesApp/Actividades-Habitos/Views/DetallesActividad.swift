@@ -15,6 +15,8 @@ struct DetallesActividadView: View {
     @State private var description: String = ""
     @State private var time: Double = 10
     
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
         VStack {
             VStack (alignment: .leading){
@@ -78,6 +80,7 @@ struct DetallesActividadView: View {
             
             Button {
                 //habits.append(Habit(frecuency: 1, name: "Habit3", date: Date()))
+                presentationMode.wrappedValue.dismiss()
             } label: {
                 Text("Listo")
                     .padding(.horizontal)

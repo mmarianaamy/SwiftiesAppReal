@@ -71,6 +71,54 @@ struct DetallesHoyView: View {
                 
             }
             .padding(.horizontal)
+            VStack (alignment: .leading){
+                Text("Nombre").bold()
+                    .padding(.vertical, 7)
+                TextField(
+                    "Nombre de la actividad",
+                    text: $habitName
+                )
+                .padding(.horizontal)
+                .padding(.vertical, 5)
+                .foregroundStyle(.black)
+                .background(Color.gray.opacity(0.2))
+                .containerShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                
+                
+                Text("Descripción").bold()
+                    .padding(.vertical, 7)
+                TextField(
+                    "Opcional",
+                    text: $description
+                )
+                .padding(.horizontal)
+                .padding(.vertical, 5)
+                .foregroundStyle(.black)
+                .background(Color.gray.opacity(0.2))
+                .containerShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                
+                Text("Duración").bold()
+                    .padding(.bottom, -20)
+                    .padding(.vertical, 7)
+                HStack{
+                    TextField("Tiempo", value: $time, formatter: NumberFormatter())
+                        .multilineTextAlignment(.center)
+                        .background(Color.gray.opacity(0.2))
+                        .frame(width: 65)
+                        .containerShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                    
+                    Picker("Unidad de tiempo", selection: $selectionTimeUnit) {
+                        Text("min").tag(0)
+                        Text("hr").tag(1)
+                    }
+                    .background(Color.gray.opacity(0.2))
+                    .frame(width: 70)
+                    .containerShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                    .tint(.black)
+                }.padding(.vertical, 7)
+                
+            }
+            .padding(.horizontal)
             
             Spacer()
             
@@ -92,5 +140,5 @@ struct DetallesHoyView: View {
 }
 
 #Preview {
-    //DetallesHoyView()
+    DatosView(selection: 1)
 }

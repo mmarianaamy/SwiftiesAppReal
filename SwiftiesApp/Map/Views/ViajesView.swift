@@ -23,7 +23,7 @@ struct ViajeView: View {
             Text("Tu viaje de hoy")
                 .font(.largeTitle)
                 .bold()
-                .foregroundStyle(Color.button)
+                .foregroundStyle(Color.black)
             Picker("Caminando, Bici, o Carro", selection: $selection) {
                 Text("Caminando").tag(0)
                 Text("Bici").tag(1)

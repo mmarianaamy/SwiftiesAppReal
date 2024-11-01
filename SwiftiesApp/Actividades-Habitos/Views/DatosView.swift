@@ -53,6 +53,7 @@ struct DatosView: View {
     
     @State private var isShowingSearch: Bool = false
     @State private var isShowingAddHabitModal: Bool = false
+    @State private var isShowingAddCompra: Bool = false
     
     var body: some View {
         NavigationStack{
@@ -138,19 +139,32 @@ struct DatosView: View {
                             }
                         }
                         
+                        Button{
+                            isShowingAddCompra = true
+                        }label: {
+                            HStack{
+                                Image(systemName: "plus")
+                                Text("Agregar compra")
+                            }
+                            
+                        }.padding()
+                        
                         
                         Button{
                             isShowingAddHabitModal = true
                         } label: {
-                            Text("Agregar acción")
-                        }
+                            HStack{
+                                Image(systemName: "plus")
+                                Text("Agregar acción")
+                            }
+                        }.padding()
                         
                         Spacer()
                     }
                 }
             }
             .background(EmptyView().fullScreenCover(isPresented: $isShowingSearch) { ActividadesView() }
-                .background(EmptyView().fullScreenCover(isPresented: $isShowingAddHabitModal) { DetallesHoyView(habits: $todayHabits) }))
+                .background(EmptyView().fullScreenCover(isPresented: $isShowingAddHabitModal) { DetallesHoyView(habits: $todayHabits) }).background(EmptyView().fullScreenCover(isPresented: $isShowingAddCompra) { AgregarCompraView() }))
             
         }
     }

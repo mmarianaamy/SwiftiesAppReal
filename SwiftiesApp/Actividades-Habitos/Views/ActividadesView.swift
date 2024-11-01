@@ -31,6 +31,7 @@ struct ActividadesView: View {
                         }
                     } label: { ActividadView(opcion: actividad.name)
                             .padding(.bottom, 6)
+                            .padding(.horizontal, 20)
                             .tint(.black)
                         
                     }

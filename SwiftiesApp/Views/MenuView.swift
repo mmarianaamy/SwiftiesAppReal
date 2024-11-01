@@ -11,8 +11,7 @@ import Intents
 struct MenuView: View {
     var body: some View {
         TabView{
-            //DatosView().tabItem{
-            HuellasView().tabItem{
+            DatosView().tabItem{
                 Label("Datos", systemImage: "chart.bar.fill")
             }
             HuellasView().tabItem{

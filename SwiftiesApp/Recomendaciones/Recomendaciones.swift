@@ -47,7 +47,7 @@ struct Recomendaciones: View {
             
             Button{
                 if(boton == "Simulador"){
-                    boton = "Recomendaciones"
+                    boton = "Listo"
                 }else{
                     boton = "Simulador"
                 }

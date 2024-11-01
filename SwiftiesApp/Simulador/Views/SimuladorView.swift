@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SimuladorView: View {
     @State var selection = 0
-    @State var currentTab: String = "7 Days" // Add state for currentTab
+    @State var currentTab: String = "7 Days"
 
     var body: some View {
         VStack {
@@ -31,7 +31,7 @@ struct SimuladorView: View {
                 
                 HStack {
                     Circle().frame(width: 10, height: 10)
-                        .foregroundStyle(Color.red.opacity(0.8))
+                        .foregroundStyle(Color.red.opacity(1.0))
                         
                     Text("Cambio")
                 }
@@ -53,10 +53,10 @@ struct SimuladorView: View {
             
             ScrollView {
                 VStack {
-                    GraphsView(currentTab: $currentTab)
+                    GraphRealView(currentTab: $currentTab)
                     GraphSimulationView(currentTab: $currentTab)
                         .padding(.top, -20)
-                    VStack(alignment: .leading) {
+                    /*VStack(alignment: .leading) {
                         Text("¿Sabías que?")
                             .font(.headline)
                         
@@ -64,7 +64,7 @@ struct SimuladorView: View {
                             .font(.body)
                             .padding(.bottom, 20)
                     }
-                    .padding()
+                    .padding()*/
                 }
             }
             

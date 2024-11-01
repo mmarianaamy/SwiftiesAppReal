@@ -20,10 +20,9 @@ struct MenuView: View {
             ViajeView().tabItem{
                 Label("Viajes", systemImage: "car.side")
             }
-            /* Parte de segundo sprint
              LeaderboardView().tabItem{
-                Label("Friends", systemImage: "person")
-            }*/
+                Label("Friends", systemImage: "person.2")
+            }
         }
     }
 }

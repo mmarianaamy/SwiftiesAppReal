@@ -10,9 +10,9 @@ import Charts
 
 struct GraphSimulationView: View {
     @Environment(\.colorScheme) var scheme
-    @Binding var currentTab: String // Add a binding for currentTab
+    @Binding var currentTab: String
     @State var sampleAnalytics: [SimulatedGraphModel] = weeklyAnalytics2
-    @State var currentActiveItem: SiteView?
+    @State var currentActiveItem: RealGraphModel?
     @State var plotWidth: CGFloat = 0
     @State var isLineGraph: Bool = true  // Always true since we only want line graphs
 

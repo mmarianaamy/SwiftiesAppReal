@@ -8,11 +8,11 @@
 import SwiftUI
 import Charts
 
-struct GraphsView: View {
+struct GraphRealView: View {
     @Environment(\.colorScheme) var scheme
-    @Binding var currentTab: String // Add a binding for currentTab
-    @State var sampleAnalytics: [SiteView] = weeklyAnalytics
-    @State var currentActiveItem: SiteView?
+    @Binding var currentTab: String 
+    @State var sampleAnalytics: [RealGraphModel] = weeklyAnalytics
+    @State var currentActiveItem: RealGraphModel?
     @State var plotWidth: CGFloat = 0
     @State var isLineGraph: Bool = true  // Always true since we only want line graphs
 
@@ -103,6 +103,6 @@ struct GraphsView: View {
 struct GraphsView_Previews: PreviewProvider {
     static var previews: some View {
         // Provide a dummy binding for the preview
-        GraphsView(currentTab: .constant("7 Days"))
+        GraphRealView(currentTab: .constant("7 Days"))
     }
 }

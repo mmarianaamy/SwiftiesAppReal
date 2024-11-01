@@ -10,13 +10,10 @@ import SwiftUI
 struct LeaderboardView: View {
     var body: some View {
         VStack{
-            Text("Leaderboard")
-                .font(.largeTitle)
-                .bold()
-                //.foregroundColor(.button)
+            topView(title: "Leaderboard")
                 .foregroundStyle(Color.black)
             LeaderboardList().padding()
-        }.background(StaticGradientView())
+        }//.background(StaticGradientView())
     }
 }
 

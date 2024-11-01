@@ -6,14 +6,15 @@ struct HuellasView: View {
     
     var body: some View {
         NavigationView {
+            
             VStack{
                 topView(title: "Tus Huellas")
                 
-                VStack(spacing: 20) {
+                VStack() {
                     
                     DonutChart()
                     
-                }.padding(.vertical, 40)
+                }.padding()
                 
                 NavigationLink(destination: RecomendacionesAIView()
                 ) {
@@ -36,11 +37,10 @@ struct HuellasView: View {
                         .padding(.top, 40)
                 }
                 
-                
-                
-                Spacer()
             }
+            Spacer()
         }
+        
     }
 }
 

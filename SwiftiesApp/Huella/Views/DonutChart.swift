@@ -121,5 +121,5 @@ struct DonutChart: View {
 }
 
 #Preview {
-    ContentView()
+    DonutChart()
 }

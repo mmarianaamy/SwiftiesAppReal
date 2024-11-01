@@ -19,13 +19,13 @@ struct LeaderbordRow: View {
             HStack{
                 if prevPosition > position {
                     Image(systemName: "chevron.compact.down")
-                        .font(.headline)
+                        .font(.title)
                         .padding(.horizontal)
                         .foregroundStyle(.red)
                         .bold()
                 } else if prevPosition < position {
                     Image(systemName: "chevron.compact.up")
-                        .font(.headline)
+                        .font(.title)
                         .padding(.horizontal)
                         .foregroundStyle(.green)
                         .bold()
@@ -39,7 +39,7 @@ struct LeaderbordRow: View {
                 
                 Text("\(position)").font(.title)
                     .padding(.trailing)
-                Text(name).font(.title)
+                Text(name).font(.subheadline)
                 Spacer()
                 Text("\(String(format: "%.2f", points))")
                     .padding(.horizontal)

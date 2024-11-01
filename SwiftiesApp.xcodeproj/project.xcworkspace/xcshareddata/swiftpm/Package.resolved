@@ -1,5 +1,5 @@
 {
-  "originHash" : "4580cafa38416427f679b993528263b9d3545272b14f523e2b387b8ea0cdc7d3",
+  "originHash" : "eec89ef2746e19e515cb38fc3590b405ca4ce4de06ceb013b79f08eb4dae8c82",
   "pins" : [
     {
       "identity" : "generative-ai-swift",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "44b8ce120425f9cf53ca756f3434ca2c2696f8bd",
         "version" : "0.5.6"
+      }
+    },
+    {
+      "identity" : "swiftui-multicolorgradient",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ArthurGuibert/SwiftUI-MulticolorGradient.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "6f80da646b607d2e3cbacc259eb41f2912ea6e4f"
       }
     }
   ],

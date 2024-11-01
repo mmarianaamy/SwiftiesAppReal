@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3AA0BC652CD5512D0022015F /* MulticolorGradient in Frameworks */ = {isa = PBXBuildFile; productRef = 3AA0BC642CD5512D0022015F /* MulticolorGradient */; };
 		FBAA14752CC2D77B00F88965 /* GoogleGenerativeAI in Frameworks */ = {isa = PBXBuildFile; productRef = FBAA14742CC2D77B00F88965 /* GoogleGenerativeAI */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AA0BC652CD5512D0022015F /* MulticolorGradient in Frameworks */,
 				FBAA14752CC2D77B00F88965 /* GoogleGenerativeAI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -71,6 +73,7 @@
 			name = SwiftiesApp;
 			packageProductDependencies = (
 				FBAA14742CC2D77B00F88965 /* GoogleGenerativeAI */,
+				3AA0BC642CD5512D0022015F /* MulticolorGradient */,
 			);
 			productName = SwiftiesApp;
 			productReference = FBFB53432CB5F51900730325 /* SwiftiesApp.app */;
@@ -102,6 +105,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				FBAA14732CC2D77B00F88965 /* XCRemoteSwiftPackageReference "generative-ai-swift" */,
+				3AA0BC632CD5512D0022015F /* XCRemoteSwiftPackageReference "SwiftUI-MulticolorGradient" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = FBFB53442CB5F51900730325 /* Products */;
@@ -333,6 +337,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		3AA0BC632CD5512D0022015F /* XCRemoteSwiftPackageReference "SwiftUI-MulticolorGradient" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ArthurGuibert/SwiftUI-MulticolorGradient.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		FBAA14732CC2D77B00F88965 /* XCRemoteSwiftPackageReference "generative-ai-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/google-gemini/generative-ai-swift.git";
@@ -344,6 +356,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3AA0BC642CD5512D0022015F /* MulticolorGradient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3AA0BC632CD5512D0022015F /* XCRemoteSwiftPackageReference "SwiftUI-MulticolorGradient" */;
+			productName = MulticolorGradient;
+		};
 		FBAA14742CC2D77B00F88965 /* GoogleGenerativeAI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FBAA14732CC2D77B00F88965 /* XCRemoteSwiftPackageReference "generative-ai-swift" */;

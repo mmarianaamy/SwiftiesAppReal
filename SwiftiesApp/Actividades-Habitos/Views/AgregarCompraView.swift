@@ -7,11 +7,14 @@
 
 import SwiftUI
 
+
 struct AgregarCompraView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @State var page : Int = 0
-
+    @State var selectedProduct : Int = -1
+    @State var count : Int = 1
+    
     var body: some View {
         VStack{
             HStack{
@@ -23,15 +26,37 @@ struct AgregarCompraView: View {
                 Spacer()
             }.padding()
             if page == 0{
-                BuscarProductoView(page: $page)
+                BuscarProductoView(selectedProduct: $selectedProduct, page: $page)
             }
             else{
-                Text("Ingresa cantidad")
+                VStack{
+                    Text("Ingresa cantidad")
+                    Button{
+                        count += 1
+                    } label: {
+                        Text("+")
+                    }
+                    HStack{
+                        TextField("1", value: $count, format: .number).multilineTextAlignment(.center)
+                    }.frame(maxWidth: .infinity)
+                    Button{
+                        if count > 1{
+                            count -= 1
+                        }
+                    } label: {
+                        Text("-")
+                    }
+                }
+                Button{
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Text("Listo")
+                }
             }
         }
     }
 }
 
 #Preview {
-    AgregarCompraView()
+    AgregarCompraView(page: 1)
 }

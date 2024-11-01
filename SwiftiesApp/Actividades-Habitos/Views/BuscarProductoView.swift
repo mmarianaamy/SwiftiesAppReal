@@ -10,20 +10,58 @@ import SwiftUI
 struct BuscarProductoView: View {
         
     @State var searchText : String = ""
-    let products : [Product] = [Product(id: 1, nombre: "Huevo"), Product(id: 2, nombre: "Leche"), Product(id: 3, nombre: "Carbon"), Product(id: 4, nombre: "Gasolina"), Product(id: 5, nombre: "Computadora"), Product(id: 6, nombre: "Agua"), Product(id: 7, nombre: "Sillon"), Product(id: 8, nombre: "Carro"), Product(id: 9, nombre: "Huevos"), Product(id: 10, nombre: "asjdklf"), Product(id: 11, nombre: "ajskld")]
+    let products : [Product] = []
     
-    @State var selectedProduct : Int = -1
+    @Binding var selectedProduct : Int
     
     @State var selected : Bool = false
     
+    @State var productosGuardados : [Product] = []
+    
     var searchResults: [Product] {
         if searchText.isEmpty{
-            return products
+            return productosGuardados
         }
-        return products.filter{$0.nombre.contains(searchText)}
+        return productosGuardados.filter{$0.nombre.lowercased().contains(searchText.lowercased())}
     }
     
     @Binding var page : Int
+    
+    private let apiURL = "https://hyufiwwpfhtovhspewlc.supabase.co/rest/v1/producto"
+    private let apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5dWZpd3dwZmh0b3Zoc3Bld2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkyMDAzNDQsImV4cCI6MjA0NDc3NjM0NH0.Eol6hgROQO_G5CnGD6YBGTIMOMPKL6GX3xdMfpMlHmc"
+    
+    @State var isLoading : Bool = true
+    @State var errorMessage : String = ""
+    
+    func getItems() async -> [Product] {
+        
+        var productos : [Product] = []
+        
+        guard let url = URL(string: "\(apiURL)?select=*") else {
+            print("URL inválida")
+            return productos
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue(apiKey, forHTTPHeaderField: "apikey")
+        request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        isLoading = true
+        
+        do{
+            let (data, _) = try await URLSession.shared.data(for: request)
+            productos = try JSONDecoder().decode([Product].self, from: data)
+        } catch {
+            productos = []
+        }
+
+        isLoading = false
+        print(self.errorMessage)
+        print(productos)
+        return productos
+    }
 
     var body: some View {
         ZStack{
@@ -32,20 +70,30 @@ struct BuscarProductoView: View {
                     .padding()
                     .border(Color.gray)
                     .padding()
-                    .autocorrectionDisabled()
-                ScrollView{
-                    ForEach(searchResults){product in
-                        Button{
-                            selectedProduct = product.id
-                            selected = true
-                        } label: {
-                            HStack{
-                                Text(product.nombre).foregroundStyle(Color.black)
-                            }.padding().frame(maxWidth: .infinity).border(product.id == selectedProduct ? Color.blue : Color.gray)
-                        }
-                        
+                    .autocorrectionDisabled().task{
+                        self.productosGuardados = await getItems()
                     }
-                }.padding()
+                if isLoading{
+                    ProgressView()
+                }else{
+                    ScrollView{
+                        ForEach(searchResults, id: \.self){product in
+                            Button{
+                                selectedProduct = product.idproducto
+                                selected = true
+                            } label: {
+                                HStack{
+                                    Text(product.nombre)
+                                    if product.unidad != ""{
+                                        Divider()
+                                        Text(String(product.cantidad) + product.unidad)
+                                    }
+                                }.padding().frame(maxWidth: .infinity).border(product.idproducto == selectedProduct ? Color.blue : Color.gray).foregroundStyle(Color.black)
+                            }
+                            
+                        }
+                    }.padding()
+                }
             }
             if selected {
                 VStack{

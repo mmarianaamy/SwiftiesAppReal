@@ -9,16 +9,10 @@ struct HuellasView: View {
             VStack{
                 topView(title: "Tus Huellas")
                 
-                // Grilla de huellas
                 VStack(spacing: 20) {
-                    HStack(spacing: 20) {
-                        HuellaCard(title: "Hídrica", value: 1150, imageName: "grafica_hidrica")
-                        HuellaCard(title: "Energética", value: 220, imageName: "grafica_energetica")
-                    }
-                    HStack(spacing: 20) {
-                        HuellaCard(title: "Carbono", value: 1375, imageName: "grafica_carbono")
-                        HuellaCard(title: "Residuos", value: 1575, imageName: "grafica_residuos")
-                    }
+                    
+                    DonutChart()
+                    
                 }.padding(.vertical, 40)
                 
                 NavigationLink(destination: RecomendacionesAIView()

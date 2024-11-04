@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Supabase
 
 func getDaysSimple(for month: Date) -> [Date] {
     let cal = Calendar.current
@@ -27,6 +28,8 @@ struct DatosView: View {
     @State var cuestionarioProgress : Int = 0
     @Binding var user : User
     
+    let client = SupabaseClient(supabaseURL: URL(string: "https://hyufiwwpfhtovhspewlc.supabase.co")!, supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5dWZpd3dwZmh0b3Zoc3Bld2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkyMDAzNDQsImV4cCI6MjA0NDc3NjM0NH0.Eol6hgROQO_G5CnGD6YBGTIMOMPKL6GX3xdMfpMlHmc")
+    
     var monthDict = [1: "Enero",
                      2: "Febrero",
                      3: "Marzo",
@@ -42,7 +45,7 @@ struct DatosView: View {
     
     //@Environment(HabitModel.self) var habitModel
     
-    @State var habits: [Habit]  = [Habit(frecuency: 1, name: "Baño de 15 minutos", date: Date()), Habit( frecuency: 1, name: "Beber una taza de café diaria", date: Date())]
+    @State var habits: [HabitUser]  = []
     //Esto se tiene que cambiar
     @State var todayHabits: [Habit]  = [Habit(frecuency: 20, name: "Lavar mi coche", date: Date())]
     
@@ -66,11 +69,22 @@ struct DatosView: View {
                 .pickerStyle(.segmented).padding()
                 if (selection == 0){
                     VStack{
-                        Text("Hábitos").font(.largeTitle)
+                        Text("Hábitos").font(.largeTitle).task{
+                            /*do{
+                                habits = try await client.from("usuario_habito")
+                                    .select(
+                                        """
+                                        recurrencia, frecuencia, cantidad
+                                        """
+                                    ).eq("usuario_habito.idusuario", value: user.idusuario).execute().value
+                            } catch{
+                                print("Not possible")
+                            }*/
+                        }
                         List{
-                            ForEach(habits) { habit in
+                            /*ForEach(habits) { habit in
                                 HabitListItem(habit: habit)
-                            }
+                            }*/
                         }.listStyle(PlainListStyle())
                         /*NavigationLink {
                          //DetallesActividadView(habitName: "")

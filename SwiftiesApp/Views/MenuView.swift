@@ -9,9 +9,12 @@ import SwiftUI
 import Intents
 
 struct MenuView: View {
+    
+    @Binding var user : User
+    
     var body: some View {
         TabView{
-            DatosView().tabItem{
+            DatosView(user: $user).tabItem{
                 Label("Datos", systemImage: "chart.bar.fill")
             }
             HuellasView().tabItem{
@@ -28,5 +31,12 @@ struct MenuView: View {
 }
 
 #Preview {
-    MenuView()
+    struct PreviewView : View {
+        @State var user : User = User(idusuario: 1, nombre: "Juan", apellido: "Perez", email: "juan.perez@example.com", contraseña: "password123")
+        var body : some View {
+            MenuView(user: $user)
+        }
+    }
+    
+    return PreviewView()
 }

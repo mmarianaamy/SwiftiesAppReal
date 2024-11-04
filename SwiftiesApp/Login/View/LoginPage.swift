@@ -18,7 +18,7 @@ struct LoginPage: View {
     
     @State var isLoading = false
     
-    @StateObject var user = User()
+    @Binding var user : User
     
     private let apiURL = "https://hyufiwwpfhtovhspewlc.supabase.co/rest/v1/usuario"
     private let apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5dWZpd3dwZmh0b3Zoc3Bld2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkyMDAzNDQsImV4cCI6MjA0NDc3NjM0NH0.Eol6hgROQO_G5CnGD6YBGTIMOMPKL6GX3xdMfpMlHmc"
@@ -57,11 +57,12 @@ struct LoginPage: View {
             }
 
             do {
-                let usuarios = try JSONDecoder().decode([Usuario].self, from: data)
+                let usuarios = try JSONDecoder().decode([User].self, from: data)
                 if !usuarios.isEmpty {
                     DispatchQueue.main.async {
                         self.logged = true
                         self.errorMessage = nil
+                        user = usuarios.first!
                     }
                 } else {
                     DispatchQueue.main.async {
@@ -155,7 +156,6 @@ struct LoginPage: View {
             
         }.ignoresSafeArea()
             .foregroundStyle(Color.white)
-            .environmentObject(user)
     }
 }
 

@@ -59,7 +59,6 @@ struct BuscarProductoView: View {
 
         isLoading = false
         print(self.errorMessage)
-        print(productos)
         return productos
     }
 

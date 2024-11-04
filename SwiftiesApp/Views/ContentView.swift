@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class User : ObservableObject{
+class User : ObservableObject, Decodable{
     init(idusuario: Int = 0, nombre: String = "", apellido: String = "", email: String = "", contraseña: String = "") {
         self.idusuario = idusuario
         self.nombre = nombre
@@ -26,13 +26,13 @@ class User : ObservableObject{
 struct ContentView: View {
     @State var logged = false
     
-    @EnvironmentObject var user : User
+    @State var user : User = User()
     
     var body: some View {
         if !logged{
-            LoginPage(logged: $logged)
+            LoginPage(logged: $logged, user: $user)
         }else{
-            MenuView()
+            MenuView(user: $user)
         }
     }
 }

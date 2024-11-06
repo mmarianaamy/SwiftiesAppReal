@@ -7,11 +7,9 @@
 
 import Foundation
 
-struct Habit : Hashable, Identifiable, Codable{
-    var id = UUID()
-    var frecuency : Int
-    var name : String
-    var date: Date
+struct Habit : Hashable, Codable{
+    var idhabito : Int
+    var nombre : String
 }
 
 struct Event: Identifiable{
@@ -20,12 +18,12 @@ struct Event: Identifiable{
     var date: Date
 }
 
-struct HabitUser {
+struct HabitUser : Decodable, Hashable {
     var recurrencia : String
     var frecuencia : Int
     var cantidad : String
-    var idusuario : Int
-    /*var fechainicio : Date
-    var fechafinal : Date*/
-    /*var nombre : String*/
+    var idhabito : Int
+    var fechainicio : String
+    var fechafinal : String?
+    var habito : Habit
 }

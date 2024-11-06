@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Supabase
 
 struct DetallesActividadView: View {
     @State var selectionFrecuency = 0
@@ -16,6 +17,8 @@ struct DetallesActividadView: View {
     @State private var time: Double = 10
     
     @Environment(\.presentationMode) var presentationMode
+    
+    let client = SupabaseClient(supabaseURL: URL(string: "https://hyufiwwpfhtovhspewlc.supabase.co")!, supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5dWZpd3dwZmh0b3Zoc3Bld2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkyMDAzNDQsImV4cCI6MjA0NDc3NjM0NH0.Eol6hgROQO_G5CnGD6YBGTIMOMPKL6GX3xdMfpMlHmc")
     
     var body: some View {
         VStack {
@@ -79,7 +82,12 @@ struct DetallesActividadView: View {
             Spacer()
             
             Button {
-                //habits.append(Habit(frecuency: 1, name: "Habit3", date: Date()))
+               /* do{
+                    //actividades = try await client.from("habito")
+                      //  .select().execute().value
+                } catch{
+                    print("Not possible")
+                }*/
                 presentationMode.wrappedValue.dismiss()
             } label: {
                 Text("Listo")

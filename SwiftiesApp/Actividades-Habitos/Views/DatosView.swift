@@ -47,7 +47,7 @@ struct DatosView: View {
     
     @State var habits: [HabitUser]  = []
     //Esto se tiene que cambiar
-    @State var todayHabits: [Habit]  = [Habit(frecuency: 20, name: "Lavar mi coche", date: Date())]
+    @State var todayHabits: [Habit]  = [Habit(idhabito: 20, nombre: "Lavar mi coche")]
     
     let dates : [Date] = getDaysSimple(for: Date())
     
@@ -69,34 +69,22 @@ struct DatosView: View {
                 .pickerStyle(.segmented).padding()
                 if (selection == 0){
                     VStack{
-                        Text("Hábitos").font(.largeTitle).task{
-                            /*do{
-                                habits = try await client.from("usuario_habito")
-                                    .select(
-                                        """
-                                        recurrencia, frecuencia, cantidad
-                                        """
-                                    ).eq("usuario_habito.idusuario", value: user.idusuario).execute().value
-                            } catch{
-                                print("Not possible")
-                            }*/
-                        }
+                        Text("Hábitos").font(.largeTitle)
                         List{
-                            /*ForEach(habits) { habit in
+                            ForEach(habits, id: \.self ) { habit in
                                 HabitListItem(habit: habit)
-                            }*/
+                            }
                         }.listStyle(PlainListStyle())
-                        /*NavigationLink {
+                        /*
+                         No se pq puse esto, pero no lo borraré por si acaso
+                         NavigationLink {
                          //DetallesActividadView(habitName: "")
                          ActividadesView()
                          } label: {
                          Text("Agregar hábito")
-                         }.padding()
-                         */
+                         }.padding()*/
                         Button{
-                            //habits.append(Habit(id: 3, frecuency: 1, name: "Habit3", date: Date()))
                             isShowingSearch=true
-                            
                         } label: {
                             Text("Agregar hábito")
                         }.padding()
@@ -106,6 +94,13 @@ struct DatosView: View {
                         }label: {
                             Text("Contestar cuestionario")
                         }.padding(.bottom)
+                    }.task{
+                        do{
+                            habits = try await client.from("usuario_habito")
+                                .select("recurrencia, frecuencia, cantidad, idhabito, fechainicio, fechafinal, habito(idhabito, nombre)").execute().value
+                        } catch{
+                            print("Not possible")
+                        }
                     }
                 }else/*{
                       HoyView()
@@ -135,7 +130,7 @@ struct DatosView: View {
                         
                         //Esto se tiene que cambiar
                         VStack{
-                            ForEach(todayHabits) { habit in
+                            /*ForEach($todayHabits) { habit in
                                 HStack{
                                     Text(habit.name).foregroundStyle(Color.white)
                                         .padding(.leading)
@@ -151,7 +146,7 @@ struct DatosView: View {
                                 .padding(.vertical, 7)
                                 .padding(.horizontal, 10)
                                 
-                            }
+                            }*/
                         }
                         
                         Button{

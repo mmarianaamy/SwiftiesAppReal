@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct HabitListItem : View {
-    var habit: Habit
+    var habit: HabitUser
+    
     var body: some View {
-        Text(habit.name).swipeActions(allowsFullSwipe: false){
+        //Cambiar a nombre
+        Text(habit.habito.nombre).swipeActions(allowsFullSwipe: false){
             
             Button(role: .destructive) {
                 print("Delete the habit pls")
@@ -19,7 +21,7 @@ struct HabitListItem : View {
             }
             
             NavigationLink{
-                DetallesActividadView(habitName: habit.name)
+                //DetallesActividadView(habitName: habit.name)
             } label: {
                 Button {
                     print("Edit")
@@ -36,7 +38,7 @@ struct HabitListItem : View {
 #Preview {
     NavigationStack{
         List{
-            HabitListItem(habit: Habit(frecuency: 1, name: "Habit1", date: Date()))
+            HabitListItem(habit: HabitUser(recurrencia: "dia", frecuencia: 7, cantidad: "jask", idhabito: 1, fechainicio: "Date()", fechafinal: nil, habito: Habit(idhabito: 1, nombre: "")))
         }
     }
 }

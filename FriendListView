@@ -1,0 +1,23 @@
+import SwiftUI
+
+struct FriendListView: View {
+    // Datos estáticos de amigos
+    let friends: [Friend] = [
+        Friend(id: 1, name: "Alice", imageName: "alice", quote: "La vida es lo que haces de ella.", status: "Activo"),
+        Friend(id: 2, name: "Bob", imageName: "bob", quote: "La felicidad no es un destino, es un estilo de vida.", status: "Ocupado"),
+        Friend(id: 3, name: "Charlie", imageName: "charlie", quote: "El éxito es la suma de pequeños esfuerzos repetidos.", status: "Disponible"),
+        Friend(id: 4, name: "Diana", imageName: "diana", quote: "La vida es corta, sonríe mientras todavía tengas dientes.", status: "En línea"),
+        Friend(id: 5, name: "Ethan", imageName: "ethan", quote: "Hazlo con pasión o no lo hagas.", status: "Desconectado")
+    ]
+
+    var body: some View {
+        NavigationView {
+            List {
+                ForEach(friends) { friend in
+                    FriendRow(friend: friend)
+                }
+            }
+            .navigationTitle("Lista de Amigos")
+        }
+    }
+}

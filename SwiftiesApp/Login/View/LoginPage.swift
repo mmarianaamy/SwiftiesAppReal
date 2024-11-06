@@ -19,7 +19,7 @@ struct LoginPage: View {
     @State var isLoading = false
     @Binding var logged: Bool
     @EnvironmentObject var user: User
-
+    
     
     var body: some View {
         ZStack {
@@ -42,10 +42,10 @@ struct LoginPage: View {
                         .overlay(RoundedRectangle(cornerRadius: 10).stroke(.gray, lineWidth: 1))
                         .zIndex(1)
                         .autocorrectionDisabled()
-
+                    
                 }.padding()
-
-
+                
+                
                 
                 VStack(alignment: .leading) {
                     Text("Password").padding(.horizontal)
@@ -56,30 +56,30 @@ struct LoginPage: View {
                         .background(Color.white)
                         .foregroundStyle(Color.black)
                         .cornerRadius(10)
-
+                    
                         .autocorrectionDisabled()
                 }.padding()
-
+                
                 
                 Button("Iniciar Sesión") {
                     Task {
                         await signInWithEmail(email: email, password: password)
                     }
-
+                    
                 }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.button)
-                    .cornerRadius(10)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10).stroke(.button, lineWidth: 1)
-                    ).padding()
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.button)
+                .cornerRadius(10)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10).stroke(.button, lineWidth: 1)
+                ).padding()
                 
                 if isLoading {
                     ProgressView()
                         .padding()
                 }
-
+                
                 Button("¿No tienes una cuenta? Regístrate") {
                     showSignUp = true
                 }
@@ -97,18 +97,17 @@ struct LoginPage: View {
                 }
                 
             }.zIndex(1)
-            .padding()
+                .padding()
         }.ignoresSafeArea()
-
+        
             .foregroundStyle(Color.white)
-            
-            if isLoading {
-                Color.black.opacity(0.5).ignoresSafeArea()
-                ProgressView().padding().background(Color.white).cornerRadius(10)
-            }
+        
+        if isLoading {
+            Color.black.opacity(0.5).ignoresSafeArea()
+            ProgressView().padding().background(Color.white).cornerRadius(10)
         }
     }
-
+    
     func signInWithEmail(email: String, password: String) async {
         do {
             try await supabase.auth.signIn(email: email, password: password)

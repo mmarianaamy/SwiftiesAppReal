@@ -57,7 +57,7 @@ class User: ObservableObject {
 
 struct ContentView: View {
     @State var logged = false
-    @EnvironmentObject var user: User
+    //@EnvironmentObject var user: User
     
     var body: some View {
         NavigationStack{
@@ -69,7 +69,9 @@ struct ContentView: View {
         }
     }
 }
- 
+
+//Users/carolinaresendz/Documents/SwiftiesAppReal/SwiftiesApp/Views/ContentView.swift:67:26 Missing argument for parameter 'user' in call
+
 
 
 #Preview {

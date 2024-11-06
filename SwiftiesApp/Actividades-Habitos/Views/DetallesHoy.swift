@@ -124,7 +124,7 @@ struct DetallesHoyView: View {
             
             Button {
                 if(habitName != ""){
-                    habits.append(Habit(frecuency: time, name: habitName))
+                    //habits.append(Habit(frecuency: time, name: habitName))
                 }
                 presentationMode.wrappedValue.dismiss()
             } label: {

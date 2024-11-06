@@ -47,7 +47,7 @@ struct DatosView: View {
     
     @State var habits: [HabitUser]  = []
     //Esto se tiene que cambiar
-    @State var todayHabits: [Habit]  = [Habit(frecuency: 20, name: "Lavar mi coche")]
+    @State var todayHabits: [Habit]  = [Habit(idhabito: 20, nombre: "Lavar mi coche")]
     
     let dates : [Date] = getDaysSimple(for: Date())
     
@@ -75,17 +75,16 @@ struct DatosView: View {
                                 HabitListItem(habit: habit)
                             }
                         }.listStyle(PlainListStyle())
-                        /*NavigationLink {
+                        /*
+                         No se pq puse esto, pero no lo borraré por si acaso
+                         NavigationLink {
                          //DetallesActividadView(habitName: "")
                          ActividadesView()
                          } label: {
                          Text("Agregar hábito")
-                         }.padding()
-                         */
+                         }.padding()*/
                         Button{
-                            //habits.append(Habit(id: 3, frecuency: 1, name: "Habit3", date: Date()))
                             isShowingSearch=true
-                            
                         } label: {
                             Text("Agregar hábito")
                         }.padding()
@@ -98,8 +97,7 @@ struct DatosView: View {
                     }.task{
                         do{
                             habits = try await client.from("usuario_habito")
-                                .select("recurrencia").execute().value
-                            print(habits)
+                                .select("recurrencia, frecuencia, cantidad, idhabito, fechainicio, fechafinal, habito(idhabito, nombre)").execute().value
                         } catch{
                             print("Not possible")
                         }
@@ -132,7 +130,7 @@ struct DatosView: View {
                         
                         //Esto se tiene que cambiar
                         VStack{
-                            ForEach(todayHabits) { habit in
+                            /*ForEach($todayHabits) { habit in
                                 HStack{
                                     Text(habit.name).foregroundStyle(Color.white)
                                         .padding(.leading)
@@ -148,7 +146,7 @@ struct DatosView: View {
                                 .padding(.vertical, 7)
                                 .padding(.horizontal, 10)
                                 
-                            }
+                            }*/
                         }
                         
                         Button{

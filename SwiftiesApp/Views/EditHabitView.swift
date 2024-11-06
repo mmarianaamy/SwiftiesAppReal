@@ -11,13 +11,11 @@ struct EditHabit : View {
     var habit : Habit
     
     @State var name : String =  ""
-    @State var frecuency : Int =  0
     @State var changeView : Bool = false
     
     init(habit: Habit) {
         self.habit = habit
-        self.name = habit.name
-        self.frecuency = habit.frecuency
+        self.name = habit.nombre
     }
     
     var body: some View {
@@ -32,8 +30,7 @@ struct EditHabit : View {
             }.padding()
             if !changeView{
                 VStack{
-                    Text(habit.name)
-                    Text(String(habit.frecuency))
+                    Text(habit.nombre)
                 }
             }else{
                 VStack{
@@ -45,5 +42,5 @@ struct EditHabit : View {
 }
 
 #Preview {
-    EditHabit(habit: Habit(frecuency: 1, name: "Habit1"))
+    EditHabit(habit: Habit(idhabito: 1, nombre: "Habit1"))
 }

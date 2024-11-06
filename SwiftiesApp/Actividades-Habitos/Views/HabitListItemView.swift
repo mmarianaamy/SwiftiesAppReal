@@ -12,7 +12,7 @@ struct HabitListItem : View {
     
     var body: some View {
         //Cambiar a nombre
-        Text(habit.recurrencia).swipeActions(allowsFullSwipe: false){
+        Text(habit.habito.nombre).swipeActions(allowsFullSwipe: false){
             
             Button(role: .destructive) {
                 print("Delete the habit pls")
@@ -38,7 +38,7 @@ struct HabitListItem : View {
 #Preview {
     NavigationStack{
         List{
-            HabitListItem(habit: HabitUser(recurrencia: "dia", frecuencia: 7))
+            HabitListItem(habit: HabitUser(recurrencia: "dia", frecuencia: 7, cantidad: "jask", idhabito: 1, fechainicio: "Date()", fechafinal: nil, habito: Habit(idhabito: 1, nombre: "")))
         }
     }
 }

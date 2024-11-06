@@ -72,7 +72,7 @@ struct ProfileView: View {
             let usuario: Usuario = try await supabase
                 .from("usuario")
                 .select()
-                .eq("idusuario", value: currentUser.id)
+                .eq("auth_user_id", value: currentUser.id)
                 .single()
                 .execute()
                 .value
@@ -101,10 +101,11 @@ struct ProfileView: View {
                       email: email
                     )
                   )
-                  .eq("id", value: currentUser.id)
+                  .eq("auth_user_id", value: currentUser.id)
                   .execute()
+                print("Perfil actualizado exitosamente")
             } catch {
-                debugPrint(error)
+                debugPrint("Error al actualizar el perfil: \(error)")
             }
         }
     }

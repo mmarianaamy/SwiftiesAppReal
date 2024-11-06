@@ -11,7 +11,6 @@ struct Habit : Hashable, Identifiable, Codable{
     var id = UUID()
     var frecuency : Int
     var name : String
-    var date: Date
 }
 
 struct Event: Identifiable{
@@ -20,11 +19,11 @@ struct Event: Identifiable{
     var date: Date
 }
 
-struct HabitUser {
+struct HabitUser : Decodable, Hashable {
     var recurrencia : String
     var frecuencia : Int
-    var cantidad : String
-    var idusuario : Int
+    //var cantidad : String
+    //var idusuario : Int
     /*var fechainicio : Date
     var fechafinal : Date*/
     /*var nombre : String*/

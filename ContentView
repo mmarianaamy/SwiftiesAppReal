@@ -1,0 +1,23 @@
+import SwiftUI
+
+struct ContentView: View {
+    var body: some View {
+        TabView {
+            MenuView()
+                .tabItem {
+                    Label("Menú", systemImage: "list.dash")
+                }
+            
+            CameraViewControllerWrapper()
+                .tabItem {
+                    Label("Cámara", systemImage: "camera")
+                }
+        }
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}

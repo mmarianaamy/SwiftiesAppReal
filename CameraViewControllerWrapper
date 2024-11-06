@@ -1,0 +1,17 @@
+import SwiftUI
+
+struct CameraViewControllerWrapper: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> CameraViewController {
+        return CameraViewController()
+    }
+
+    func updateUIViewController(_ uiViewController: CameraViewController, context: Context) {
+        // Aquí puedes realizar actualizaciones si es necesario
+    }
+}
+
+struct CameraViewControllerWrapper_Previews: PreviewProvider {
+    static var previews: some View {
+        CameraViewControllerWrapper()
+    }
+}

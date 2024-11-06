@@ -19,3 +19,13 @@ struct Event: Identifiable{
     var name: String
     var date: Date
 }
+
+struct HabitUser {
+    var recurrencia : String
+    var frecuencia : Int
+    var cantidad : String
+    var idusuario : Int
+    /*var fechainicio : Date
+    var fechafinal : Date*/
+    /*var nombre : String*/
+}

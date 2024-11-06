@@ -9,29 +9,30 @@ import SwiftUI
 import Charts
 
 struct DonutChart: View {
+    @StateObject private var viewModel = EmissionViewModel()
+    @Binding var user : User
     
     @State private var graphType: GraphType = .donut
-    
     @State private var barSelection: String?
     @State private var pieSelection: Double?
     var body: some View {
         VStack {
             ZStack {
-                if let totalEmissions = appDownloads.max(by: {
+                if let highestEmissions = mockupDataTotalEmissions.max(by: {
                     $1.emissions > $0.emissions
                 }) {
                     
-                    if let barSelection, let selectedDownloads = appDownloads.findDownloads(barSelection) {
+                    if let barSelection, let selectedDownloads = mockupDataTotalEmissions.findDownloads(barSelection) {
                         ChartPopOverView(selectedDownloads, barSelection, true, true)
                     } else {
-                        ChartPopOverView(totalEmissions.emissions, totalEmissions.type, true)
+                        ChartPopOverView(highestEmissions.emissions, highestEmissions.type, true)
                     }
                     
                 }
             }
             .padding(.vertical)
             Chart {
-                ForEach(appDownloads.sorted(by: { graphType == .bar ? false : $0.emissions > $1.emissions })) { download in
+                ForEach(mockupDataTotalEmissions.sorted(by: { graphType == .bar ? false : $0.emissions > $1.emissions })) { download in
                     
                     SectorMark(
                         angle: .value("Downloads", download.emissions),
@@ -53,7 +54,7 @@ struct DonutChart: View {
                             position: .top,
                             spacing: 0,
                             overflowResolution: .init(x: .fit, y: .disabled)) {
-                                if let emissions = appDownloads.findDownloads(barSelection) {
+                                if let emissions = mockupDataTotalEmissions.findDownloads(barSelection) {
                                     ChartPopOverView(emissions, barSelection)
                                 }
                             }
@@ -79,7 +80,7 @@ struct DonutChart: View {
     @ViewBuilder
     func ChartPopOverView(_ emissions: Double, _ type: String, _ isTitleView: Bool = false, _ isSelection: Bool = false) -> some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text("\(isTitleView && !isSelection ? "Total" : "\(type)") Emissions")
+            Text("\(isTitleView && !isSelection ? "Highest" : "\(type)") Emissions")
                 .font(.title3)
                 .foregroundStyle(.gray)
             
@@ -101,7 +102,7 @@ struct DonutChart: View {
     func findDownload(_ rangeValue: Double) {
         
         var initalValue: Double = 0.0
-        let convertedArray = appDownloads
+        let convertedArray = mockupDataTotalEmissions
             .sorted(by: { $0.emissions > $1.emissions })
             .compactMap { download -> (String, Range<Double>) in
                 let rangeEnd = initalValue + download.emissions
@@ -121,5 +122,5 @@ struct DonutChart: View {
 }
 
 #Preview {
-    ContentView()
+    DonutChart(user: .constant(User(idusuario: 1, nombre: "Juan", apellido: "Perez", email: "juan.perez@example.com", contraseña: "password123")))
 }

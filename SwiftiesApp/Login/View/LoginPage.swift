@@ -19,13 +19,17 @@ struct LoginPage: View {
     @State var isLoading = false
     @Binding var logged: Bool
     @EnvironmentObject var user: User
+
     
     var body: some View {
-        ZStack{
+        ZStack {
             Color.background
-            VStack{
+                .ignoresSafeArea()
+            
+            VStack {
                 Text("New Spot").font(.largeTitle)
-                VStack(alignment: .leading){
+                
+                VStack(alignment: .leading) {
                     Text("Username").padding(.horizontal)
                     TextField("Email", text: $email)
                         .textContentType(.emailAddress)
@@ -35,14 +39,15 @@ struct LoginPage: View {
                         .background(Color.white)
                         .foregroundStyle(Color.black)
                         .cornerRadius(10)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10).stroke(.gray, lineWidth: 1)
-                        )
+                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(.gray, lineWidth: 1))
                         .zIndex(1)
                         .autocorrectionDisabled()
+
                 }.padding()
+
+
                 
-                VStack(alignment: .leading){
+                VStack(alignment: .leading) {
                     Text("Password").padding(.horizontal)
                     SecureField("Password", text: $password)
                         .textContentType(.password)
@@ -51,13 +56,16 @@ struct LoginPage: View {
                         .background(Color.white)
                         .foregroundStyle(Color.black)
                         .cornerRadius(10)
+
                         .autocorrectionDisabled()
                 }.padding()
+
                 
                 Button("Iniciar Sesión") {
                     Task {
                         await signInWithEmail(email: email, password: password)
                     }
+
                 }
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -91,8 +99,14 @@ struct LoginPage: View {
             }.zIndex(1)
             .padding()
         }.ignoresSafeArea()
+
             .foregroundStyle(Color.white)
-            .environmentObject(user)
+            
+            if isLoading {
+                Color.black.opacity(0.5).ignoresSafeArea()
+                ProgressView().padding().background(Color.white).cornerRadius(10)
+            }
+        }
     }
 
     func signInWithEmail(email: String, password: String) async {

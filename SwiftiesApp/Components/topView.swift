@@ -12,23 +12,24 @@ struct topView: View {
     var title: String
     
     var body: some View {
-        ZStack(alignment: .top) {
-            GeometryReader { reader in
+        GeometryReader { reader in
+            ZStack(alignment: .top) {
                 Color.background
-                //.frame(height: reader.safeAreaInsets.top, alignment: .top)
                     .ignoresSafeArea()
-                    .frame(height: 75)
-            }.frame(height: 75)
-            HStack {
-                Text(title)
-                    .font(.largeTitle)
-                    .bold()
-                    //.foregroundColor(.button)
-                    .foregroundStyle(Color.white)
-                Spacer()
-            }.padding()
+                
+                HStack {
+                    Text(title)
+                        .font(.largeTitle)
+                        .bold()
+                        .foregroundColor(.white)
+                    Spacer()
+                }
+                .padding()
                 .padding(.horizontal)
+            }
+            .frame(height: 75)
         }
+        .frame(height: 75) 
     }
 }
 

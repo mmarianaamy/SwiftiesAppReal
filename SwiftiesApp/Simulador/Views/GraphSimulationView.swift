@@ -43,8 +43,8 @@ struct GraphSimulationView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .padding()
-        .onChange(of: currentTab) { newValue in
-            switch newValue {
+        .onChange(of: currentTab) {
+            switch currentTab {
             case "7 Days":
                 sampleAnalytics = weeklyAnalytics2
             case "Month":

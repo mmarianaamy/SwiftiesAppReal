@@ -8,8 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		3AA0BC652CD5512D0022015F /* MulticolorGradient in Frameworks */ = {isa = PBXBuildFile; productRef = 3AA0BC642CD5512D0022015F /* MulticolorGradient */; };
-		E9F6A5122CD575B3007F8393 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = E9F6A5112CD575B3007F8393 /* Auth */; };
-		E9F6A5142CD575B3007F8393 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = E9F6A5132CD575B3007F8393 /* Supabase */; };
+
+  FB18B9D82CD928FC00DD5139 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = FB18B9D72CD928FC00DD5139 /* Supabase */; };
+  FB9CA7802CD926DB00A18895 /* Auth in Frameworks */ = {isa = PBXBuildFile; productRef = FB9CA77F2CD926DB00A18895 /* Auth */; };
+  FB9CA7822CD926DB00A18895 /* Functions in Frameworks */ = {isa = PBXBuildFile; productRef = FB9CA7812CD926DB00A18895 /* Functions */; };
+  FB9CA7842CD926DB00A18895 /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = FB9CA7832CD926DB00A18895 /* PostgREST */; };
+  FB9CA7862CD926DB00A18895 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = FB9CA7852CD926DB00A18895 /* Realtime */; };
+  FB9CA7882CD926DB00A18895 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = FB9CA7872CD926DB00A18895 /* Storage */; };
+
 		FBAA14752CC2D77B00F88965 /* GoogleGenerativeAI in Frameworks */ = {isa = PBXBuildFile; productRef = FBAA14742CC2D77B00F88965 /* GoogleGenerativeAI */; };
 /* End PBXBuildFile section */
 
@@ -33,17 +39,30 @@
 				E9F6A5142CD575B3007F8393 /* Supabase in Frameworks */,
 				3AA0BC652CD5512D0022015F /* MulticolorGradient in Frameworks */,
 				FBAA14752CC2D77B00F88965 /* GoogleGenerativeAI in Frameworks */,
-				E9F6A5122CD575B3007F8393 /* Auth in Frameworks */,
+FB9CA7882CD926DB00A18895 /* Storage in Frameworks */,
+				FB9CA7822CD926DB00A18895 /* Functions in Frameworks */,
+				FB18B9D82CD928FC00DD5139 /* Supabase in Frameworks */,
+				FB9CA7862CD926DB00A18895 /* Realtime in Frameworks */,
+				FB9CA7802CD926DB00A18895 /* Auth in Frameworks */,
+				FB9CA7842CD926DB00A18895 /* PostgREST in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FB18B9D62CD928FC00DD5139 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		FBFB533A2CB5F51900730325 = {
 			isa = PBXGroup;
 			children = (
 				FBFB53452CB5F51900730325 /* SwiftiesApp */,
+				FB18B9D62CD928FC00DD5139 /* Frameworks */,
 				FBFB53442CB5F51900730325 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -78,8 +97,12 @@
 			packageProductDependencies = (
 				FBAA14742CC2D77B00F88965 /* GoogleGenerativeAI */,
 				3AA0BC642CD5512D0022015F /* MulticolorGradient */,
-				E9F6A5112CD575B3007F8393 /* Auth */,
-				E9F6A5132CD575B3007F8393 /* Supabase */,
+FB9CA77F2CD926DB00A18895 /* Auth */,
+				FB9CA7812CD926DB00A18895 /* Functions */,
+				FB9CA7832CD926DB00A18895 /* PostgREST */,
+				FB9CA7852CD926DB00A18895 /* Realtime */,
+				FB9CA7872CD926DB00A18895 /* Storage */,
+				FB18B9D72CD928FC00DD5139 /* Supabase */,
 			);
 			productName = SwiftiesApp;
 			productReference = FBFB53432CB5F51900730325 /* SwiftiesApp.app */;
@@ -112,7 +135,10 @@
 			packageReferences = (
 				FBAA14732CC2D77B00F88965 /* XCRemoteSwiftPackageReference "generative-ai-swift" */,
 				3AA0BC632CD5512D0022015F /* XCRemoteSwiftPackageReference "SwiftUI-MulticolorGradient" */,
-				E9F6A5102CD575B3007F8393 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+
+
+				FB9CA77E2CD9266A00A18895 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = FBFB53442CB5F51900730325 /* Products */;
@@ -352,9 +378,11 @@
 				kind = branch;
 			};
 		};
-		E9F6A5102CD575B3007F8393 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+
+		FB9CA77E2CD9266A00A18895 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/supabase/supabase-swift";
+			repositoryURL = "https://github.com/supabase/supabase-swift.git";
+
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.5.1;
@@ -376,15 +404,37 @@
 			package = 3AA0BC632CD5512D0022015F /* XCRemoteSwiftPackageReference "SwiftUI-MulticolorGradient" */;
 			productName = MulticolorGradient;
 		};
-		E9F6A5112CD575B3007F8393 /* Auth */ = {
+
+		FB18B9D72CD928FC00DD5139 /* Supabase */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E9F6A5102CD575B3007F8393 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			package = FB9CA77E2CD9266A00A18895 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+		FB9CA77F2CD926DB00A18895 /* Auth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FB9CA77E2CD9266A00A18895 /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Auth;
 		};
-		E9F6A5132CD575B3007F8393 /* Supabase */ = {
+		FB9CA7812CD926DB00A18895 /* Functions */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E9F6A5102CD575B3007F8393 /* XCRemoteSwiftPackageReference "supabase-swift" */;
-			productName = Supabase;
+			package = FB9CA77E2CD9266A00A18895 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Functions;
+		};
+		FB9CA7832CD926DB00A18895 /* PostgREST */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FB9CA77E2CD9266A00A18895 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = PostgREST;
+		};
+		FB9CA7852CD926DB00A18895 /* Realtime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FB9CA77E2CD9266A00A18895 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Realtime;
+		};
+		FB9CA7872CD926DB00A18895 /* Storage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FB9CA77E2CD9266A00A18895 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Storage;
+
 		};
 		FBAA14742CC2D77B00F88965 /* GoogleGenerativeAI */ = {
 			isa = XCSwiftPackageProductDependency;

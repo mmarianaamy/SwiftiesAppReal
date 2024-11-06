@@ -2,76 +2,24 @@
 //  LoginPage.swift
 //  SwiftiesApp
 //
-//  Created by Alumno on 08/10/24.
+//  Created by Carolina De los Santos Reséndiz on 08/10/24.
 //
 
 import SwiftUI
 
+
 struct LoginPage: View {
-    @State var username: String = ""
-    @FocusState var usernameFieldFocused
-    @State var password: String = ""
     
-    @Binding var logged: Bool
-    @State private var errorMessage: String?
+    @State private var email = ""
+    @State private var password = ""
+    @State private var resultMessage = ""
+    @State private var showSignUp = false // State to show the registration screen
+    @State private var isLoggedIn = false // State for navigation to ProfileView
+    
     @State var isLoading = false
-    @Binding var user: User
-    
-    private let apiURL = "https://hyufiwwpfhtovhspewlc.supabase.co/rest/v1/usuario"
-    private let apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5dWZpd3dwZmh0b3Zoc3Bld2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkyMDAzNDQsImV4cCI6MjA0NDc3NjM0NH0.Eol6hgROQO_G5CnGD6YBGTIMOMPKL6GX3xdMfpMlHmc"
-    
-    func validation(username: String, password: String) {
-        guard let url = URL(string: "\(apiURL)?email=eq.\(username)&contraseña=eq.\(password)&select=idusuario,nombre,apellido") else {
-            return
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.addValue(apiKey, forHTTPHeaderField: "apikey")
-        request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        isLoading = true
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            DispatchQueue.main.async {
-                self.isLoading = false
-            }
-            
-            if let error = error {
-                DispatchQueue.main.async {
-                    self.errorMessage = "Error en la solicitud: \(error.localizedDescription)"
-                }
-                return
-            }
-            
-            guard let data = data else {
-                DispatchQueue.main.async {
-                    self.errorMessage = "No se recibieron datos"
-                }
-                return
-            }
-            
-            do {
-                let usuarios = try JSONDecoder().decode([User].self, from: data)
-                if !usuarios.isEmpty {
-                    DispatchQueue.main.async {
-                        self.logged = true
-                        self.errorMessage = nil
-                        user = usuarios.first!
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        self.errorMessage = "Contraseña incorrecta. Vuelve a intentarlo o haz clic en Contraseña olvidada para cambiarla"
-                    }
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    self.errorMessage = "Error al decodificar los datos: \(error.localizedDescription)"
-                }
-            }
-        }.resume()
-    }
+    @Binding var logged: Bool
+    @EnvironmentObject var user: User
+
     
     var body: some View {
         ZStack {
@@ -83,8 +31,10 @@ struct LoginPage: View {
                 
                 VStack(alignment: .leading) {
                     Text("Username").padding(.horizontal)
-                    TextField("Username", text: $username)
-                        .focused($usernameFieldFocused)
+                    TextField("Email", text: $email)
+                        .textContentType(.emailAddress)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
                         .padding()
                         .background(Color.white)
                         .foregroundStyle(Color.black)
@@ -92,63 +42,82 @@ struct LoginPage: View {
                         .overlay(RoundedRectangle(cornerRadius: 10).stroke(.gray, lineWidth: 1))
                         .zIndex(1)
                         .autocorrectionDisabled()
-                        .textInputAutocapitalization(.never)
-                }
-                .padding()
+
+                }.padding()
+
+
                 
                 VStack(alignment: .leading) {
                     Text("Password").padding(.horizontal)
                     SecureField("Password", text: $password)
-                        .focused($usernameFieldFocused)
+                        .textContentType(.password)
+                        .textInputAutocapitalization(.never)
                         .padding()
                         .background(Color.white)
                         .foregroundStyle(Color.black)
                         .cornerRadius(10)
-                        .overlay(RoundedRectangle(cornerRadius: 5)
-                            .stroke(errorMessage == "Contraseña incorrecta. Vuelve a intentarlo o haz clic en Contraseña olvidada para cambiarla" ? Color.red : Color.gray, lineWidth: 2))
+
                         .autocorrectionDisabled()
-                        .textInputAutocapitalization(.never)
-                }
-                .padding()
+                }.padding()
+
                 
-                if let errorMessage = errorMessage {
-                    ZStack {
-                        Text(errorMessage)
-                            .foregroundColor(.white)
-                            .offset(x: -0.5, y: -0.5)
-                        
-                        Text(errorMessage)
-                            .foregroundColor(.red)
+                Button("Iniciar Sesión") {
+                    Task {
+                        await signInWithEmail(email: email, password: password)
                     }
+
+                }
+                    .frame(maxWidth: .infinity)
                     .padding()
+                    .background(Color.button)
+                    .cornerRadius(10)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10).stroke(.button, lineWidth: 1)
+                    ).padding()
+                
+                if isLoading {
+                    ProgressView()
+                        .padding()
                 }
-                HStack{
-                    Spacer()
-                    Text("Forgot password?").padding(.horizontal)
+
+                Button("¿No tienes una cuenta? Regístrate") {
+                    showSignUp = true
                 }
-                Button("Log in", action: {
-                    validation(username: username, password: password)
-                })
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(Color.button)
-                .cornerRadius(10)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10).stroke(.button, lineWidth: 1)
-                )
+                .foregroundColor(.blue)
                 .padding()
                 
-                Divider().overlay(Color.white).padding()
-                VStack {
-                    Text("Login using the following").padding()
+                // Navegación a SignUpView
+                NavigationLink(destination: SignUpView(), isActive: $showSignUp) {
+                    EmptyView()
                 }
-            }
+                
+                // Navegación a MenuView al iniciar sesión
+                NavigationLink(destination: MenuView(), isActive: $isLoggedIn) {
+                    EmptyView()
+                }
+                
+            }.zIndex(1)
+            .padding()
+        }.ignoresSafeArea()
+
             .foregroundStyle(Color.white)
             
             if isLoading {
                 Color.black.opacity(0.5).ignoresSafeArea()
                 ProgressView().padding().background(Color.white).cornerRadius(10)
             }
+        }
+    }
+
+    func signInWithEmail(email: String, password: String) async {
+        do {
+            try await supabase.auth.signIn(email: email, password: password)
+            resultMessage = "Inicio de sesión exitoso con correo y contraseña."
+            DispatchQueue.main.async {
+                self.isLoggedIn = true // Navigate to ProfileView on successful login
+            }
+        } catch {
+            resultMessage = "Error al iniciar sesión: \(error.localizedDescription)"
         }
     }
 }

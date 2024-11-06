@@ -1,0 +1,88 @@
+import UIKit
+import AVFoundation
+
+class CameraViewController: UIViewController {
+    var captureSession: AVCaptureSession!
+    var previewLayer: AVCaptureVideoPreviewLayer!
+    var photoOutput: AVCapturePhotoOutput!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        captureSession = AVCaptureSession()
+        
+        guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else { return }
+        let videoDeviceInput: AVCaptureDeviceInput
+        
+        do {
+            videoDeviceInput = try AVCaptureDeviceInput(device: videoCaptureDevice)
+        } catch {
+            return
+        }
+        
+        if (captureSession.canAddInput(videoDeviceInput)) {
+            captureSession.addInput(videoDeviceInput)
+        } else {
+            return
+        }
+        
+        photoOutput = AVCapturePhotoOutput()
+        if (captureSession.canAddOutput(photoOutput)) {
+            captureSession.addOutput(photoOutput)
+        } else {
+            return
+        }
+        
+        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        previewLayer.frame = view.layer.bounds
+        previewLayer.videoGravity = .resizeAspectFill
+        view.layer.addSublayer(previewLayer)
+        
+        // Ajustar la orientación de la vista de la cámara
+        if let connection = previewLayer.connection, connection.isVideoOrientationSupported {
+            switch UIDevice.current.orientation {
+            case .landscapeLeft:
+                connection.videoOrientation = .landscapeRight
+            case .landscapeRight:
+                connection.videoOrientation = .landscapeLeft
+            case .portraitUpsideDown:
+                connection.videoOrientation = .portraitUpsideDown
+            default:
+                connection.videoOrientation = .portrait
+            }
+        }
+
+        captureSession.startRunning()
+        
+        setupCaptureButton()
+    }
+
+    func setupCaptureButton() {
+        let captureButton = UIButton(type: .system)
+        captureButton.frame = CGRect(x: 100, y: 400, width: 200, height: 50)
+        captureButton.setTitle("Capturar Foto", for: .normal)
+        captureButton.addTarget(self, action: #selector(capturePhoto), for: .touchUpInside)
+        view.addSubview(captureButton)
+    }
+    
+    @objc func capturePhoto() {
+        let photoSettings = AVCapturePhotoSettings()
+        photoOutput.capturePhoto(with: photoSettings, delegate: self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        captureSession.stopRunning()
+    }
+}
+
+extension CameraViewController: AVCapturePhotoCaptureDelegate {
+    func captureOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        if let imageData = photo.fileDataRepresentation() {
+            if let image = UIImage(data: imageData) {
+                // Aquí puedes hacer lo que quieras con la imagen capturada
+                print("Imagen capturada: \(image)")
+            }
+        }
+    }
+}

@@ -1,0 +1,42 @@
+import SwiftUI
+
+struct ProfileDetailView: View {
+    let friend: Friend
+
+    var body: some View {
+        VStack {
+            Image(friend.imageName)
+                .resizable()
+                .scaledToFit()
+                .frame(height: 200)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .padding()
+
+            Text(friend.name)
+                .font(.largeTitle)
+                .bold()
+                .padding()
+
+            Text(friend.quote)
+                .font(.title2)
+                .italic()
+                .padding()
+
+            Text("Estado: \(friend.status)")
+                .font(.headline)
+                .padding()
+
+            Spacer()
+            
+            // Placeholder para gráficas
+            Text("Gráficas aquí")
+                .font(.title2)
+                .foregroundColor(.gray)
+                .padding()
+
+            Spacer()
+        }
+        .navigationTitle(friend.name)
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}

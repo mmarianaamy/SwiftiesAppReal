@@ -7,9 +7,7 @@
 
 import SwiftUI
 
-
-/*class User : ObservableObject{
-
+class User : ObservableObject, Decodable{
     init(idusuario: Int = 0, nombre: String = "", apellido: String = "", email: String = "", contraseña: String = "") {
         self.idusuario = idusuario
         self.nombre = nombre
@@ -37,40 +35,7 @@ struct ContentView: View {
             MenuView(user: $user)
         }
     }
-}*/
-
-class User: ObservableObject {
-    @Published var idusuario: Int
-    @Published var nombre: String
-    @Published var apellido: String
-    @Published var email: String
-    @Published var contraseña: String
-    
-    init(idusuario: Int = 0, nombre: String = "", apellido: String = "", email: String = "", contraseña: String = "") {
-        self.idusuario = idusuario
-        self.nombre = nombre
-        self.apellido = apellido
-        self.email = email
-        self.contraseña = contraseña
-    }
 }
-
-struct ContentView: View {
-    @State var logged = false
-    @EnvironmentObject var user: User
-    
-    var body: some View {
-        NavigationStack{
-            if !logged {
-                LoginPage(logged: $logged) // Pass `logged` as a binding
-            } else {
-                MenuView()
-            }
-        }
-    }
-}
- 
-
 
 #Preview {
     ContentView()

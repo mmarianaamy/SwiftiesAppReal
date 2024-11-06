@@ -23,11 +23,8 @@ struct MenuView: View {
             ViajeView().tabItem{
                 Label("Viajes", systemImage: "car.side")
             }
-            LeaderboardView().tabItem{
-                Label("Amigos", systemImage: "person.2")
-            }
-            ProfileView().tabItem{
-                Label("Perfil", systemImage: "person.circle.fill")
+             LeaderboardView().tabItem{
+                Label("Friends", systemImage: "person.2")
             }
         }
     }

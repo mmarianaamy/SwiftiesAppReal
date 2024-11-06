@@ -12,7 +12,7 @@ struct HabitListItem : View {
     
     var body: some View {
         //Cambiar a nombre
-        Text(habit.habito.nombre).swipeActions(allowsFullSwipe: false){
+        Text(habit.habito?.nombre ?? "Habito").swipeActions(allowsFullSwipe: false){
             
             Button(role: .destructive) {
                 print("Delete the habit pls")

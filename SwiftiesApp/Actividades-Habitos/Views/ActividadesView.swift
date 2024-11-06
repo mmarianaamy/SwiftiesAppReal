@@ -17,7 +17,7 @@ struct ActividadesView: View {
     @State var isLoading : Bool = true
     @State var errorMessage : String = ""
     
-    @State var actividades : [Actividad] = []
+    @State var actividades : [Habit] = []
     
     var body: some View {
         
@@ -39,9 +39,9 @@ struct ActividadesView: View {
                 ForEach($actividades, id: \.self) { actividad in
                     NavigationLink {
                         if(actividad.nombre.wrappedValue == "Otro"){
-                            DetallesActividadView(habitName: "")
+                            DetallesActividadView(habito: Habit(idhabito: 1, nombre: ""))
                         }else{
-                            DetallesActividadView(habitName: actividad.nombre.wrappedValue)
+                            DetallesActividadView(habito: actividad.wrappedValue)
                         }
                     } label: { ActividadView(opcion: actividad.nombre.wrappedValue)
                             .padding(.bottom, 6)

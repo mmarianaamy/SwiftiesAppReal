@@ -1,0 +1,30 @@
+import SwiftUI
+
+struct FriendRow: View {
+    let friend: Friend
+
+    var body: some View {
+        NavigationLink(destination: ProfileDetailView(friend: friend)) {
+            HStack {
+                Image(friend.imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 50, height: 50)
+                    .clipShape(Circle())
+
+                VStack(alignment: .leading) {
+                    Text(friend.name)
+                        .font(.headline)
+                    Text(friend.quote)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                    Text(friend.status)
+                        .font(.caption)
+                        .foregroundColor(.blue)
+                }
+            }
+            .padding()
+        }
+        .buttonStyle(PlainButtonStyle())
+    }
+}

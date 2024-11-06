@@ -1,5 +1,5 @@
 {
-  "originHash" : "e325a497f059b2a05c7b1afe88aa6c44bd7ba951ce5b5f630b63ae41e8619120",
+  "originHash" : "04177e105def9126e53117b6c7ac55e42483418fadb8af1381991709d9263464",
   "pins" : [
     {
       "identity" : "generative-ai-swift",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/supabase/supabase-swift.git",
       "state" : {
-        "revision" : "24c6b2252f35cdd45e546bb5ea2c684c963df726",
-        "version" : "2.20.5"
+        "revision" : "1460660e5e5fcf6fb2a62a4f80d83157e0f4804a",
+        "version" : "2.21.0"
       }
     },
     {

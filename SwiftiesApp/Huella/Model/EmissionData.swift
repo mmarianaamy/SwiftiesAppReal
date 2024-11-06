@@ -37,8 +37,11 @@ extension [Emissions] {
     }
 }
 
-var appDownloads: [Emissions] = [
-    .init(type: "Hydric", emissions: 5000),
+///test data
+
+var mockupDataTotalEmissions: [Emissions] = [
+    .init(type: "Liters", emissions: 5000),
     .init(type: "Electric", emissions: 4500),
-    .init(type: "Carbon", emissions: 2500),
+    .init(type: "CO2e metric tons", emissions: 2500),
 ]
+

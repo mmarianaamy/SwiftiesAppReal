@@ -17,7 +17,7 @@ struct MenuView: View {
             DatosView(user: $user).tabItem{
                 Label("Datos", systemImage: "chart.bar.fill")
             }
-            HuellasView().tabItem{
+            HuellasView(user: $user).tabItem{
                 Label("Huellas", systemImage: "chart.pie.fill")
             }
             ViajeView().tabItem{

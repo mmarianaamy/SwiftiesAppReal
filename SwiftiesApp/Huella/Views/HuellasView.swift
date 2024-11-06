@@ -3,6 +3,7 @@ import SwiftUI
 struct HuellasView: View {
     
     @State private var hideBar = false
+    @Binding var user : User
     
     var body: some View {
         NavigationView {
@@ -11,7 +12,7 @@ struct HuellasView: View {
                 
                 VStack(spacing: 20) {
                     
-                    DonutChart()
+                    DonutChart(user: $user)
                     
                 }.padding(.vertical, 40)
                 
@@ -44,8 +45,13 @@ struct HuellasView: View {
     }
 }
 
-struct HuellasView_Previews: PreviewProvider {
-    static var previews: some View {
-        HuellasView()
+#Preview {
+    struct PreviewView : View {
+        @State var user : User = User(idusuario: 1, nombre: "Juan", apellido: "Perez", email: "juan.perez@example.com", contraseña: "password123")
+        var body : some View {
+            HuellasView(user: $user)
+        }
     }
+    
+    return PreviewView()
 }

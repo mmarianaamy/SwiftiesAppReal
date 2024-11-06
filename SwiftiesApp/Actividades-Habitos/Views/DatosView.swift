@@ -26,7 +26,7 @@ func getDaysSimple(for month: Date) -> [Date] {
 struct DatosView: View {
     @State var selection = 0
     @State var cuestionarioProgress : Int = 0
-    @Binding var user : User
+    @EnvironmentObject var user : User
     
     let client = SupabaseClient(supabaseURL: URL(string: "https://hyufiwwpfhtovhspewlc.supabase.co")!, supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5dWZpd3dwZmh0b3Zoc3Bld2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkyMDAzNDQsImV4cCI6MjA0NDc3NjM0NH0.Eol6hgROQO_G5CnGD6YBGTIMOMPKL6GX3xdMfpMlHmc")
     
@@ -189,7 +189,7 @@ struct DatosView: View {
     struct PreviewView : View {
         @State var user : User = User(idusuario: 1, nombre: "Juan", apellido: "Perez", email: "juan.perez@example.com", contraseña: "password123")
         var body : some View {
-            DatosView(user: $user)
+            DatosView()
         }
     }
     

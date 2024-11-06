@@ -10,7 +10,7 @@ import Charts
 
 struct DonutChart: View {
     @StateObject private var viewModel = EmissionViewModel()
-    @Binding var user : User
+    @EnvironmentObject var user : User
     
     @State private var graphType: GraphType = .donut
     @State private var barSelection: String?
@@ -122,5 +122,5 @@ struct DonutChart: View {
 }
 
 #Preview {
-    DonutChart(user: .constant(User(idusuario: 1, nombre: "Juan", apellido: "Perez", email: "juan.perez@example.com", contraseña: "password123")))
+    DonutChart()
 }

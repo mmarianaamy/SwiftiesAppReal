@@ -43,11 +43,10 @@ struct DatosView: View {
                      11: "Noviembre",
                      12: "Diciembre"]
     
-    //@Environment(HabitModel.self) var habitModel
-    
     @State var habits: [HabitUser]  = []
     //Esto se tiene que cambiar
-    @State var todayHabits: [Habit]  = [Habit(idhabito: 20, nombre: "Lavar mi coche")]
+    @State var todayProducts: [UsuarioProduct]  = []
+    @State var loading : Bool = false
     
     let dates : [Date] = getDaysSimple(for: Date())
     
@@ -70,38 +69,36 @@ struct DatosView: View {
                 if (selection == 0){
                     VStack{
                         Text("Hábitos").font(.largeTitle)
+                        if loading{
+                            ProgressView()
+                        }
                         List{
                             ForEach(habits, id: \.self ) { habit in
                                 HabitListItem(habit: habit)
                             }
                         }.listStyle(PlainListStyle())
-                        /*
-                         No se pq puse esto, pero no lo borraré por si acaso
-                         NavigationLink {
-                         //DetallesActividadView(habitName: "")
-                         ActividadesView()
-                         } label: {
-                         Text("Agregar hábito")
-                         }.padding()*/
                         Button{
                             isShowingSearch=true
                         } label: {
                             Text("Agregar hábito")
                         }.padding()
                         
-                        NavigationLink{
+                        /*NavigationLink{
                             CuestionarioView(current: $cuestionarioProgress)
                         }label: {
                             Text("Contestar cuestionario")
-                        }.padding(.bottom)
+                        }.padding(.bottom)*/
                     }.task{
+                        loading = true
                         do{
                             habits = try await client.from("usuario_habito")
                                 .select("recurrencia, frecuencia, cantidad, idhabito, fechainicio, fechafinal, habito(idhabito, nombre)").execute().value
+                            print(user.idusuario)
                         } catch{
                             print("Not possible")
                         }
-                    }
+                        loading = false
+                    }.background(EmptyView().fullScreenCover(isPresented: $isShowingSearch) { ActividadesView() })
                 }else/*{
                       HoyView()
                       .padding(.horizontal)
@@ -116,12 +113,34 @@ struct DatosView: View {
                                 if (current > 1){
                                     current -= 1
                                 }
+                                Task{
+                                    loading = true
+                                    do{
+                                        todayProducts = try await client.from("usuario_producto")
+                                            .select("idusuario, idproducto, cantidad, fecha, producto(idproducto, nombre, cantidad, unidad)").eq("fecha", value: dates[current - 1]).execute().value
+                                    } catch{
+                                        print("Not possible")
+                                    }
+                                    print(todayProducts)
+                                }
+                                loading = false
                             } label: {
                                 Image(systemName: "chevron.left")
                             }
                             Button{
                                 if (current < 31){
                                     current += 1
+                                }
+                                Task{
+                                    loading = true
+                                    do{
+                                        todayProducts = try await client.from("usuario_producto")
+                                            .select("idusuario, idproducto, cantidad, fecha, producto(idproducto, nombre, cantidad, unidad)").eq("fecha", value: dates[current - 1]).execute().value
+                                    } catch{
+                                        print("Not possible")
+                                    }
+                                    print(todayProducts)
+                                    loading = false
                                 }
                             } label: {
                                 Image(systemName: "chevron.right")
@@ -130,15 +149,18 @@ struct DatosView: View {
                         
                         //Esto se tiene que cambiar
                         VStack{
-                            /*ForEach($todayHabits) { habit in
+                            if loading{
+                                ProgressView()
+                            }
+                            ForEach($todayProducts, id: \.self) { habit in
                                 HStack{
-                                    Text(habit.name).foregroundStyle(Color.white)
+                                    Text(String(habit.wrappedValue.producto.nombre)).foregroundStyle(Color.white)
                                         .padding(.leading)
                                         .padding(.vertical, 5)
                                     Spacer()
-                                    Text("\(habit.frecuency) minutos").foregroundStyle(Color.white)
+                                    /*Text("\(habit.frecuency) minutos").foregroundStyle(Color.white)
                                         .padding(.trailing)
-                                        .padding(.vertical, 5)
+                                        .padding(.vertical, 5)*/
                                     
                                     
                                 }
@@ -146,7 +168,18 @@ struct DatosView: View {
                                 .padding(.vertical, 7)
                                 .padding(.horizontal, 10)
                                 
-                            }*/
+                            }
+                        }.task {
+                            do{
+                                print("try")
+                                loading = true
+                                todayProducts = try await client.from("usuario_producto")
+                                    .select("idusuario, idproducto, cantidad, fecha, producto(idproducto, nombre, cantidad, unidad)").eq("fecha", value: dates[current - 1]).execute().value
+                                print(todayProducts)
+                                loading = false
+                            } catch{
+                                print("Error: \(error)")
+                            }
                         }
                         
                         Button{
@@ -172,21 +205,13 @@ struct DatosView: View {
                         Spacer()
                     }
                 }
-            }
-            .background(EmptyView().fullScreenCover(isPresented: $isShowingSearch) { ActividadesView() }
-                .background(EmptyView().fullScreenCover(isPresented: $isShowingAddHabitModal) { DetallesHoyView(habits: $todayHabits) }).background(EmptyView().fullScreenCover(isPresented: $isShowingAddCompra) { AgregarCompraView() }))
+            }.background(EmptyView().fullScreenCover(isPresented: $isShowingAddCompra) { AgregarCompraView() })
+            /*.background(EmptyView().fullScreenCover(isPresented: $isShowingAddHabitModal) { DetallesHoyView(habits: todayProducts) })*/
             
         }
     }
 }
 
 #Preview {
-    struct PreviewView : View {
-        @State var user : User = User(idusuario: 1, nombre: "Juan", apellido: "Perez", email: "juan.perez@example.com", contraseña: "password123")
-        var body : some View {
-            DatosView()
-        }
-    }
-    
-    return PreviewView()
+    DatosView().environmentObject(User(idusuario: 1, nombre: "Juan", apellido: "", email: "", contraseña: ""))
 }

@@ -10,7 +10,7 @@ import SwiftUI
 struct LeaderboardList: View {
     
     ///mock data
-    private var users: [LeaderboardUser] = [LeaderboardUser(name: "Guillermo", emissions: 34.2, position: 1, prevPosition: 2), LeaderboardUser(name: "Ximena", emissions: 53.9, position: 2, prevPosition: 1), LeaderboardUser(name: "Carlos", emissions: 34.2, position: 3, prevPosition: 3), LeaderboardUser(name: "Marina", emissions: 34.2, position: 4, prevPosition: 4), LeaderboardUser(name: "Lucy", emissions: 34.2, position: 5, prevPosition: 5)]
+    private var users: [LeaderboardUser] = [LeaderboardUser(name: "Luis", emissions: 93.2, position: 1, prevPosition: 2), LeaderboardUser(name: "Ximena", emissions: 53.9, position: 2, prevPosition: 1), LeaderboardUser(name: "Carlos", emissions: 34.2, position: 3, prevPosition: 3), LeaderboardUser(name: "Marina", emissions: 31.9, position: 4, prevPosition: 4), LeaderboardUser(name: "Lucy", emissions: 24.8, position: 5, prevPosition: 5)]
     
     var body: some View {
         

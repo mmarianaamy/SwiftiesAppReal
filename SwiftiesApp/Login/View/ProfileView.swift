@@ -18,6 +18,7 @@ struct ProfileView: View {
 
     var body: some View {
         NavigationStack {
+            topView(title: "Perfil")
             Form {
             Section {
               TextField("Nombre", text: $nombre)
@@ -123,4 +124,8 @@ struct UpdateProfileParams: Encodable {
     let nombre: String
     let apellido: String
     let email: String
+}
+
+#Preview{
+    ProfileView()
 }

@@ -52,6 +52,7 @@ struct RecomendacionesAIView: View {
                 }.padding()
             }
             
+            Spacer()
             HStack{
                 TextField("Que deseas preguntar?", text: $pregunta, axis: .vertical).padding().border(Color.button).padding().keyboardType(.default)
                 Button{
@@ -63,7 +64,6 @@ struct RecomendacionesAIView: View {
                     Image(systemName: "paperplane.fill")
                 }.padding()
             }
-            
         }
     }
 }

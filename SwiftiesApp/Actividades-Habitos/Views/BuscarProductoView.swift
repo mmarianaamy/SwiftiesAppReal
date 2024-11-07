@@ -11,15 +11,15 @@ import Supabase
 struct BuscarProductoView: View {
         
     @State var searchText : String = ""
-    let products : [Producto] = []
+    let products : [Product] = []
     
     @Binding var selectedProduct : Int
     
     @State var selected : Bool = false
     
-    @State var productosGuardados : [Producto] = []
+    @State var productosGuardados : [Product] = []
     
-    var searchResults: [Producto] {
+    var searchResults: [Product] {
         if searchText.isEmpty{
             return productosGuardados
         }

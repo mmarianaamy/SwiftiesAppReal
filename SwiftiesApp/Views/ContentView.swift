@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Supabase
 
 
 /*class User : ObservableObject{
@@ -39,6 +40,14 @@ struct ContentView: View {
     }
 }*/
 
+struct userHold : Observable, Decodable {
+    var idusuario: Int
+    var nombre: String
+    var apellido: String
+    var email: String
+    var contraseña: String
+}
+
 class User: ObservableObject {
     @Published var idusuario: Int
     @Published var nombre: String
@@ -53,6 +62,18 @@ class User: ObservableObject {
         self.email = email
         self.contraseña = contraseña
     }
+    
+    func changeValue(email : String) async {
+        let client = SupabaseClient(supabaseURL: URL(string: "https://hyufiwwpfhtovhspewlc.supabase.co")!, supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5dWZpd3dwZmh0b3Zoc3Bld2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkyMDAzNDQsImV4cCI6MjA0NDc3NjM0NH0.Eol6hgROQO_G5CnGD6YBGTIMOMPKL6GX3xdMfpMlHmc")
+        
+        do{
+            let hold : [userHold]? = try await client.from("usuario").select("idusuario, nombre, apellido,email,contraseña").eq("email", value: email).execute().value
+
+        }catch{
+            print("No se pudo guardar el usuario")
+        }
+    }
+    
 }
 
 struct ContentView: View {
@@ -75,5 +96,5 @@ struct ContentView: View {
 
 
 #Preview {
-    ContentView()
+    ContentView().environmentObject(User())
 }

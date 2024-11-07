@@ -25,9 +25,15 @@ struct DetallesActividadView: View {
     
     @EnvironmentObject var user : User
     
-    init(habito : Habit) {
+    //creo que el disabled no funciona
+    var disabled : Bool = true
+    
+    init(habito : Habit = Habit(idhabito: 0, nombre: "")) {
         self.habitName = habito.nombre
         self.habitid = habito.idhabito
+        if habito.idhabito == 0{
+            self.disabled = false
+        }
     }
     
     let client = SupabaseClient(supabaseURL: URL(string: "https://hyufiwwpfhtovhspewlc.supabase.co")!, supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5dWZpd3dwZmh0b3Zoc3Bld2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkyMDAzNDQsImV4cCI6MjA0NDc3NjM0NH0.Eol6hgROQO_G5CnGD6YBGTIMOMPKL6GX3xdMfpMlHmc")
@@ -37,6 +43,7 @@ struct DetallesActividadView: View {
             VStack (alignment: .leading){
                 Text("Nombre").bold()
                     .padding(.vertical, 7)
+                    .disabled(disabled)
                 TextField(
                     "Nombre de la actividad",
                     text: $habitName

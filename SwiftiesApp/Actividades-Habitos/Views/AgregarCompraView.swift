@@ -59,5 +59,5 @@ struct AgregarCompraView: View {
 }
 
 #Preview {
-    AgregarCompraView(page: 1)
+    AgregarCompraView(page: 0)
 }

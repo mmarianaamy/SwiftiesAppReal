@@ -14,6 +14,13 @@ struct Product : Decodable, Hashable{
     var unidad : String
 }
 
+struct UsuarioProduct : Decodable, Hashable {
+    var cantidad : Float
+    var fecha : String
+    var idusuario : Int
+    var idproducto : Int
+    var producto : Producto
+}
 /*
 
 struct User: Codable {

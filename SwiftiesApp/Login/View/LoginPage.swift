@@ -115,6 +115,8 @@ struct LoginPage: View {
             DispatchQueue.main.async {
                 self.isLoggedIn = true // Navigate to ProfileView on successful login
             }
+            await user.changeValue(email: email)
+            
         } catch {
             resultMessage = "Error al iniciar sesión: \(error.localizedDescription)"
         }

@@ -25,5 +25,15 @@ struct HabitUser : Decodable, Hashable {
     var idhabito : Int
     var fechainicio : String
     var fechafinal : String?
-    var habito : Habit
+    var habito : Habit?
+}
+
+struct HabitUserToDatabase : Hashable, Codable {
+    var idusuario : Int
+    var idhabito : Int
+    var recurrencia : String
+    var frecuencia : Int
+    var cantidad : String
+    var fechainicio : Date
+    
 }

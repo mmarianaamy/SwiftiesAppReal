@@ -14,7 +14,7 @@ struct HuellasView: View {
                     
                     DonutChart()
                     
-                }.padding(.vertical, 40)
+                }.padding(.vertical, -20)
                 
                 NavigationLink(destination: RecomendacionesAIView()
                 ) {

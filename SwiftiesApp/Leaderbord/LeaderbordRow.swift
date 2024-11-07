@@ -17,13 +17,13 @@ struct LeaderbordRow: View {
     var body: some View {
         VStack {
             HStack{
-                if prevPosition > position {
+                if prevPosition < position {
                     Image(systemName: "chevron.compact.down")
                         .font(.headline)
                         .padding(.horizontal)
                         .foregroundStyle(.red)
                         .bold()
-                } else if prevPosition < position {
+                } else if prevPosition > position {
                     Image(systemName: "chevron.compact.up")
                         .font(.headline)
                         .padding(.horizontal)

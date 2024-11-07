@@ -9,7 +9,6 @@ import SwiftUI
 import Charts
 
 struct DonutChart: View {
-    @StateObject private var viewModel = EmissionViewModel()
     @EnvironmentObject var user : User
     
     @State private var graphType: GraphType = .donut
@@ -80,7 +79,7 @@ struct DonutChart: View {
     @ViewBuilder
     func ChartPopOverView(_ emissions: Double, _ type: String, _ isTitleView: Bool = false, _ isSelection: Bool = false) -> some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text("\(isTitleView && !isSelection ? "Highest" : "\(type)") Emissions")
+            Text("\(isTitleView && !isSelection ? "Emisiones/consumo más alto" : "\(type)") ")
                 .font(.title3)
                 .foregroundStyle(.gray)
             
@@ -89,7 +88,9 @@ struct DonutChart: View {
                     .font(.title3)
                     .fontWeight(.semibold)
                 
-                Text(type)
+                    .font(.title3)
+                    .textScale(.secondary)
+                Text(type == "Hidrica" ? "L" : type == "Energetica" ? "kW" : type == "Carbono" ? "CO2e" : "t")
                     .font(.title3)
                     .textScale(.secondary)
             }

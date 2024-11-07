@@ -119,7 +119,7 @@ struct SignUpView: View {
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        let apiKey = "your-api-key-here"
+        let apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5dWZpd3dwZmh0b3Zoc3Bld2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkyMDAzNDQsImV4cCI6MjA0NDc3NjM0NH0.Eol6hgROQO_G5CnGD6YBGTIMOMPKL6GX3xdMfpMlHmc"
         
         request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
         request.addValue(apiKey, forHTTPHeaderField: "apikey")

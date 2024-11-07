@@ -5,8 +5,9 @@
 //  Created by Jorge Salcedo on 01/11/24.
 //
 
-import Foundation
 import SwiftUI
+import Foundation
+
 
 struct Emissions: Identifiable {
     var id: UUID = .init()
@@ -40,8 +41,8 @@ extension [Emissions] {
 ///test data
 
 var mockupDataTotalEmissions: [Emissions] = [
-    .init(type: "Liters", emissions: 5000),
-    .init(type: "Electric", emissions: 4500),
-    .init(type: "CO2e metric tons", emissions: 2500),
+    .init(type: "Energetica", emissions: .random(in: 6000...45000)),
+    .init(type: "Carbono", emissions: .random(in: 3500...45000)),
+    .init(type: "Hidrica", emissions: .random(in: 12000...45000)),
 ]
 

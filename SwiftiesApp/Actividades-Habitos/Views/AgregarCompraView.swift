@@ -53,6 +53,7 @@ struct AgregarCompraView: View {
                     Text("Listo")
                 }
             }
+            Spacer()
         }
     }
 }

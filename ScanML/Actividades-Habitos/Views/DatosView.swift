@@ -60,6 +60,7 @@ struct DatosView: View {
     
     var body: some View {
         NavigationStack{
+            topView(title: "Datos")
             VStack () {
                 Picker("Habitos o diario", selection: $selection) {
                     Text("Hábitos").tag(0)
@@ -191,6 +192,7 @@ struct DatosView: View {
                             }
                             
                         }.padding()
+                            //.buttonStyle(.borderedProminent)
                         
                         
                         Button{
@@ -200,6 +202,18 @@ struct DatosView: View {
                                 Image(systemName: "plus")
                                 Text("Agregar acción")
                             }
+                        }.padding()
+                            //.buttonStyle(.borderedProminent)
+                        
+                        VStack{
+                            NavigationLink(destination: CameraScanView(labelData: Classification())){
+                                Image(systemName: "camera")
+                                Text("Escanear")
+                                
+                            }
+                            
+
+                            
                         }.padding()
                         
                         Spacer()

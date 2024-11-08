@@ -12,7 +12,6 @@ struct MenuView: View {
     
     //@Binding var user : User
     //@EnvironmentObject var user: User
-    @StateObject private var predictionStatus = PredictionStatus()
     
     var body: some View {
         TabView{
@@ -32,23 +31,19 @@ struct MenuView: View {
                 Label("Amigos", systemImage: "person.2")
             }.navigationBarTitle("")
                 .navigationBarHidden(true)
-            MLMenuView()
-                .environmentObject(predictionStatus)
+            ProfileView()
                 .tabItem{
-                Label("Perfil", systemImage: "person.circle.fill")
-            }.navigationBarTitle("")
+                    Label("Perfil", systemImage: "person.circle.fill")
+                }.navigationBarTitle("")
                 .navigationBarHidden(true)
         }
     }
 }
 
 #Preview {
-    struct PreviewView : View {
-        @State var user : User = User(idusuario: 1, nombre: "Juan", apellido: "Perez", email: "juan.perez@example.com", contraseña: "password123")
-        var body : some View {
-            MenuView()
-        }
-    }
-    
-    return PreviewView()
+
+    @Previewable @StateObject var user = User() // Create an instance of User
+    MenuView()
+        .environmentObject(user)
+
 }

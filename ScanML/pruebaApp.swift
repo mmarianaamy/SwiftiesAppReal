@@ -18,7 +18,7 @@ struct pruebaApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MenuView()
+            ContentView()
                 .environmentObject(predictionStatus)
                 .environmentObject(user) // Provide it to ContentView and all children
         }

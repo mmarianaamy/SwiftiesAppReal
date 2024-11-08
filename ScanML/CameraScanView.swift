@@ -11,44 +11,42 @@ struct CameraScanView: View {
     @StateObject var classifierViewModel = ClassifierViewModel()
     private(set) var labelData: Classification
     
-    @State private var scan = "Cat"
+    @State private var scan = "Unknown"
     
     var body: some View {
         let predictionLabel = predictionStatus.topLabel
-        GeometryReader { geo in
-            ZStack(alignment: .center){
-                Color(.background).ignoresSafeArea()
+        
+        ZStack {
+            Color(.background).ignoresSafeArea()
+            VStack (alignment: .center){
+                VStack() {
+                    ShowSignView(labelData: classifierViewModel.getPredictionData(label: predictionLabel))
+                }
                 
-                VStack(alignment: .center){
-                    
-                    VStack() {
-                        ShowSignView(labelData: classifierViewModel.getPredictionData(label: predictionLabel))
+                VStack() {
+                    LiveCameraRepresentable() {
+                        predictionStatus.setLivePrediction(with: $0, label: $1, confidence: $2)
                     }
-                    
-                    VStack() {
-                        LiveCameraRepresentable() {
-                            predictionStatus.setLivePrediction(with: $0, label: $1, confidence: $2)
-                        }
-                        .frame(width: geo.size.width * 0.5)
-                        
-                        
-                    }// VStack
+                }.padding(.leading)
                     .onAppear(perform: classifierViewModel.loadJSON)
-                    
-                        
-                }//VStack
-                
-            }//ZStack
-        } //Geo
+                    .padding()
+            }
+        }
     }
 }
+        
 
-struct CameraScanViewPreviews: PreviewProvider {
-    static var previews: some View {
-        CameraScanView(labelData: Classification())
-    }
+
+#Preview {
+    @Previewable @EnvironmentObject var predictionStatus: PredictionStatus
+    @Previewable @StateObject var user = User() // Create an instance of User
+    CameraScanView(labelData: Classification())
+        .environmentObject(user)
+        .environmentObject(predictionStatus)
+
+    
+    //return PreviewView()
 }
-
-
  
+
 

@@ -20,7 +20,10 @@ struct MLMenuView: View {
                     }
                     .frame(width: 300.0)
                     HStack(alignment: .firstTextBaseline){
-                        Text("Identificador").foregroundColor(Color(.white)).font(Font.varTitle)
+                        Text("Identificador")
+                            .font(.largeTitle)
+                            .bold()
+                            .foregroundStyle(Color.white)
                     }
                     .frame(height: 90.0)
 

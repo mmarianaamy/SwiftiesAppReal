@@ -9,10 +9,10 @@ import SwiftUI
 
 struct LeaderbordRow: View {
     
-    var position: Int
+    var position: Int = 0
     var name: String
-    var points: Double
-    var prevPosition: Int
+    var points: Double = 0
+    var prevPosition: Int = 0
     
     var body: some View {
         VStack {

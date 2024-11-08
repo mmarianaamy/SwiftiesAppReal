@@ -19,7 +19,7 @@ struct UsuarioProduct : Decodable, Hashable {
     var fecha : String
     var idusuario : Int
     var idproducto : Int
-    var producto : Producto
+    var producto : Product
 }
 /*
 

@@ -12,6 +12,7 @@ struct MenuView: View {
     
     //@Binding var user : User
     //@EnvironmentObject var user: User
+    @StateObject private var predictionStatus = PredictionStatus()
     
     var body: some View {
         TabView{
@@ -31,7 +32,9 @@ struct MenuView: View {
                 Label("Amigos", systemImage: "person.2")
             }.navigationBarTitle("")
                 .navigationBarHidden(true)
-            ProfileView().tabItem{
+            MLMenuView()
+                .environmentObject(predictionStatus)
+                .tabItem{
                 Label("Perfil", systemImage: "person.circle.fill")
             }.navigationBarTitle("")
                 .navigationBarHidden(true)

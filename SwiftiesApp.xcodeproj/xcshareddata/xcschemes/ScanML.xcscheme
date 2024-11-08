@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FB5A056E2B50817E00D09AD3"
-               BuildableName = "ScanML.app"
-               BlueprintName = "ScanML"
-               ReferencedContainer = "container:ScanML.xcodeproj">
+               BuildableName = "SwiftiesApp.app"
+               BlueprintName = "SwiftiesApp"
+               ReferencedContainer = "container:SwiftiesApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,9 +35,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FB5A057E2B50818D00D09AD3"
-               BuildableName = "ScanMLTests.xctest"
-               BlueprintName = "ScanMLTests"
-               ReferencedContainer = "container:ScanML.xcodeproj">
+               BuildableName = "SwiftiesAppTests.xctest"
+               BlueprintName = "SwiftiesAppTests"
+               ReferencedContainer = "container:SwiftiesApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -46,9 +46,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FB5A05882B50818D00D09AD3"
-               BuildableName = "ScanMLUITests.xctest"
-               BlueprintName = "ScanMLUITests"
-               ReferencedContainer = "container:ScanML.xcodeproj">
+               BuildableName = "SwiftiesAppUITests.xctest"
+               BlueprintName = "SwiftiesAppUITests"
+               ReferencedContainer = "container:SwiftiesApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -68,9 +68,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FB5A056E2B50817E00D09AD3"
-            BuildableName = "ScanML.app"
-            BlueprintName = "ScanML"
-            ReferencedContainer = "container:ScanML.xcodeproj">
+            BuildableName = "SwiftiesApp.app"
+            BlueprintName = "SwiftiesApp"
+            ReferencedContainer = "container:SwiftiesApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -85,9 +85,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FB5A056E2B50817E00D09AD3"
-            BuildableName = "ScanML.app"
-            BlueprintName = "ScanML"
-            ReferencedContainer = "container:ScanML.xcodeproj">
+            BuildableName = "SwiftiesApp.app"
+            BlueprintName = "SwiftiesApp"
+            ReferencedContainer = "container:SwiftiesApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

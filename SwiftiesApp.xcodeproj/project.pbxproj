@@ -71,7 +71,7 @@
 		3A5EDA262CDD9A04007C4F67 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A5ED9D82CDD9A04007C4F67 /* Preview Assets.xcassets */; };
 		3A5EDA272CDD9A04007C4F67 /* Property List.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A5ED9DA2CDD9A04007C4F67 /* Property List.plist */; };
 		3A5EDA282CDD9A04007C4F67 /* Assets 2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A5ED9B42CDD9A04007C4F67 /* Assets 2.xcassets */; };
-		FB5A05732B50817E00D09AD3 /* pruebaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A05722B50817E00D09AD3 /* pruebaApp.swift */; };
+		FB5A05732B50817E00D09AD3 /* swiftiesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A05722B50817E00D09AD3 /* swiftiesApp.swift */; };
 		FB5A05772B50818D00D09AD3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB5A05762B50818D00D09AD3 /* Assets.xcassets */; };
 		FB5A059D2B5081DC00D09AD3 /* MLMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A059C2B5081DC00D09AD3 /* MLMenuView.swift */; };
 		FB5A05A52B50873700D09AD3 /* FontStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A05A42B50873700D09AD3 /* FontStyles.swift */; };
@@ -153,11 +153,11 @@
 		3A5ED9ED2CDD9A04007C4F67 /* EditHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHabitView.swift; sourceTree = "<group>"; };
 		3A5ED9EE2CDD9A04007C4F67 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		3A5ED9EF2CDD9A04007C4F67 /* StepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperView.swift; sourceTree = "<group>"; };
-		FB5A056F2B50817E00D09AD3 /* ScanML.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScanML.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		FB5A05722B50817E00D09AD3 /* pruebaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pruebaApp.swift; sourceTree = "<group>"; };
+		FB5A056F2B50817E00D09AD3 /* SwiftiesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftiesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB5A05722B50817E00D09AD3 /* swiftiesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swiftiesApp.swift; sourceTree = "<group>"; };
 		FB5A05762B50818D00D09AD3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		FB5A057F2B50818D00D09AD3 /* ScanMLTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScanMLTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FB5A05892B50818D00D09AD3 /* ScanMLUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScanMLUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB5A057F2B50818D00D09AD3 /* SwiftiesAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftiesAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB5A05892B50818D00D09AD3 /* SwiftiesAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftiesAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB5A059C2B5081DC00D09AD3 /* MLMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLMenuView.swift; sourceTree = "<group>"; };
 		FB5A05A32B5086C300D09AD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FB5A05A42B50873700D09AD3 /* FontStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStyles.swift; sourceTree = "<group>"; };
@@ -171,7 +171,7 @@
 				Classification.swift,
 				mydata.geojson,
 			);
-			target = FB5A056E2B50817E00D09AD3 /* ScanML */;
+			target = FB5A056E2B50817E00D09AD3 /* SwiftiesApp */;
 		};
 		3A2EBFC82CDDC1A500998DFF /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -179,7 +179,7 @@
 				"Chapeau-Bold.ttf",
 				"Chapeau-Medium.ttf",
 			);
-			target = FB5A056E2B50817E00D09AD3 /* ScanML */;
+			target = FB5A056E2B50817E00D09AD3 /* SwiftiesApp */;
 		};
 		3A2EBFC92CDDC1A500998DFF /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -190,14 +190,14 @@
 				Helpers/Helpers.swift,
 				ModelViews/ClassifierViewModel.swift,
 			);
-			target = FB5A056E2B50817E00D09AD3 /* ScanML */;
+			target = FB5A056E2B50817E00D09AD3 /* SwiftiesApp */;
 		};
 		3A2EBFCA2CDDC1A500998DFF /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"Preview Assets.xcassets",
 			);
-			target = FB5A056E2B50817E00D09AD3 /* ScanML */;
+			target = FB5A056E2B50817E00D09AD3 /* SwiftiesApp */;
 		};
 		3A2EBFCB2CDDC1A500998DFF /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -213,7 +213,7 @@
 				9.mp4,
 				10.mp4,
 			);
-			target = FB5A056E2B50817E00D09AD3 /* ScanML */;
+			target = FB5A056E2B50817E00D09AD3 /* SwiftiesApp */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -513,9 +513,9 @@
 		FB5A05702B50817E00D09AD3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FB5A056F2B50817E00D09AD3 /* ScanML.app */,
-				FB5A057F2B50818D00D09AD3 /* ScanMLTests.xctest */,
-				FB5A05892B50818D00D09AD3 /* ScanMLUITests.xctest */,
+				FB5A056F2B50817E00D09AD3 /* SwiftiesApp.app */,
+				FB5A057F2B50818D00D09AD3 /* SwiftiesAppTests.xctest */,
+				FB5A05892B50818D00D09AD3 /* SwiftiesAppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -537,7 +537,7 @@
 				3A5ED9DF2CDD9A04007C4F67 /* Recomendaciones */,
 				3A5ED9E92CDD9A04007C4F67 /* Simulador */,
 				3A5ED9F02CDD9A04007C4F67 /* Views */,
-				FB5A05722B50817E00D09AD3 /* pruebaApp.swift */,
+				FB5A05722B50817E00D09AD3 /* swiftiesApp.swift */,
 				3A2EBF942CDDC1A500998DFF /* Data */,
 				3A2EBF972CDDC1A500998DFF /* fonts */,
 				3A2EBFA02CDDC1A500998DFF /* Foundation */,
@@ -556,9 +556,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		FB5A056E2B50817E00D09AD3 /* ScanML */ = {
+		FB5A056E2B50817E00D09AD3 /* SwiftiesApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FB5A05932B50818D00D09AD3 /* Build configuration list for PBXNativeTarget "ScanML" */;
+			buildConfigurationList = FB5A05932B50818D00D09AD3 /* Build configuration list for PBXNativeTarget "SwiftiesApp" */;
 			buildPhases = (
 				FB5A056B2B50817E00D09AD3 /* Sources */,
 				FB5A056C2B50817E00D09AD3 /* Frameworks */,
@@ -571,7 +571,7 @@
 			fileSystemSynchronizedGroups = (
 				3A2EBFA32CDDC1A500998DFF /* Model */,
 			);
-			name = ScanML;
+			name = SwiftiesApp;
 			packageProductDependencies = (
 				FB5A05BD2B54820C00D09AD3 /* YouTubePlayerKit */,
 				3A5ED98E2CDD984B007C4F67 /* GoogleGenerativeAI */,
@@ -584,12 +584,12 @@
 				3A5ED99F2CDD98A0007C4F67 /* Supabase */,
 			);
 			productName = prueba;
-			productReference = FB5A056F2B50817E00D09AD3 /* ScanML.app */;
+			productReference = FB5A056F2B50817E00D09AD3 /* SwiftiesApp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		FB5A057E2B50818D00D09AD3 /* ScanMLTests */ = {
+		FB5A057E2B50818D00D09AD3 /* SwiftiesAppTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FB5A05962B50818D00D09AD3 /* Build configuration list for PBXNativeTarget "ScanMLTests" */;
+			buildConfigurationList = FB5A05962B50818D00D09AD3 /* Build configuration list for PBXNativeTarget "SwiftiesAppTests" */;
 			buildPhases = (
 				FB5A057B2B50818D00D09AD3 /* Sources */,
 				FB5A057C2B50818D00D09AD3 /* Frameworks */,
@@ -600,14 +600,14 @@
 			dependencies = (
 				FB5A05812B50818D00D09AD3 /* PBXTargetDependency */,
 			);
-			name = ScanMLTests;
+			name = SwiftiesAppTests;
 			productName = pruebaTests;
-			productReference = FB5A057F2B50818D00D09AD3 /* ScanMLTests.xctest */;
+			productReference = FB5A057F2B50818D00D09AD3 /* SwiftiesAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		FB5A05882B50818D00D09AD3 /* ScanMLUITests */ = {
+		FB5A05882B50818D00D09AD3 /* SwiftiesAppUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FB5A05992B50818D00D09AD3 /* Build configuration list for PBXNativeTarget "ScanMLUITests" */;
+			buildConfigurationList = FB5A05992B50818D00D09AD3 /* Build configuration list for PBXNativeTarget "SwiftiesAppUITests" */;
 			buildPhases = (
 				FB5A05852B50818D00D09AD3 /* Sources */,
 				FB5A05862B50818D00D09AD3 /* Frameworks */,
@@ -618,9 +618,9 @@
 			dependencies = (
 				FB5A058B2B50818D00D09AD3 /* PBXTargetDependency */,
 			);
-			name = ScanMLUITests;
+			name = SwiftiesAppUITests;
 			productName = pruebaUITests;
-			productReference = FB5A05892B50818D00D09AD3 /* ScanMLUITests.xctest */;
+			productReference = FB5A05892B50818D00D09AD3 /* SwiftiesAppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -646,7 +646,7 @@
 					};
 				};
 			};
-			buildConfigurationList = FB5A056A2B50817D00D09AD3 /* Build configuration list for PBXProject "ScanML" */;
+			buildConfigurationList = FB5A056A2B50817D00D09AD3 /* Build configuration list for PBXProject "SwiftiesApp" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -665,9 +665,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FB5A056E2B50817E00D09AD3 /* ScanML */,
-				FB5A057E2B50818D00D09AD3 /* ScanMLTests */,
-				FB5A05882B50818D00D09AD3 /* ScanMLUITests */,
+				FB5A056E2B50817E00D09AD3 /* SwiftiesApp */,
+				FB5A057E2B50818D00D09AD3 /* SwiftiesAppTests */,
+				FB5A05882B50818D00D09AD3 /* SwiftiesAppUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -761,7 +761,7 @@
 				FB5A059D2B5081DC00D09AD3 /* MLMenuView.swift in Sources */,
 				1123D4052B6356A100CB8B16 /* ShowSignView.swift in Sources */,
 				FB5A05A52B50873700D09AD3 /* FontStyles.swift in Sources */,
-				FB5A05732B50817E00D09AD3 /* pruebaApp.swift in Sources */,
+				FB5A05732B50817E00D09AD3 /* swiftiesApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -784,12 +784,12 @@
 /* Begin PBXTargetDependency section */
 		FB5A05812B50818D00D09AD3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = FB5A056E2B50817E00D09AD3 /* ScanML */;
+			target = FB5A056E2B50817E00D09AD3 /* SwiftiesApp */;
 			targetProxy = FB5A05802B50818D00D09AD3 /* PBXContainerItemProxy */;
 		};
 		FB5A058B2B50818D00D09AD3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = FB5A056E2B50817E00D09AD3 /* ScanML */;
+			target = FB5A056E2B50817E00D09AD3 /* SwiftiesApp */;
 			targetProxy = FB5A058A2B50818D00D09AD3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -922,7 +922,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ScanML/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 69JN5N9WFY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ScanML/Info.plist;
@@ -953,7 +953,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ScanML/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 69JN5N9WFY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ScanML/Info.plist;
@@ -991,7 +991,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ScanML.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ScanML";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftiesApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SwiftiesApp";
 			};
 			name = Debug;
 		};
@@ -1010,7 +1010,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ScanML.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ScanML";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftiesApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SwiftiesApp";
 			};
 			name = Release;
 		};
@@ -1051,7 +1051,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FB5A056A2B50817D00D09AD3 /* Build configuration list for PBXProject "ScanML" */ = {
+		FB5A056A2B50817D00D09AD3 /* Build configuration list for PBXProject "SwiftiesApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FB5A05912B50818D00D09AD3 /* Debug */,
@@ -1060,7 +1060,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FB5A05932B50818D00D09AD3 /* Build configuration list for PBXNativeTarget "ScanML" */ = {
+		FB5A05932B50818D00D09AD3 /* Build configuration list for PBXNativeTarget "SwiftiesApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FB5A05942B50818D00D09AD3 /* Debug */,
@@ -1069,7 +1069,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FB5A05962B50818D00D09AD3 /* Build configuration list for PBXNativeTarget "ScanMLTests" */ = {
+		FB5A05962B50818D00D09AD3 /* Build configuration list for PBXNativeTarget "SwiftiesAppTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FB5A05972B50818D00D09AD3 /* Debug */,
@@ -1078,7 +1078,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FB5A05992B50818D00D09AD3 /* Build configuration list for PBXNativeTarget "ScanMLUITests" */ = {
+		FB5A05992B50818D00D09AD3 /* Build configuration list for PBXNativeTarget "SwiftiesAppUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FB5A059A2B50818D00D09AD3 /* Debug */,

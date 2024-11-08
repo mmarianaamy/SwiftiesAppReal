@@ -11,7 +11,7 @@
 import SwiftUI
 
 @main
-struct pruebaApp: App {
+struct swiftiesApp: App {
     
     @StateObject private var user = User() // Create an instance of User
     @StateObject private var predictionStatus = PredictionStatus()

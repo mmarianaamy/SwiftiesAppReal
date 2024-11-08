@@ -68,11 +68,6 @@ class User: ObservableObject {
         
         do{
             let hold : [userHold]? = try await client.from("usuario").select("idusuario, nombre, apellido,email,contraseña").eq("email", value: email).execute().value
-            self.idusuario = (hold?.first?.idusuario)!
-            self.nombre = (hold?.first?.nombre)!
-            self.apellido = (hold?.first?.apellido)!
-            self.email = (hold?.first?.email)!
-            self.contraseña = (hold?.first?.contraseña)!
 
         }catch{
             print("No se pudo guardar el usuario")

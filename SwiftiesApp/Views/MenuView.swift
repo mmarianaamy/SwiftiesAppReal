@@ -40,5 +40,12 @@ struct MenuView: View {
 }
 
 #Preview {
-    MenuView().environmentObject(User(idusuario: 11))
+    struct PreviewView : View {
+        @State var user : User = User(idusuario: 1, nombre: "Juan", apellido: "Perez", email: "juan.perez@example.com", contraseña: "password123")
+        var body : some View {
+            MenuView()
+        }
+    }
+    
+    return PreviewView()
 }

@@ -11,17 +11,15 @@ import Supabase
 struct BuscarProductoView: View {
         
     @State var searchText : String = ""
-    let products : [Product] = []
+    let products : [Producto] = []
     
     @Binding var selectedProduct : Int
     
     @State var selected : Bool = false
     
-    @State var productosGuardados : [Product] = []
+    @State var productosGuardados : [Producto] = []
     
-    var tipo : String = "P"
-    
-    var searchResults: [Product] {
+    var searchResults: [Producto] {
         if searchText.isEmpty{
             return productosGuardados
         }
@@ -46,7 +44,7 @@ struct BuscarProductoView: View {
                         do{
                             print("here")
                             productosGuardados = try await client.from("producto")
-                                .select().eq("ProductoAccion", value: tipo).execute().value
+                                .select().execute().value
                             print(productosGuardados)
                             print("done")
                         } catch{
@@ -83,7 +81,7 @@ struct BuscarProductoView: View {
                         page += 1
                     }label: {
                         Text("Siguiente").foregroundStyle(Color.white).padding()
-                    }.background(Color.background).containerShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                    }.background(Color.background)
                 }.padding()
             }
         }
@@ -91,5 +89,5 @@ struct BuscarProductoView: View {
 }
 
 #Preview {
-    AgregarCompraView().environmentObject(User(idusuario: 1))
+    AgregarCompraView()
 }

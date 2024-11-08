@@ -92,7 +92,14 @@ struct DetallesHoyView: View {
 }
 
 #Preview {
+    /*struct PreviewView : View {
+        @State var user : User = User(idusuario: 1, nombre: "Juan", apellido: "Perez", email: "juan.perez@example.com", contraseña: "password123")
+        var body : some View {
+            DatosView()
+        }
+    }*/
     
-    DatosView().environmentObject(User(idusuario: 11))
-
+    DatosView()
+    
+    //return PreviewView()
 }

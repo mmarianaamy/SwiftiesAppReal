@@ -121,9 +121,9 @@ struct DatosView: View {
                                     } catch{
                                         print("Not possible")
                                     }
-                                    loading = false
                                     print(todayProducts)
                                 }
+                                loading = false
                             } label: {
                                 Image(systemName: "chevron.left")
                             }
@@ -148,44 +148,40 @@ struct DatosView: View {
                         }.padding()
                         
                         //Esto se tiene que cambiar
-                        ScrollView{
-                            VStack{
-                                if loading{
-                                    ProgressView()
-                                }
-                                ForEach($todayProducts, id: \.self) { habit in
-                                    HStack{
-                                        Spacer()
-                                        Text(String(habit.wrappedValue.producto.nombre)).foregroundStyle(Color.white)
-                                            .padding(.leading)
-                                            .padding(.vertical, 5)
-                                        Spacer()
-                                        /*Text("\(habit.frecuency) minutos").foregroundStyle(Color.white)
-                                         .padding(.trailing)
-                                         .padding(.vertical, 5)*/
-                                        
-                                        
-                                    }
-                                    .padding()
-                                    .background(Color.blue)
-                                    .padding(.vertical, 7)
-                                    .padding(.horizontal, 10)
-                                    .containerShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+                        VStack{
+                            if loading{
+                                ProgressView()
+                            }
+                            ForEach($todayProducts, id: \.self) { habit in
+                                HStack{
+                                    Text(String(habit.wrappedValue.producto.nombre)).foregroundStyle(Color.white)
+                                        .padding(.leading)
+                                        .padding(.vertical, 5)
+                                    Spacer()
+                                    /*Text("\(habit.frecuency) minutos").foregroundStyle(Color.white)
+                                        .padding(.trailing)
+                                        .padding(.vertical, 5)*/
+                                    
                                     
                                 }
-                            }.task {
-                                do{
-                                    print("try")
-                                    loading = true
-                                    todayProducts = try await client.from("usuario_producto")
-                                        .select("idusuario, idproducto, cantidad, fecha, producto(idproducto, nombre, cantidad, unidad)").eq("fecha", value: dates[current - 1]).execute().value
-                                    print(todayProducts)
-                                    loading = false
-                                } catch{
-                                    print("Error: \(error)")
-                                }
+                                .background(Color.blue)
+                                .padding(.vertical, 7)
+                                .padding(.horizontal, 10)
+                                
+                            }
+                        }.task {
+                            do{
+                                print("try")
+                                loading = true
+                                todayProducts = try await client.from("usuario_producto")
+                                    .select("idusuario, idproducto, cantidad, fecha, producto(idproducto, nombre, cantidad, unidad)").eq("fecha", value: dates[current - 1]).execute().value
+                                print(todayProducts)
+                                loading = false
+                            } catch{
+                                print("Error: \(error)")
                             }
                         }
+                        
                         Button{
                             isShowingAddCompra = true
                         }label: {
@@ -210,7 +206,7 @@ struct DatosView: View {
                     }
                 }
             }.background(EmptyView().fullScreenCover(isPresented: $isShowingAddCompra) { AgregarCompraView() })
-                .background(EmptyView().fullScreenCover(isPresented: $isShowingAddHabitModal) { AgregarCompraView(tipo: "A") })
+            /*.background(EmptyView().fullScreenCover(isPresented: $isShowingAddHabitModal) { DetallesHoyView(habits: todayProducts) })*/
             
         }
     }

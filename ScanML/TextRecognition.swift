@@ -72,8 +72,53 @@ struct TextRecognition: View {
     
     var body: some View {
         VStack {
+            
+            Text("Suba una foto de su recibo digital")
+                .font(.title)
+                .fontWeight(.bold)
+                .multilineTextAlignment(.center)
+            ShowInSafariButton(tipo: 1)
+                .padding(.top, -5)
+            Spacer()
+            
+            if loading {
+                ProgressView()
+            }
+            if (response != nil){
+                Text("Consumo de energía total del recibo: \n" + (response?.text ?? ""))
+                    .multilineTextAlignment(.leading)
+                    .onAppear{
+                    Task{
+                        await respond()
+                    }
+                    loading = false
+                }.padding()
+            }
+            
+            if selectedImage != nil {
+                Image(uiImage: selectedImage!)
+                    .resizable()
+                    .scaledToFit()
+            }
+            
+            Spacer()
+            
+            Button{
+                //MARK: To do -------
+                ///Make it so that the value gets saved in the database
+                ///Maybe instead of a button, a popup notification like that says "Is this value correct?" and has the option to confirm or retry
+            }
+            label:{
+                Text("Confirmar")
+                    .foregroundStyle(.black)
+                    .fontWeight(.semibold)
+            }
+            .buttonStyle(.borderedProminent)
+            .padding()
+            .tint(.yellow)
+            
             PhotosPicker(selection: $pickerItems, maxSelectionCount: 1, matching: .images) {
-                Label("Select a picture", systemImage: "photo")
+                Label("Seleccione una foto", systemImage: "photo")
             }
             .onChange(of: pickerItems) { _, newItems in
                 if let item = newItems.first {
@@ -83,34 +128,14 @@ struct TextRecognition: View {
                             selectedImage = loadedImage
                             recognizeText(from: selectedImage)
                         }
+                        Task{
+                            await respond()
+                        }
                     }
+                    
                 }
             }
-
-            if loading {
-                ProgressView()
-            }
-            if (response != nil){
-                Text(response?.text ?? "").onAppear{
-                    Task{
-                        await respond()
-                    }
-                    loading = false
-                }.padding()
-            }
-            HStack{
-                Button{
-                    loading = true
-                    Task{
-                        await respond()
-                    }
-                }label:{
-                    Image(systemName: "paperplane.fill")
-                }.padding()
-            }
-            Divider()
             
-            //MARK: Debug
             /*
              Divider()
              
@@ -121,14 +146,7 @@ struct TextRecognition: View {
              recognizeText(from: image)
              }
              
-             if let image = image {
-             Image(uiImage: image)
-             .resizable()
-             .scaledToFit()
-             .onAppear {
-             recognizeText(from: image)
-             }
-             }*/
+             */
             
         }
         .padding()

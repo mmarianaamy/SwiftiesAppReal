@@ -208,12 +208,15 @@ struct DatosView: View {
                         VStack{
                             NavigationLink(destination: CameraScanView(labelData: Classification())){
                                 Image(systemName: "camera")
-                                Text("Escanear")
-                                
+                                Text("Escanear productos")
                             }
-                            
-
-                            
+                        }.padding()
+                        
+                        VStack{
+                            NavigationLink(destination: TextRecognition()){
+                                Image(systemName: "text.document")
+                                Text("Recibo CFE")
+                            }
                         }.padding()
                         
                         Spacer()

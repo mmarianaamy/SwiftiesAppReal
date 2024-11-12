@@ -71,6 +71,7 @@
 		3A5EDA262CDD9A04007C4F67 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A5ED9D82CDD9A04007C4F67 /* Preview Assets.xcassets */; };
 		3A5EDA272CDD9A04007C4F67 /* Property List.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A5ED9DA2CDD9A04007C4F67 /* Property List.plist */; };
 		3A5EDA282CDD9A04007C4F67 /* Assets 2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A5ED9B42CDD9A04007C4F67 /* Assets 2.xcassets */; };
+		3ADBCAB42CE303DB00DB7688 /* TextRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADBCAB32CE303DB00DB7688 /* TextRecognition.swift */; };
 		FB5A05732B50817E00D09AD3 /* swiftiesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A05722B50817E00D09AD3 /* swiftiesApp.swift */; };
 		FB5A05772B50818D00D09AD3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB5A05762B50818D00D09AD3 /* Assets.xcassets */; };
 		FB5A059D2B5081DC00D09AD3 /* MLMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A059C2B5081DC00D09AD3 /* MLMenuView.swift */; };
@@ -153,6 +154,7 @@
 		3A5ED9ED2CDD9A04007C4F67 /* EditHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHabitView.swift; sourceTree = "<group>"; };
 		3A5ED9EE2CDD9A04007C4F67 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		3A5ED9EF2CDD9A04007C4F67 /* StepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperView.swift; sourceTree = "<group>"; };
+		3ADBCAB32CE303DB00DB7688 /* TextRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognition.swift; sourceTree = "<group>"; };
 		FB5A056F2B50817E00D09AD3 /* SwiftiesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftiesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB5A05722B50817E00D09AD3 /* swiftiesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swiftiesApp.swift; sourceTree = "<group>"; };
 		FB5A05762B50818D00D09AD3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -549,6 +551,7 @@
 				FB5A05A32B5086C300D09AD3 /* Info.plist */,
 				FB5A059C2B5081DC00D09AD3 /* MLMenuView.swift */,
 				1123D4042B6356A100CB8B16 /* ShowSignView.swift */,
+				3ADBCAB32CE303DB00DB7688 /* TextRecognition.swift */,
 			);
 			path = ScanML;
 			sourceTree = "<group>";
@@ -753,6 +756,7 @@
 				3A5EDA1F2CDD9A04007C4F67 /* HabitStruct.swift in Sources */,
 				3A5EDA202CDD9A04007C4F67 /* CuestionarioView.swift in Sources */,
 				3A5EDA212CDD9A04007C4F67 /* TotalEmissionsViewModel.swift in Sources */,
+				3ADBCAB42CE303DB00DB7688 /* TextRecognition.swift in Sources */,
 				3A5EDA222CDD9A04007C4F67 /* EmissionData.swift in Sources */,
 				3A5EDA232CDD9A04007C4F67 /* GraphRealView.swift in Sources */,
 				3A5EDA242CDD9A04007C4F67 /* UsuarioStruct.swift in Sources */,
@@ -922,7 +926,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ScanML/Preview Content\"";
-				DEVELOPMENT_TEAM = 69JN5N9WFY;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ScanML/Info.plist;
@@ -953,7 +957,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ScanML/Preview Content\"";
-				DEVELOPMENT_TEAM = 69JN5N9WFY;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ScanML/Info.plist;

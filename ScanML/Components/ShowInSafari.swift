@@ -16,12 +16,12 @@ struct ShowInSafariButton: View {
     init(tipo: Int) {
             self.tipo = tipo
             switch tipo {
-            case 1:
+            case 1: //luz
                 self.search = URL(string: "https://app.cfe.mx/aplicaciones/CCFE/SolicitudesCFE/Solicitudes/ConsultaTuReciboLuzGmx")
-            case 2:
-                self.search = URL(string: "https://app.cfe.mx/aplicaciones/CCFE/SolicitudesCFE/Solicitudes/ConsultaTuReciboLuzGmx")
-            case 3:
-                self.search = URL(string: "https://app.cfe.mx/aplicaciones/CCFE/SolicitudesCFE/Solicitudes/ConsultaTuReciboLuzGmx")
+            case 2: //agua
+                self.search = URL(string: "https://sadm.gob.mx")
+            case 3: //gas
+                self.search = URL(string: "https://www.google.com/search?q=descarga+recibo+gas&ie=UTF-8&oe=UTF-8")
             default:
                 self.search = nil
             }
@@ -32,7 +32,7 @@ struct ShowInSafariButton: View {
             let vc: UIViewController
             if search == nil {
                 // google
-                let googleSearchString = "decarga+recibo+cfe"
+                let googleSearchString = "decarga+recibo+agua+luz+gas"
                 vc = SFSafariViewController(url: URL(string: "https://www.google.com/search?q=\(googleSearchString)")!)
             } else {
                 vc = SFSafariViewController(url: search!)

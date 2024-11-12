@@ -72,7 +72,6 @@
 		3A5EDA272CDD9A04007C4F67 /* Property List.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A5ED9DA2CDD9A04007C4F67 /* Property List.plist */; };
 		3A5EDA282CDD9A04007C4F67 /* Assets 2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A5ED9B42CDD9A04007C4F67 /* Assets 2.xcassets */; };
 		3AC8FDBF2CE3B9200049706D /* ShowInSafari.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC8FDBE2CE3B9200049706D /* ShowInSafari.swift */; };
-		3ADBCAB42CE303DB00DB7688 /* TextRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADBCAB32CE303DB00DB7688 /* TextRecognition.swift */; };
 		FB5A05732B50817E00D09AD3 /* swiftiesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A05722B50817E00D09AD3 /* swiftiesApp.swift */; };
 		FB5A05772B50818D00D09AD3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB5A05762B50818D00D09AD3 /* Assets.xcassets */; };
 		FB5A059D2B5081DC00D09AD3 /* MLMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A059C2B5081DC00D09AD3 /* MLMenuView.swift */; };
@@ -156,7 +155,6 @@
 		3A5ED9EE2CDD9A04007C4F67 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		3A5ED9EF2CDD9A04007C4F67 /* StepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperView.swift; sourceTree = "<group>"; };
 		3AC8FDBE2CE3B9200049706D /* ShowInSafari.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInSafari.swift; sourceTree = "<group>"; };
-		3ADBCAB32CE303DB00DB7688 /* TextRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognition.swift; sourceTree = "<group>"; };
 		FB5A056F2B50817E00D09AD3 /* SwiftiesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftiesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB5A05722B50817E00D09AD3 /* swiftiesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swiftiesApp.swift; sourceTree = "<group>"; };
 		FB5A05762B50818D00D09AD3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -228,6 +226,7 @@
 		3A2EBFA32CDDC1A500998DFF /* Model */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Model; sourceTree = "<group>"; };
 		3A2EBFA52CDDC1A500998DFF /* Preview Content */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (3A2EBFCA2CDDC1A500998DFF /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "Preview Content"; sourceTree = "<group>"; };
 		3A2EBFB02CDDC1A500998DFF /* videos */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (3A2EBFCB2CDDC1A500998DFF /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = videos; sourceTree = "<group>"; };
+		3AC8FDC02CE3C6170049706D /* TextRecognition */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TextRecognition; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -302,6 +301,7 @@
 		3A5ED9B22CDD9A04007C4F67 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3AC8FDC02CE3C6170049706D /* TextRecognition */,
 				3A5ED9AA2CDD9A04007C4F67 /* ActividadesView.swift */,
 				3A5ED9AB2CDD9A04007C4F67 /* ActividadView.swift */,
 				3A5ED9AC2CDD9A04007C4F67 /* AgregarCompraView.swift */,
@@ -328,6 +328,7 @@
 			isa = PBXGroup;
 			children = (
 				3A5ED9B52CDD9A04007C4F67 /* topView.swift */,
+				3AC8FDBE2CE3B9200049706D /* ShowInSafari.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -553,8 +554,6 @@
 				FB5A05A32B5086C300D09AD3 /* Info.plist */,
 				FB5A059C2B5081DC00D09AD3 /* MLMenuView.swift */,
 				1123D4042B6356A100CB8B16 /* ShowSignView.swift */,
-				3ADBCAB32CE303DB00DB7688 /* TextRecognition.swift */,
-				3AC8FDBE2CE3B9200049706D /* ShowInSafari.swift */,
 			);
 			path = ScanML;
 			sourceTree = "<group>";
@@ -576,6 +575,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				3A2EBFA32CDDC1A500998DFF /* Model */,
+				3AC8FDC02CE3C6170049706D /* TextRecognition */,
 			);
 			name = SwiftiesApp;
 			packageProductDependencies = (
@@ -760,7 +760,6 @@
 				3A5EDA1F2CDD9A04007C4F67 /* HabitStruct.swift in Sources */,
 				3A5EDA202CDD9A04007C4F67 /* CuestionarioView.swift in Sources */,
 				3A5EDA212CDD9A04007C4F67 /* TotalEmissionsViewModel.swift in Sources */,
-				3ADBCAB42CE303DB00DB7688 /* TextRecognition.swift in Sources */,
 				3A5EDA222CDD9A04007C4F67 /* EmissionData.swift in Sources */,
 				3A5EDA232CDD9A04007C4F67 /* GraphRealView.swift in Sources */,
 				3A5EDA242CDD9A04007C4F67 /* UsuarioStruct.swift in Sources */,

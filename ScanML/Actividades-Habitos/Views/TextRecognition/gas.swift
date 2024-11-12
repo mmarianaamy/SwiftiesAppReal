@@ -10,9 +10,19 @@ import Vision
 import GoogleGenerativeAI
 import PhotosUI
 import Photos
+import SafariServices
 
 struct TextRecognitionGas: View {
     @State var loading : Bool = false
+    
+    //MARK: Alert
+    @State private var showingAlert = false
+    @State private var proveedor = ""
+    @State private var changed = false
+    func submit() {
+            print("You entered \(proveedor)")
+        changed = true
+        }
     
     //MARK: Photos
     @State private var pickerItems = [PhotosPickerItem]()
@@ -28,7 +38,7 @@ struct TextRecognitionGas: View {
     
     func respond() async -> String {
         do{
-            response = try await self.generativeModel.generateContent("Lo siguiente es un recibo de la CFE escaneado usando OCR. Dame el consumo de energía total. Unicamente regresa el valor del consumo, no lo acompañes de texto adicional. Por ejemplo, si el consumo es de 442 kWh, regresa 442. Si no se proporciona un recibo, si no contiene la info necesaria, o si no estas seguro de que puedas obtener el consumo de energía total, regresa 0 sin texto adicional: " + recognizedText)
+            response = try await self.generativeModel.generateContent("Lo siguiente es un recibo de gas escaneado usando OCR. Dame el consumo total. Unicamente regresa el valor del consumo, no lo acompañes de texto adicional. Por ejemplo, si el consumo es de 61m^3 , regresa 61. Si no se proporciona un recibo, si no contiene la info necesaria, o si no estas seguro de que puedas obtener el consumo total, regresa 0 sin texto adicional: " + recognizedText)
             guard (response?.text != nil) else {
                 throw MyError.runtimeError("some message")
                 
@@ -77,7 +87,44 @@ struct TextRecognitionGas: View {
                 .font(.title)
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
-            ShowInSafariButton(tipo: 3)
+                .onAppear{
+                    if changed == false {showingAlert = true}
+                }
+                .alert("Ingresa el nombre de tu proveedor de gas ", isPresented: $showingAlert) {
+                    TextField("Proveedor", text: $proveedor)
+                        .disableAutocorrection(true)
+                    Button("Cancelar", role: .cancel){
+                        changed = true
+                    }
+                        .foregroundColor(.red)
+                    Button("Aceptar", action: submit)
+                } message: {
+                    Text("Por ejemplo: Naturgy")
+                }
+            TextField("hola", text: $recognizedText)
+            Button {
+                let vc: UIViewController
+                if proveedor == "" {
+                    // google
+                    let googleSearchString = "decarga+recibo+gas"
+                    vc = SFSafariViewController(url: URL(string: "https://www.google.com/search?q=\(googleSearchString)")!)
+                } else if proveedor.lowercased() == "naturgy" {
+                    vc = SFSafariViewController(url: URL(string: "https://www.naturgy.com.mx")!)
+                } else {
+                    vc = SFSafariViewController(url: URL(string: "https://www.google.com/search?q=descarga+recibo+gas+\(proveedor)")!)
+                }
+                UIApplication.shared.firstKeyWindow?.rootViewController?.present(vc, animated: true)
+            } label: {
+                HStack {
+                    Text ("Consulta y descarga tu recibo")
+                    //Image (systemName: "arrow.forward")
+                }
+                .padding ()
+                .underline()
+                .foregroundStyle(Color.blue)
+                
+            }
+            .buttonStyle(.borderless)
                 .padding(.top, -5)
             Spacer()
             

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct Recibos: View {
     var body: some View {
+        
         NavigationStack {
             
             VStack (alignment: .leading){
@@ -23,36 +24,38 @@ struct Recibos: View {
                     .padding(.bottom, 50)
             }.padding()
             
-
             
-            NavigationLink(destination: TextRecognitionElectricidad()) {
-                Label("Electricidad", systemImage: "lightbulb")
-                    .foregroundStyle(.black)
-                    .padding(.vertical, 10)
-                    .frame(maxWidth: .infinity)
-                    .background(RoundedRectangle(cornerRadius: 10).fill(Color.customYellowButton))
-            }
-            .frame(width: 200)
-
-
             
-            NavigationLink(destination: TextRecognitionAgua()) {
-                Label("Agua", systemImage: "drop")
-                    .foregroundStyle(.black)
-                    .padding(.vertical, 10)
-                    .frame(maxWidth: .infinity)
-                    .background(RoundedRectangle(cornerRadius: 10).fill(Color.customBlueButton))
+            VStack (spacing: 13){
+                NavigationLink(destination: TextRecognitionElectricidad()) {
+                    Label("Electricidad", systemImage: "lightbulb")
+                        .foregroundStyle(.black)
+                        .padding(.vertical, 10)
+                        .frame(maxWidth: .infinity)
+                        .background(RoundedRectangle(cornerRadius: 10).fill(Color.customYellowButton))
+                }
+                .frame(width: 200)
+                
+                
+                NavigationLink(destination: TextRecognitionAgua()) {
+                    Label("Agua", systemImage: "drop")
+                        .foregroundStyle(.black)
+                        .padding(.vertical, 10)
+                        .frame(maxWidth: .infinity)
+                        .background(RoundedRectangle(cornerRadius: 10).fill(Color.customBlueButton))
+                }
+                .frame(width: 200)
+                
+                
+                NavigationLink(destination: TextRecognitionGas()) {
+                    Label("Gas", systemImage: "flame")
+                        .foregroundStyle(.black)
+                        .padding(.vertical, 10)
+                        .frame(maxWidth: .infinity)
+                        .background(RoundedRectangle(cornerRadius: 10).fill(Color.customGreenButton))
+                }
+                .frame(width: 200)
             }
-            .frame(width: 200)
-            
-            NavigationLink(destination: TextRecognitionGas()) {
-                Label("Gas", systemImage: "flame")
-                    .foregroundStyle(.black)
-                    .padding(.vertical, 10)
-                    .frame(maxWidth: .infinity)
-                    .background(RoundedRectangle(cornerRadius: 10).fill(Color.customGreenButton))
-            }
-            .frame(width: 200)
             Spacer()
         }
     }

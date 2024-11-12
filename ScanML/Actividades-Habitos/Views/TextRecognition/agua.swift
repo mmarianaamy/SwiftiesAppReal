@@ -29,7 +29,7 @@ struct TextRecognitionAgua: View {
     func respond() async -> String {
         do{
             //MARK: Change propmpt from CFE to water
-            response = try await self.generativeModel.generateContent("Lo siguiente es un recibo de agua escaneado usando OCR. Dame el consumo de energía total. Unicamente regresa el valor del consumo, no lo acompañes de texto adicional. Por ejemplo, si el consumo es de 442 kWh, regresa 442. Si no se proporciona un recibo, si no contiene la info necesaria, o si no estas seguro de que puedas obtener el consumo de energía total, regresa 0 sin texto adicional: " + recognizedText)
+            response = try await self.generativeModel.generateContent("Lo siguiente es un recibo de agua escaneado usando OCR. Dame el consumo total. Unicamente regresa el valor del consumo, no lo acompañes de texto adicional. Por ejemplo, si el consumo es de 115 L, regresa 115. Si no se proporciona un recibo, si no contiene la info necesaria, o si no estas seguro de que puedas obtener el consumo total, regresa 0 sin texto adicional: " + recognizedText)
             guard (response?.text != nil) else {
                 throw MyError.runtimeError("some message")
                 

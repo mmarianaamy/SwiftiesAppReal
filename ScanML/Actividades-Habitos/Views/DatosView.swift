@@ -213,9 +213,9 @@ struct DatosView: View {
                         }.padding()
                         
                         VStack{
-                            NavigationLink(destination: TextRecognition()){
+                            NavigationLink(destination: Recibos()){
                                 Image(systemName: "text.document")
-                                Text("Recibo CFE")
+                                Text("Subir recibo")
                             }
                         }.padding()
                         

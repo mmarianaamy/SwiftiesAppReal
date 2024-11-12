@@ -26,6 +26,18 @@ extension Color {
     public static var customBlue4: Color {
         return Color(UIColor(red: 187/255, green: 222/255, blue: 251/255, alpha: 1))
     }
+    // 157, 197, 187
+    public static var customGreenButton: Color {
+        return Color(UIColor(red: 157/255, green: 197/255, blue: 187/255, alpha: 1))
+    }
+    //146, 188, 234
+    public static var customBlueButton: Color {
+        return Color(UIColor(red: 146/255, green: 188/255, blue: 234/255, alpha: 1))
+    }
+    //252, 191, 73
+    public static var customYellowButton: Color {
+        return Color(UIColor(red: 252/255, green: 191/255, blue: 73/255, alpha: 1))
+    }
 
 
 }

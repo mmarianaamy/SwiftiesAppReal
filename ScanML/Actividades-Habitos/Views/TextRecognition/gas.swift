@@ -11,7 +11,7 @@ import GoogleGenerativeAI
 import PhotosUI
 import Photos
 
-struct TextRecognition: View {
+struct TextRecognitionGas: View {
     @State var loading : Bool = false
     
     //MARK: Photos
@@ -77,7 +77,7 @@ struct TextRecognition: View {
                 .font(.title)
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
-            ShowInSafariButton(tipo: 1)
+            ShowInSafariButton(tipo: 3)
                 .padding(.top, -5)
             Spacer()
             
@@ -115,7 +115,7 @@ struct TextRecognition: View {
             }
             .buttonStyle(.borderedProminent)
             .padding()
-            .tint(.yellow)
+            .tint(.customGreenButton)
             
             PhotosPicker(selection: $pickerItems, maxSelectionCount: 1, matching: .images) {
                 Label("Seleccione una foto", systemImage: "photo")
@@ -154,5 +154,5 @@ struct TextRecognition: View {
 }
 
 #Preview {
-    TextRecognition()
+    TextRecognitionGas()
 }

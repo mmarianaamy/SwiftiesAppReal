@@ -40,7 +40,7 @@ struct ContentView: View {
     }
 }*/
 
-struct userHold : Observable, Decodable {
+struct userHold : Observable, Decodable, Hashable {
     var idusuario: Int
     var nombre: String
     var apellido: String

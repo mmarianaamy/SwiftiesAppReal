@@ -213,7 +213,7 @@ struct DatosView: View {
                         }.padding()
                         
                         VStack{
-                            NavigationLink(destination: Recibos()){
+                            NavigationLink(destination: RecibosUtilidades()){
                                 Image(systemName: "text.document")
                                 Text("Subir recibo")
                             }

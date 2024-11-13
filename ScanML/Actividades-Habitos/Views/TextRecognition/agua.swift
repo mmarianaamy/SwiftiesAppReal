@@ -74,7 +74,7 @@ struct TextRecognitionAgua: View {
     var body: some View {
         VStack {
             
-            Text("Suba una foto de su recibo digital")
+            Text("Sube una foto de tu recibo digital")
                 .font(.title)
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
@@ -86,7 +86,7 @@ struct TextRecognitionAgua: View {
                 ProgressView()
             }
             if (response != nil){
-                Text("Consumo de energía total del recibo: \n" + (response?.text ?? ""))
+                Text("Consumo de agua total del recibo: \n" + (response?.text ?? "") + "L")
                     .multilineTextAlignment(.leading)
                     .onAppear{
                     Task{

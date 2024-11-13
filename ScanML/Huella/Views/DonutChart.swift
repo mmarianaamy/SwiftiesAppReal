@@ -24,7 +24,7 @@ struct DonutChart: View {
                     if let barSelection, let selectedDownloads = mockupDataTotalEmissions.findDownloads(barSelection) {
                         ChartPopOverView(selectedDownloads, barSelection, true, true)
                     } else {
-                        ChartPopOverView(highestEmissions.emissions, highestEmissions.type, true)
+                        ChartPopOverView(0, highestEmissions.type, true)
                     }
                     
                 }
@@ -79,20 +79,22 @@ struct DonutChart: View {
     @ViewBuilder
     func ChartPopOverView(_ emissions: Double, _ type: String, _ isTitleView: Bool = false, _ isSelection: Bool = false) -> some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text("\(isTitleView && !isSelection ? "Emisiones/consumo más alto" : "\(type)") ")
+            Text("\(isTitleView && !isSelection ? "Tu impacto ambiental" : "\(type == "Hidrica" ? "Huella Hidrica" : type == "Energetica" ? "Huella Energetica" : type == "Carbono" ? "Huella de Carbono" : "t")") ")
                 .font(.title3)
                 .foregroundStyle(.gray)
             
             HStack(spacing: 4) {
-                Text(String(format: "%.0f", emissions))
-                    .font(.title3)
-                    .fontWeight(.semibold)
+                if emissions > 0 {
+                    Text(String(format: "%.0f", emissions))
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .font(.title3)
+                        .textScale(.secondary)
+                    Text(type == "Hidrica" ? "L" : type == "Energetica" ? "kW" : type == "Carbono" ? "CO2e" : "t")
+                        .font(.title3)
+                        .textScale(.secondary)
+                }
                 
-                    .font(.title3)
-                    .textScale(.secondary)
-                Text(type == "Hidrica" ? "L" : type == "Energetica" ? "kW" : type == "Carbono" ? "CO2e" : "t")
-                    .font(.title3)
-                    .textScale(.secondary)
             }
         }
         .padding(isTitleView ? [.horizontal] : [.all] )

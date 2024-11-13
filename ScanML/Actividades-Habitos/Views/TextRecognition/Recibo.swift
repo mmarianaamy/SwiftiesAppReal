@@ -11,7 +11,7 @@ import GoogleGenerativeAI
 import PhotosUI
 import Photos
 
-struct TextRecognitionElectricidad: View {
+struct Recibo: View {
     @State var loading : Bool = false
     
     //MARK: Photos
@@ -28,7 +28,7 @@ struct TextRecognitionElectricidad: View {
     
     func respond() async -> String {
         do{
-            response = try await self.generativeModel.generateContent("Lo siguiente es un recibo de la CFE escaneado usando OCR. Dame el consumo de energía total. Unicamente regresa el valor del consumo, no lo acompañes de texto adicional. Por ejemplo, si el consumo es de 442 kWh, regresa 442. Si no se proporciona un recibo, si no contiene la info necesaria, o si no estas seguro de que puedas obtener el consumo de energía total, regresa 0 sin texto adicional: " + recognizedText)
+            response = try await self.generativeModel.generateContent("Lo siguiente es un recibo de compras escaneado usando OCR. dime que productos compro el usuario. No me regreses el codigo del producto que viene en el recibo, como MS HVO 12P. Iterpreta los codigos para que me devuelvas el producto real. Por ejemplo, en vez de <MS HVO 12P>, regresa <12 huevos>. Regresa el producto en especifico. No regreses que un codigo probablemente signifique algo, o que puede ser varias cosas. Si no identificas un producto en especifico, añádelo a la categoría de productos de los cuales estas incierto. Regresa con un formato de Productos: \n Productos de los cuales no estas seguro: " + recognizedText)
             guard (response?.text != nil) else {
                 throw MyError.runtimeError("some message")
                 
@@ -73,19 +73,18 @@ struct TextRecognitionElectricidad: View {
     var body: some View {
         VStack {
             
-            Text("Sube una foto de tu recibo digital")
+            Text("Sube una foto de tu recibo de compras")
                 .font(.title)
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
-            ShowInSafariButton(tipo: 1)
-                .padding(.top, -5)
+            TextField("hola", text: $recognizedText)
             Spacer()
             
             if loading {
                 ProgressView()
             }
             if (response != nil){
-                Text("Consumo de energía total del recibo: \n" + (response?.text ?? "") + "kWh")
+                Text("Consumo de energía total del recibo: \n" + (response?.text ?? ""))
                     .multilineTextAlignment(.leading)
                     .onAppear{
                     Task{
@@ -154,5 +153,5 @@ struct TextRecognitionElectricidad: View {
 }
 
 #Preview {
-    TextRecognitionElectricidad()
+    Recibo()
 }

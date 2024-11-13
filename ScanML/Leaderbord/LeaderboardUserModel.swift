@@ -7,10 +7,14 @@
 
 import Foundation
 
-struct LeaderboardUser: Identifiable, Hashable {
-    let id = UUID()
-    let name: String
-    let emissions: Double
-    let position: Int
-    let prevPosition: Int?
+struct amigoUser : Decodable, Hashable {
+    var idusuario: Int?
+    var nombre: String?
+}
+
+struct LeaderboardUser: Hashable, Decodable {
+    let idamigos : Int
+    let idusuario : Int
+    let idamigo : Int
+    let user : [amigoUser]?
 }

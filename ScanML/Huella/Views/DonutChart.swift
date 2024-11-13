@@ -77,7 +77,7 @@ struct DonutChart: View {
     
     /// Chart Popover View
     @ViewBuilder
-    func ChartPopOverView(_ emissions: Double, _ type: String, _ isTitleView: Bool = false, _ isSelection: Bool = false) -> some View {
+    private func ChartPopOverView(_ emissions: Double, _ type: String, _ isTitleView: Bool = false, _ isSelection: Bool = false) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             Text("\(isTitleView && !isSelection ? "Tu impacto ambiental" : "\(type == "Hidrica" ? "Huella Hidrica" : type == "Energetica" ? "Huella Energetica" : type == "Carbono" ? "Huella de Carbono" : "t")") ")
                 .font(.title3)
@@ -91,6 +91,12 @@ struct DonutChart: View {
                         .font(.title3)
                         .textScale(.secondary)
                     Text(type == "Hidrica" ? "L" : type == "Energetica" ? "kW" : type == "Carbono" ? "CO2e" : "t")
+                        .font(.title3)
+                        .textScale(.secondary)
+                } else {
+                    Text("Huella ecológica")
+                        .font(.title3)
+                        .fontWeight(.semibold)
                         .font(.title3)
                         .textScale(.secondary)
                 }

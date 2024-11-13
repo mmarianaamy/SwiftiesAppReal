@@ -73,6 +73,7 @@
 		3A5EDA282CDD9A04007C4F67 /* Assets 2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A5ED9B42CDD9A04007C4F67 /* Assets 2.xcassets */; };
 		3AC8FDBF2CE3B9200049706D /* ShowInSafari.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC8FDBE2CE3B9200049706D /* ShowInSafari.swift */; };
 		3AF907762CE4235700A95554 /* Escaneo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF907752CE4235700A95554 /* Escaneo.swift */; };
+		3AF907A12CE5233E00A95554 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF907A02CE5233E00A95554 /* Date+Extensions.swift */; };
 		FB5A05732B50817E00D09AD3 /* swiftiesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A05722B50817E00D09AD3 /* swiftiesApp.swift */; };
 		FB5A05772B50818D00D09AD3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB5A05762B50818D00D09AD3 /* Assets.xcassets */; };
 		FB5A059D2B5081DC00D09AD3 /* MLMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A059C2B5081DC00D09AD3 /* MLMenuView.swift */; };
@@ -157,6 +158,7 @@
 		3A5ED9EF2CDD9A04007C4F67 /* StepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperView.swift; sourceTree = "<group>"; };
 		3AC8FDBE2CE3B9200049706D /* ShowInSafari.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInSafari.swift; sourceTree = "<group>"; };
 		3AF907752CE4235700A95554 /* Escaneo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Escaneo.swift; sourceTree = "<group>"; };
+		3AF907A02CE5233E00A95554 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		FB5A056F2B50817E00D09AD3 /* SwiftiesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftiesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB5A05722B50817E00D09AD3 /* swiftiesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swiftiesApp.swift; sourceTree = "<group>"; };
 		FB5A05762B50818D00D09AD3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 		3A2EBFA52CDDC1A500998DFF /* Preview Content */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (3A2EBFCA2CDDC1A500998DFF /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "Preview Content"; sourceTree = "<group>"; };
 		3A2EBFB02CDDC1A500998DFF /* videos */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (3A2EBFCB2CDDC1A500998DFF /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = videos; sourceTree = "<group>"; };
 		3AC8FDC02CE3C6170049706D /* TextRecognition */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TextRecognition; sourceTree = "<group>"; };
+		3AF907992CE51F0700A95554 /* SpecificGraphs */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SpecificGraphs; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -344,6 +347,7 @@
 				3A5ED9B92CDD9A04007C4F67 /* SimpleAnimatedGradient.swift */,
 				3A5ED9BA2CDD9A04007C4F67 /* StaticGradientView.swift */,
 				3A5ED9BB2CDD9A04007C4F67 /* StaticGradientViewBlue.swift */,
+				3AF907A02CE5233E00A95554 /* Date+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -378,6 +382,7 @@
 		3A5ED9C62CDD9A04007C4F67 /* Huella */ = {
 			isa = PBXGroup;
 			children = (
+				3AF907992CE51F0700A95554 /* SpecificGraphs */,
 				3A5ED9BF2CDD9A04007C4F67 /* Model */,
 				3A5ED9C12CDD9A04007C4F67 /* ViewModel */,
 				3A5ED9C52CDD9A04007C4F67 /* Views */,
@@ -579,6 +584,7 @@
 			fileSystemSynchronizedGroups = (
 				3A2EBFA32CDDC1A500998DFF /* Model */,
 				3AC8FDC02CE3C6170049706D /* TextRecognition */,
+				3AF907992CE51F0700A95554 /* SpecificGraphs */,
 			);
 			name = SwiftiesApp;
 			packageProductDependencies = (
@@ -722,6 +728,7 @@
 				3A5ED9F62CDD9A04007C4F67 /* Supabase.swift in Sources */,
 				3A5ED9F72CDD9A04007C4F67 /* ProductStruct.swift in Sources */,
 				3AF907762CE4235700A95554 /* Escaneo.swift in Sources */,
+				3AF907A12CE5233E00A95554 /* Date+Extensions.swift in Sources */,
 				3A5ED9F82CDD9A04007C4F67 /* LeaderbordRow.swift in Sources */,
 				3A5ED9F92CDD9A04007C4F67 /* LeaderboardUserModel.swift in Sources */,
 				3A5ED9FB2CDD9A04007C4F67 /* Recomendaciones.swift in Sources */,

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Recibos: View {
+struct RecibosUtilidades: View {
     var body: some View {
         
         NavigationStack {
@@ -62,5 +62,5 @@ struct Recibos: View {
 }
 
 #Preview {
-    Recibos()
+    RecibosUtilidades()
 }

@@ -83,7 +83,7 @@ struct TextRecognitionGas: View {
     var body: some View {
         VStack {
             
-            Text("Suba una foto de su recibo digital")
+            Text("Sube una foto de tu recibo digital")
                 .font(.title)
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
@@ -101,7 +101,6 @@ struct TextRecognitionGas: View {
                 } message: {
                     Text("Por ejemplo: Naturgy")
                 }
-            TextField("hola", text: $recognizedText)
             Button {
                 let vc: UIViewController
                 if proveedor == "" {
@@ -132,7 +131,7 @@ struct TextRecognitionGas: View {
                 ProgressView()
             }
             if (response != nil){
-                Text("Consumo de energía total del recibo: \n" + (response?.text ?? ""))
+                Text("Consumo total del recibo: \n" + (response?.text ?? "") + "m3")
                     .multilineTextAlignment(.leading)
                     .onAppear{
                     Task{

@@ -18,45 +18,47 @@ struct ProfileView: View {
 
     var body: some View {
         NavigationStack {
-            topView(title: "Perfil")
-            Form {
-            Section {
-              TextField("Nombre", text: $nombre)
-                .textContentType(.name)
-                .textInputAutocapitalization(.never)
-              TextField("Apellido", text: $apellido)
-                .textContentType(.familyName)
-                HStack {
-                    Text("Email")
-                        .foregroundColor(.gray)
-                    Spacer()
-                    Text(email)
-                        .foregroundColor(.primary)
+            VStack{
+                Form {
+                Section {
+                  TextField("Nombre", text: $nombre)
+                    .textContentType(.name)
+                    .textInputAutocapitalization(.never)
+                  TextField("Apellido", text: $apellido)
+                    .textContentType(.familyName)
+                    /*HStack {
+                        Text("Email")
+                            .foregroundColor(.gray)
+                        Spacer()
+                        Text(email)
+                            .foregroundColor(.primary)
+                    }*/
                 }
-            }
 
-            Section {
-                Button("Actualizar Perfil") {
-                    updateProfileButtonTapped()
-                }
-                .bold()
+                Section {
+                    Button("Actualizar Perfil") {
+                        updateProfileButtonTapped()
+                    }
+                    .bold()
 
-                if isLoading {
-                    ProgressView()
-                }
-            }
-            }
-
-            Section {
-                Button("Cerrar Sesión") {
-                    Task {
-                        await logout()
+                    if isLoading {
+                        ProgressView()
                     }
                 }
-                .foregroundColor(.blue)
-                .padding()
-            }
-            Spacer()
+                }
+
+                Section {
+                    Button("Cerrar Sesión") {
+                        Task {
+                            await logout()
+                        }
+                    }
+                    .foregroundColor(.blue)
+                    .padding()
+                }
+                Spacer()
+            }.padding(.top, -8)
+            
         }
         .task {
         await getInitialProfile()
@@ -93,6 +95,7 @@ struct ProfileView: View {
             do {
                 let currentUser = try await supabase.auth.session.user
 
+                
                 try await supabase
                   .from("usuario")
                   .update(

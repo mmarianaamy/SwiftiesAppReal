@@ -31,9 +31,9 @@ struct MenuView: View {
                 Label("Amigos", systemImage: "person.2")
             }.navigationBarTitle("")
                 .navigationBarHidden(true)
-            ProfileView()
+            SettingsView()
                 .tabItem{
-                    Label("Perfil", systemImage: "person.circle.fill")
+                    Label("Configuración", systemImage: "gear")
                 }.navigationBarTitle("")
                 .navigationBarHidden(true)
         }

@@ -72,12 +72,15 @@ struct DatosView: View {
                         Text("Hábitos").font(.largeTitle)
                         if loading{
                             ProgressView()
+                            Spacer()
+                        }else{
+                            List{
+                                ForEach(habits, id: \.self ) { habit in
+                                    HabitListItem(habit: habit)
+                                }
+                            }.listStyle(PlainListStyle())
                         }
-                        List{
-                            ForEach(habits, id: \.self ) { habit in
-                                HabitListItem(habit: habit)
-                            }
-                        }.listStyle(PlainListStyle())
+                        
                         Button{
                             isShowingSearch=true
                         } label: {
@@ -152,24 +155,28 @@ struct DatosView: View {
                         VStack{
                             if loading{
                                 ProgressView()
-                            }
-                            ForEach($todayProducts, id: \.self) { habit in
-                                HStack{
-                                    Text(String(habit.wrappedValue.producto.nombre)).foregroundStyle(Color.white)
-                                        .padding(.leading)
-                                        .padding(.vertical, 5)
-                                    Spacer()
-                                    /*Text("\(habit.frecuency) minutos").foregroundStyle(Color.white)
-                                        .padding(.trailing)
-                                        .padding(.vertical, 5)*/
-                                    
-                                    
-                                }
-                                .background(Color.blue)
-                                .padding(.vertical, 7)
-                                .padding(.horizontal, 10)
                                 
                             }
+                            else{
+                                ForEach($todayProducts, id: \.self) { habit in
+                                    HStack{
+                                        Text(String(habit.wrappedValue.producto.nombre)).foregroundStyle(Color.white)
+                                            .padding(.leading)
+                                            .padding(.vertical, 5)
+                                        Spacer()
+                                        /*Text("\(habit.frecuency) minutos").foregroundStyle(Color.white)
+                                            .padding(.trailing)
+                                            .padding(.vertical, 5)*/
+                                        
+                                        
+                                    }
+                                    .background(Color.blue)
+                                    .padding(.vertical, 7)
+                                    .padding(.horizontal, 10)
+                                    
+                                }
+                            }
+                            
                         }.task {
                             do{
                                 print("try")

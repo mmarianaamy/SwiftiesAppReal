@@ -24,7 +24,7 @@ struct LeaderboardList: View {
                     if loading {
                         ProgressView()
                     }  else if users.isEmpty {
-                        Text("Es agradable tener a alguien a tu lado. ¡Invita amigos!.")
+                        Text("Es agradable tener a alguien a tu lado. ¡Invita amigos!")
                             .foregroundColor(.gray)
                             .padding()
                     } else {

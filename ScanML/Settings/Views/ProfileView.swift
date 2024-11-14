@@ -48,13 +48,16 @@ struct ProfileView: View {
                 }
 
                 Section {
-                    Button("Cerrar Sesión") {
+                    NavigationLink(destination: ContentView()) {
+                        Text("Cerrar Sesion")
+                            .padding()
+                            .foregroundStyle(.blue)
+                    }.onTapGesture {
                         Task {
                             await logout()
                         }
                     }
-                    .foregroundColor(.blue)
-                    .padding()
+
                 }
                 Spacer()
             }.padding(.top, -8)
@@ -116,7 +119,6 @@ struct ProfileView: View {
     func logout() async {
         do {
             try await supabase.auth.signOut()
-            dismiss()
         } catch {
             print("Error al cerrar sesión: \(error.localizedDescription)")
         }

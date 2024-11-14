@@ -201,7 +201,7 @@ struct DatosView: View {
                         }.padding()
                             //.buttonStyle(.borderedProminent)
                         
-                        
+                        /*
                         Button{
                             isShowingAddHabitModal = true
                         } label: {
@@ -211,6 +211,7 @@ struct DatosView: View {
                             }
                         }.padding()
                             //.buttonStyle(.borderedProminent)
+                         */
                         
                         VStack{
                             NavigationLink(destination: CameraScanView(labelData: Classification())){

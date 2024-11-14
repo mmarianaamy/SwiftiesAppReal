@@ -32,6 +32,7 @@ struct MenuView: View {
             }.navigationBarTitle("")
                 .navigationBarHidden(true)
             SettingsView()
+                .environmentObject(User())
                 .tabItem{
                     Label("Configuración", systemImage: "gear")
                 }.navigationBarTitle("")

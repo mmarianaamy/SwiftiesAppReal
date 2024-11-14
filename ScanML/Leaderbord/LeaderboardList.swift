@@ -23,10 +23,15 @@ struct LeaderboardList: View {
                 LazyVStack(spacing: 10) {
                     if loading {
                         ProgressView()
-                    }
-                    ForEach(users, id: \.self) { user in
-                        LeaderbordRow(position: 0, name: String(user.idamigo), points: 0, prevPosition: 0)
-                            .padding(.horizontal)
+                    }  else if users.isEmpty {
+                        Text("Es agradable tener a alguien a tu lado. ¡Invita amigos!.")
+                            .foregroundColor(.gray)
+                            .padding()
+                    } else {
+                        ForEach(users, id: \.self) { user in
+                            LeaderbordRow(position: 0, name: String(user.idamigo), points: 0, prevPosition: 0)
+                                .padding(.horizontal)
+                        }
                     }
                 }
                 .accentColor(.primary)

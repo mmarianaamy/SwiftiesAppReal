@@ -14,7 +14,9 @@ struct SignUpView: View {
     @State private var resultMessage = ""
     
     @State var isLoading = false
-    @State private var showLogin = false
+    
+    
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         ZStack {
@@ -82,14 +84,10 @@ struct SignUpView: View {
                     .padding()
                 
                 Button("¿Ya tienes una cuenta? Inicia Sesión") {
-                    showLogin = true
+                    dismiss()
                 }
-                .foregroundColor(.blue)
+                .foregroundStyle(Color.white)
                 .padding()
-
-                NavigationLink(destination: LoginPage(logged: .constant(false)), isActive: $showLogin) {
-                    EmptyView()
-                }
             }
             .padding()
         }

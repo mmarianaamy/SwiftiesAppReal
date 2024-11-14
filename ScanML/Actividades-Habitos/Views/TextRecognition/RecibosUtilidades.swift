@@ -18,7 +18,7 @@ struct RecibosUtilidades: View {
                     .padding(.bottom, 20)
                     .bold()
                 
-                Text("Para garantizar que la información sea correcta, recomendamos subir una foto de tu recibo digital, aunque si esto no te es posible, igualemnte puedes usar una foto de tu recibo físico.")
+                Text("Para garantizar que la información sea correcta, recomendamos subir una foto de tu recibo digital. Sin embargo, si esto no te es posible, también puedes usar una foto de tu recibo físico.")
                     .font(.subheadline)
                     .foregroundColor(.gray)
                     .padding(.bottom, 50)

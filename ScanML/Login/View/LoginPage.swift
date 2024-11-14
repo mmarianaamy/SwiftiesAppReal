@@ -13,7 +13,6 @@ struct LoginPage: View {
     @State private var email = ""
     @State private var password = ""
     @State private var resultMessage = ""
-    @State private var showSignUp = false // State to show the registration screen
     @State private var isLoggedIn = false // State for navigation to ProfileView
     
     @State var isLoading = false
@@ -80,16 +79,19 @@ struct LoginPage: View {
                         .padding()
                 }
                 
-                Button("¿No tienes una cuenta? Regístrate") {
-                    showSignUp = true
-                }
-                .foregroundColor(.blue)
-                .padding()
-                
                 // Navegación a SignUpView
-                NavigationLink(destination: SignUpView(), isActive: $showSignUp) {
-                    EmptyView()
+                NavigationLink(destination: SignUpView().navigationTitle("")
+                    .navigationBarBackButtonHidden()
+                    .toolbar(.hidden)
+) {
+                    Text("¿No tienes una cuenta? Regístrate")
+                        .foregroundStyle(Color.white)
                 }
+.padding()
+                .navigationTitle("")
+                .navigationBarBackButtonHidden()
+                .toolbar(.hidden)
+
                 
                 // Navegación a MenuView al iniciar sesión
                 NavigationLink(destination: MenuView(), isActive: $isLoggedIn) {

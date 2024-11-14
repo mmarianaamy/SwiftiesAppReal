@@ -53,7 +53,7 @@ struct Recomendaciones: View {
                 }
             } label: {
                 Text(boton)
-                    .foregroundColor(.white)
+                    .foregroundStyle(Color.white)
                     .padding()
                     .background(Color.blue)
                     .cornerRadius(10)

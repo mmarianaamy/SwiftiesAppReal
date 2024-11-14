@@ -14,16 +14,16 @@ struct RecomendacionItemView: View {
             HStack {
                 Text(title)
                     .font(.headline)
-                    .foregroundColor(.black)
+                    .foregroundStyle(Color.primary)
                 Spacer()
             }
         }
         .padding()
-        .background(Color.white)
+        .background(Color.primary.colorInvert())
         .cornerRadius(10)
         .overlay(
             RoundedRectangle(cornerRadius: 10)
-                .stroke(Color.blue, lineWidth: 1)
+                .stroke(Color.blueCustom, lineWidth: 1)
         )
         .padding(.horizontal)
     }

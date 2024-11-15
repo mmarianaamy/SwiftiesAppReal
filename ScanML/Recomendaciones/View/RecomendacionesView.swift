@@ -21,18 +21,26 @@ struct RecomendacionesView: View {
     
     func respond() async -> String {
         do {
-            let habitsString = habits.compactMap { $0.habito?.nombre }.joined(separator: ", ")
+            let habitsString = habits.map {
+                "\($0.habito?.nombre ?? "N/A")  \($0.frecuencia) veces por \($0.recurrencia), por \($0.cantidad) minutos"
+            }.joined(separator: "; ")
             // MARK: Debug -----
+            print("\n Habitos:")
             print(habitsString)
+            print("\n")
             if tipo == "Hídrico" {
                 response = try await self.generativeModel.generateContent(
                     "Dame un máximo de 4 sugerencias pare reducir el impacto hidrico de una persona que tiene los siguientes habitos: \(habitsString). Deben de ser sugerencias que hagan sentido. No tienes que dar 4 obligatoriamente. Dámelo en formato JSON. No incluyas texto adicional. Unicamente regresa el diccionario. Empezando con { y terminando con }. El formato debe de ser una clave sugerencia. Cada elemento del arreglo es un objeto que tiene dos claves: actividad y sugerencia. Devuélvelo estrictamente en formato JSON sin caracteres de escape o de formato adicional. Enfocate en cosas que reduzcan la huella hidrica. Cosas relacionadas al agua. Las sugerencias deben incluir acciones como el ahorro de agua")
-                print("PROMPT AGUA")
+                print("PROMPT AGUA \n")
+                print(
+                    "Dame un máximo de 4 sugerencias pare reducir el impacto hidrico de una persona que tiene los siguientes habitos: \(habitsString). Deben de ser sugerencias que hagan sentido. No tienes que dar 4 obligatoriamente. Dámelo en formato JSON. No incluyas texto adicional. Unicamente regresa el diccionario. Empezando con { y terminando con }. El formato debe de ser una clave sugerencia. Cada elemento del arreglo es un objeto que tiene dos claves: actividad y sugerencia. Devuélvelo estrictamente en formato JSON sin caracteres de escape o de formato adicional. Enfocate en cosas que reduzcan la huella hidrica. Cosas relacionadas al agua. Las sugerencias deben incluir acciones como el ahorro de agua \n")
             }
             else if tipo == "Energético" {
                 response = try await self.generativeModel.generateContent(
                     "Dame un máximo de 4 sugerencias pare reducir el impacto electrico de una persona que tiene los siguientes habitos: \(habitsString). Deben de ser sugerencias que hagan sentido. No tienes que dar 4 obligatoriamente. Dámelo en formato JSON. No incluyas texto adicional. Unicamente regresa el diccionario. Empezando con { y terminando con }. El formato debe de ser una clave sugerencia. Cada elemento del arreglo es un objeto que tiene dos claves: actividad y sugerencia. Devuélvelo estrictamente en formato JSON sin caracteres de escape o de formato adicional. Las sugerencias deben centrarse en eficiencia energética. Solo incluye cosas de agua si directamente se relacionan con el consumo de electricidad")
                 print("PROMPT ELECTRICIDAD")
+                print(
+                    " \n Dame un máximo de 4 sugerencias pare reducir el impacto electrico de una persona que tiene los siguientes habitos: \(habitsString). Deben de ser sugerencias que hagan sentido. No tienes que dar 4 obligatoriamente. Dámelo en formato JSON. No incluyas texto adicional. Unicamente regresa el diccionario. Empezando con { y terminando con }. El formato debe de ser una clave sugerencia. Cada elemento del arreglo es un objeto que tiene dos claves: actividad y sugerencia. Devuélvelo estrictamente en formato JSON sin caracteres de escape o de formato adicional. Las sugerencias deben centrarse en eficiencia energética. Solo incluye cosas de agua si directamente se relacionan con el consumo de electricidad \n")
             }
             else if tipo == "Carbono"{
                 response = try await self.generativeModel.generateContent(
@@ -82,6 +90,8 @@ struct RecomendacionesView: View {
                             habits = try await client.from("usuario_habito")
                                 .select("recurrencia, frecuencia, cantidad, idhabito, fechainicio, fechafinal, habito(idhabito, nombre)")
                                 .eq("idusuario", value: user.idusuario).execute().value
+                            
+                            print("\n Fetched habits as appear on the database: \n \(habits)")
                             
                             // Fetching AI response
                             let textResponse = await respond()

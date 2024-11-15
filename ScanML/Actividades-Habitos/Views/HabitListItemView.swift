@@ -24,7 +24,8 @@ struct HabitListItem: View {
                 }
                 
                 NavigationLink {
-                    // Implement Navigation for editing habit
+                    DetallesActividadUpdate(habito: habit.habito ?? Habit(idhabito: 0, nombre: ""))
+                                            //.environmentObject(user)
                 } label: {
                     Button {
                         print("Editar")

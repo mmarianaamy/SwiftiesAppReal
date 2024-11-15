@@ -11,8 +11,8 @@ struct LoginPage: View {
     @State private var email = ""
     @State private var password = ""
     @State private var resultMessage = ""
-    @State private var isLoggedIn = false // State for navigation to ProfileView
-    @State private var showAlert = false  // State for controlling the alert
+    @State private var isLoggedIn = false
+    @State private var showAlert = false
     
     @State var isLoading = false
     @Binding var logged: Bool
@@ -74,7 +74,6 @@ struct LoginPage: View {
                         .padding()
                 }
                 
-                // Navegación a SignUpView
                 NavigationLink(destination: SignUpView(showAlert: $showAlert).navigationTitle("")
                     .navigationBarBackButtonHidden()
                     .toolbar(.hidden)
@@ -86,8 +85,7 @@ struct LoginPage: View {
                 .navigationTitle("")
                 .navigationBarBackButtonHidden()
                 .toolbar(.hidden)
-                
-                // Navegación a MenuView al iniciar sesión
+   
                 NavigationLink(destination: MenuView(), isActive: $isLoggedIn) {
                     EmptyView()
                 }
@@ -98,7 +96,6 @@ struct LoginPage: View {
         .ignoresSafeArea()
         .foregroundStyle(Color.white)
         
-        // Show alert on LoginPage
         .alert(isPresented: $showAlert) {
             Alert(
                 title: Text("Usuario Creado"),
@@ -118,7 +115,7 @@ struct LoginPage: View {
             try await supabase.auth.signIn(email: email, password: password)
             resultMessage = "Inicio de sesión exitoso con correo y contraseña."
             DispatchQueue.main.async {
-                self.isLoggedIn = true // Navigate to ProfileView on successful login
+                self.isLoggedIn = true
             }
             await user.changeValue(email: email)
             

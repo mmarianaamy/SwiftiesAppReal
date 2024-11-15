@@ -117,7 +117,8 @@ struct RecomendacionesView: View {
                         }
                     }
                 ScrollView {
-                    if !responseTextField.isEmpty {
+                    //MARK: DEBUG ---
+                    /*if !responseTextField.isEmpty {
                         TextField("Consumo de agua total del recibo:", text: $responseTextField)
                             .padding()
                             .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -128,7 +129,7 @@ struct RecomendacionesView: View {
                                     await respond()
                                 }
                             }
-                    }
+                    }*/
                     VStack(alignment: .leading, spacing: 10) {
                         if tipo == "Hídrico" {
                             ForEach(sugerencias) { sugerencia in

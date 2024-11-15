@@ -44,12 +44,10 @@ struct DatosView: View {
                      12: "Diciembre"]
     
     @State var habits: [HabitUser]  = []
-    //Esto se tiene que cambiar
     @State var todayProducts: [UsuarioProduct]  = []
     @State var loading : Bool = false
     
     let dates : [Date] = getDaysSimple(for: Date())
-    
     
     @State var currentMonth : Int = Calendar.current.component(.month, from: Date())
     @State var current : Int = Calendar.current.component(.day, from: Date())
@@ -59,92 +57,85 @@ struct DatosView: View {
     @State private var isShowingAddCompra: Bool = false
     
     var body: some View {
-        NavigationStack{
+        NavigationStack {
             topView(title: "Datos")
-            VStack () {
-                Picker("Habitos o diario", selection: $selection) {
+            VStack {
+                Picker("Hábitos o diario", selection: $selection) {
                     Text("Hábitos").tag(0)
                     Text("Diario").tag(1)
                 }
                 .pickerStyle(.segmented).padding()
-                if (selection == 0){
-                    VStack{
+                
+                if (selection == 0) {
+                    VStack {
                         Text("Hábitos").font(.largeTitle)
-                        if loading{
+                        if loading {
                             ProgressView()
                             Spacer()
-                        }else{
-                            List{
-                                ForEach(habits, id: \.self ) { habit in
+                        } else {
+                            List {
+                                ForEach(habits, id: \.self) { habit in
                                     HabitListItem(habit: habit)
                                 }
                             }.listStyle(PlainListStyle())
                         }
                         
-                        Button{
-                            isShowingSearch=true
+                        Button {
+                            isShowingSearch = true
                         } label: {
                             Text("Agregar hábito")
                         }.padding()
-                        
-                        /*NavigationLink{
-                            CuestionarioView(current: $cuestionarioProgress)
-                        }label: {
-                            Text("Contestar cuestionario")
-                        }.padding(.bottom)*/
-                    }.task{
+                    }
+                    .task {
                         loading = true
-                        do{
+                        do {
                             habits = try await client.from("usuario_habito")
                                 .select("recurrencia, frecuencia, cantidad, idhabito, fechainicio, fechafinal, habito(idhabito, nombre)")
                                 .eq("idusuario", value: user.idusuario).execute().value
-                            print("id usuario:  \(user.idusuario) /n email: \(user.email) ")
-                        } catch{
-                            print("Not possible")
+                        } catch {
+                            print("Error fetching habits: \(error)")
                         }
                         loading = false
-                    }.background(EmptyView().fullScreenCover(isPresented: $isShowingSearch) { ActividadesView() })
-                }else/*{
-                      HoyView()
-                      .padding(.horizontal)
-                      }*/
-                
-                {
-                    VStack{
-                        HStack{
+                    }
+                    .background(EmptyView().fullScreenCover(isPresented: $isShowingSearch) { ActividadesView() })
+                } else {
+                    VStack {
+                        HStack {
                             Text((monthDict[currentMonth] ?? "Octubre") + " " + String(current)).font(.largeTitle)
                             Spacer()
-                            Button{
-                                if (current > 1){
+                            Button {
+                                if (current > 1) {
                                     current -= 1
                                 }
-                                Task{
+                                Task {
                                     loading = true
-                                    do{
+                                    do {
                                         todayProducts = try await client.from("usuario_producto")
-                                            .select("idusuario, idproducto, cantidad, fecha, producto(idproducto, nombre, cantidad, unidad)").eq("fecha", value: dates[current - 1]).execute().value
-                                    } catch{
-                                        print("Not possible")
+                                            .select("idusuario, idproducto, cantidad, fecha, producto(idproducto, nombre, cantidad, unidad)")
+                                            .eq("fecha", value: dates[current - 1])
+                                            .eq("idusuario", value: user.idusuario).execute().value
+                                    } catch {
+                                        print("Error fetching products: \(error)")
                                     }
-                                    print(todayProducts)
+                                    loading = false
                                 }
-                                loading = false
                             } label: {
                                 Image(systemName: "chevron.left")
                             }
-                            Button{
-                                if (current < 31){
+                            Button {
+                                if (current < 31) {
                                     current += 1
                                 }
-                                Task{
+                                Task {
                                     loading = true
-                                    do{
+                                    do {
                                         todayProducts = try await client.from("usuario_producto")
-                                            .select("idusuario, idproducto, cantidad, fecha, producto(idproducto, nombre, cantidad, unidad)").eq("fecha", value: dates[current - 1]).execute().value
-                                    } catch{
-                                        print("Not possible")
+                                            .select("idusuario, idproducto, cantidad, fecha, producto(idproducto, nombre, cantidad, unidad)")
+                                            .eq("fecha", value: dates[current - 1])
+                                            .eq("idusuario", value: user.idusuario).execute().value
+                                    } catch {
+                                        print("Error fetching products: \(error)")
                                     }
-                                    print(todayProducts)
                                     loading = false
                                 }
                             } label: {
@@ -152,77 +143,55 @@ struct DatosView: View {
                             }
                         }.padding()
                         
-                        //Esto se tiene que cambiar
-                        VStack{
-                            if loading{
+                        VStack {
+                            if loading {
                                 ProgressView()
-                                
-                            }
-                            else{
-                                ForEach($todayProducts, id: \.self) { habit in
-                                    HStack{
-                                        Text(String(habit.wrappedValue.producto.nombre)).foregroundStyle(Color.white)
+                            } else {
+                                ForEach($todayProducts, id: \.self) { product in
+                                    HStack {
+                                        Text(product.wrappedValue.producto.nombre)
+                                            .foregroundStyle(Color.white)
                                             .padding(.leading)
                                             .padding(.vertical, 5)
                                         Spacer()
-                                        /*Text("\(habit.frecuency) minutos").foregroundStyle(Color.white)
-                                            .padding(.trailing)
-                                            .padding(.vertical, 5)*/
-                                        
-                                        
                                     }
                                     .background(Color.blue)
                                     .padding(.vertical, 7)
                                     .padding(.horizontal, 10)
-                                    
                                 }
                             }
-                            
-                        }.task {
-                            do{
-                                print("try")
-                                loading = true
+                        }
+                        .task {
+                            loading = true
+                            do {
                                 todayProducts = try await client.from("usuario_producto")
-                                    .select("idusuario, idproducto, cantidad, fecha, producto(idproducto, nombre, cantidad, unidad)").eq("fecha", value: dates[current - 1]).execute().value
-                                print(todayProducts)
-                                loading = false
-                            } catch{
+                                    .select("idusuario, idproducto, cantidad, fecha, producto(idproducto, nombre, cantidad, unidad)")
+                                    .eq("fecha", value: dates[current - 1])
+                                    .eq("idusuario", value: user.idusuario).execute().value
+                            } catch {
                                 print("Error: \(error)")
                             }
+                            loading = false
                         }
                         
-                        Button{
+                        Button {
                             isShowingAddCompra = true
-                        }label: {
-                            HStack{
+                        } label: {
+                            HStack {
                                 Image(systemName: "plus")
                                 Text("Agregar compra")
                             }
-                            
                         }.padding()
-                            //.buttonStyle(.borderedProminent)
                         
-                        /*
-                        Button{
-                            isShowingAddHabitModal = true
-                        } label: {
-                            HStack{
-                                Image(systemName: "plus")
-                                Text("Agregar acción")
-                            }
-                        }.padding()
-                            //.buttonStyle(.borderedProminent)
-                         */
-                        
-                        VStack{
-                            NavigationLink(destination: CameraScanView(labelData: Classification())){
+                        VStack {
+                            NavigationLink(destination: CameraScanView(labelData: Classification())) {
                                 Image(systemName: "camera")
                                 Text("Escanear productos")
                             }
                         }.padding()
                         
-                        VStack{
-                            NavigationLink(destination: RecibosUtilidades()){
+                        VStack {
+                            NavigationLink(destination: RecibosUtilidades()) {
                                 Image(systemName: "text.document")
                                 Text("Subir recibo")
                             }
@@ -231,9 +200,8 @@ struct DatosView: View {
                         Spacer()
                     }
                 }
-            }.background(EmptyView().fullScreenCover(isPresented: $isShowingAddCompra) { AgregarCompraView() })
-            /*.background(EmptyView().fullScreenCover(isPresented: $isShowingAddHabitModal) { DetallesHoyView(habits: todayProducts) })*/
-            
+            }
+            .background(EmptyView().fullScreenCover(isPresented: $isShowingAddCompra) { AgregarCompraView() })
         }
     }
 }

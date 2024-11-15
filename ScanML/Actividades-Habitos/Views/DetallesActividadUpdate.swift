@@ -1,42 +1,34 @@
-//
-//  DetallesActividadUpdate.swift
-//  SwiftiesApp
-//
-//  Created by Jorge Salcedo on 17/10/24.
-//
-
 import SwiftUI
 import Supabase
 
 struct DetallesActividadUpdate: View {
     @State var selectionFrecuency = 0
     @State var selectionTimeUnit = 0
-    
+
     @State var habitName: String
     var habitid: Int
     @State private var description: String = ""
     @State private var time: Int = 10
     @State private var cantidad: Int = 1
-    
+
     let mapFrecuencia: [String] = ["Dia", "Semana", "Mes"]
     let mapCantidad: [String] = ["min", "hr"]
-    
+
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var user: User
-    
+
     var disabled: Bool = false
-    
+
     let client = SupabaseClient(supabaseURL: URL(string: "https://hyufiwwpfhtovhspewlc.supabase.co")!, supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5dWZpd3dwZmh0b3Zoc3Bld2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkyMDAzNDQsImV4cCI6MjA0NDc3NjM0NH0.Eol6hgROQO_G5CnGD6YBGTIMOMPKL6GX3xdMfpMlHmc")
-    
 
     init(habito: Habit) {
         self.habitName = habito.nombre
         self.habitid = habito.idhabito
     }
-    
+
     var body: some View {
         VStack {
-            VStack (alignment: .leading){
+            VStack(alignment: .leading) {
                 Text("Nombre").bold()
                     .padding(.vertical, 7)
                 TextField(
@@ -52,7 +44,7 @@ struct DetallesActividadUpdate: View {
                 Text("Frecuencia").bold()
                     .padding(.bottom, -20)
                     .padding(.vertical, 7)
-                HStack{
+                HStack {
                     TextField("Tiempo", value: $time, formatter: NumberFormatter())
                         .multilineTextAlignment(.center)
                         .frame(width: 65, height: 40)
@@ -66,7 +58,7 @@ struct DetallesActividadUpdate: View {
                     }
                     .pickerStyle(.segmented).padding()
                 }
-                
+
                 Text("Cantidad").bold()
                     .padding(.bottom, -20)
                     .padding(.vertical, 7)
@@ -85,7 +77,6 @@ struct DetallesActividadUpdate: View {
                     .containerShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                     .tint(.black)
                 }.padding(.top)
-                
             }
             .padding(.horizontal)
             
@@ -102,9 +93,13 @@ struct DetallesActividadUpdate: View {
                             cantidad: String(cantidad),
                             fechainicio: Date()
                         )
+                        // Use `update()` for updating an existing record
                         try await client.from("usuario_habito")
-                            .upsert(updatedHabit)
+                            .update(updatedHabit)
+                            .eq("idhabito", value: habitid)
+                            .eq("idusuario", value: user.idusuario)
                             .execute()
+                        
                         print("Hábito actualizado exitosamente")
                     } catch {
                         print("Error al actualizar el hábito: \(error.localizedDescription)")
@@ -121,8 +116,6 @@ struct DetallesActividadUpdate: View {
     }
 }
 
-
 #Preview {
-    
     DetallesActividadUpdate(habito: Habit(idhabito: 1, nombre: "Bañarse")).environmentObject(User(idusuario: 1, nombre: "Juan", apellido: "", email: "", contraseña: ""))
 }

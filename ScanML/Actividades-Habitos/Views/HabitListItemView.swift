@@ -25,7 +25,7 @@ struct HabitListItem: View {
                 
                 NavigationLink {
                     DetallesActividadUpdate(habito: habit.habito ?? Habit(idhabito: 0, nombre: ""))
-                                            //.environmentObject(user)
+                                           
                 } label: {
                     Button {
                         print("Editar")

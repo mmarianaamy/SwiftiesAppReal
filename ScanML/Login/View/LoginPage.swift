@@ -7,18 +7,16 @@
 
 import SwiftUI
 
-
 struct LoginPage: View {
-    
     @State private var email = ""
     @State private var password = ""
     @State private var resultMessage = ""
     @State private var isLoggedIn = false // State for navigation to ProfileView
+    @State private var showAlert = false  // State for controlling the alert
     
     @State var isLoading = false
     @Binding var logged: Bool
     @EnvironmentObject var user: User
-    
     
     var body: some View {
         ZStack {
@@ -44,8 +42,6 @@ struct LoginPage: View {
                     
                 }.padding()
                 
-                
-                
                 VStack(alignment: .leading) {
                     Text("Password").padding(.horizontal)
                     SecureField("Password", text: $password)
@@ -58,7 +54,6 @@ struct LoginPage: View {
                     
                         .autocorrectionDisabled()
                 }.padding()
-                
                 
                 Button("Iniciar Sesión") {
                     Task {
@@ -80,18 +75,17 @@ struct LoginPage: View {
                 }
                 
                 // Navegación a SignUpView
-                NavigationLink(destination: SignUpView().navigationTitle("")
+                NavigationLink(destination: SignUpView(showAlert: $showAlert).navigationTitle("")
                     .navigationBarBackButtonHidden()
                     .toolbar(.hidden)
-) {
+                ) {
                     Text("¿No tienes una cuenta? Regístrate")
                         .foregroundStyle(Color.white)
                 }
-.padding()
+                .padding()
                 .navigationTitle("")
                 .navigationBarBackButtonHidden()
                 .toolbar(.hidden)
-
                 
                 // Navegación a MenuView al iniciar sesión
                 NavigationLink(destination: MenuView(), isActive: $isLoggedIn) {
@@ -100,9 +94,18 @@ struct LoginPage: View {
                 
             }.zIndex(1)
                 .padding()
-        }.ignoresSafeArea()
+        }
+        .ignoresSafeArea()
+        .foregroundStyle(Color.white)
         
-            .foregroundStyle(Color.white)
+        // Show alert on LoginPage
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("Usuario Creado"),
+                message: Text("¡Ahora puedes iniciar sesión con tu cuenta!"),
+                dismissButton: .default(Text("OK"))
+            )
+        }
         
         if isLoading {
             Color.black.opacity(0.5).ignoresSafeArea()

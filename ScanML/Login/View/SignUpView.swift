@@ -15,8 +15,10 @@ struct SignUpView: View {
     
     @State var isLoading = false
     
-    
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var user: User
+
+    @Binding var showAlert: Bool // Binding to control alert in LoginPage
 
     var body: some View {
         ZStack {
@@ -64,6 +66,14 @@ struct SignUpView: View {
                 Button("Registrarme") {
                     Task {
                         resultMessage = await signUpWithURLSessionWithRetry(email: email, password: password)
+                        if resultMessage == "Registro exitoso" {
+                            DispatchQueue.main.async {
+                                // Cierra la vista actual (SignUpView) y regresa al LoginPage
+                                dismiss()
+                                // Trigger the alert in LoginPage
+                                showAlert = true
+                            }
+                        }
                     }
                 }
                 .frame(maxWidth: .infinity)

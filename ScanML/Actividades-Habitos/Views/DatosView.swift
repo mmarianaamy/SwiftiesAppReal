@@ -207,5 +207,5 @@ struct DatosView: View {
 }
 
 #Preview {
-    DatosView().environmentObject(User(idusuario: 2, nombre: "Juan", apellido: "", email: "", contraseña: ""))
+    DatosView().environmentObject(User(idusuario: 11, nombre: "Juan", apellido: "", email: "", contraseña: ""))
 }

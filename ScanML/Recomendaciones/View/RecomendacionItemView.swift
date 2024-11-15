@@ -1,18 +1,19 @@
 import SwiftUI
 
 struct RecomendacionItemView: View {
-    var title: String
+    var titulo: String
+    var descripcion: String
     @State private var isExpanded: Bool = false
 
     var body: some View {
         DisclosureGroup(isExpanded: $isExpanded) {
-            Text("Cada pequeño cambio contribuye a reducir la huella hídrica y promueve un uso más sostenible y consciente del agua.")
+            Text(descripcion)
                 .padding(.top, 5)
                 .font(.body)
                 .foregroundColor(.gray)
         } label: {
             HStack {
-                Text(title)
+                Text(titulo)
                     .font(.headline)
                     .foregroundStyle(Color.primary)
                 Spacer()
@@ -31,6 +32,6 @@ struct RecomendacionItemView: View {
 
 struct RecomendacionItemView_Previews: PreviewProvider {
     static var previews: some View {
-        RecomendacionItemView(title: "Reduce el consumo de carne y lácteos")
+        RecomendacionItemView(titulo: "Reduce el consumo de carne y lácteos", descripcion: "descripcion :)")
     }
 }

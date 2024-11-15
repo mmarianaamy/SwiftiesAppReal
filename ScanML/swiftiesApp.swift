@@ -15,7 +15,7 @@ struct swiftiesApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(predictionStatus)
-                .environmentObject(user) // Provide it to ContentView and all children
+                .environmentObject(user)
         }
     }
 }

@@ -6,38 +6,57 @@
 //
 
 import SwiftUI
+import Supabase
 
-struct HabitListItem : View {
+struct HabitListItem: View {
     var habit: HabitUser
+    @EnvironmentObject var user: User
+    let client = SupabaseClient(supabaseURL: URL(string: "https://hyufiwwpfhtovhspewlc.supabase.co")!, supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5dWZpd3dwZmh0b3Zoc3Bld2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkyMDAzNDQsImV4cCI6MjA0NDc3NjM0NH0.Eol6hgROQO_G5CnGD6YBGTIMOMPKL6GX3xdMfpMlHmc")
     
     var body: some View {
-        //Cambiar a nombre
-        Text(habit.habito?.nombre ?? "Habito").swipeActions(allowsFullSwipe: false){
-            
-            Button(role: .destructive) {
-                print("Delete the habit pls")
-            } label: {
-                Label("Delete", systemImage: "trash.fill")
-            }
-            
-            NavigationLink{
-                //DetallesActividadView(habitName: habit.name)
-            } label: {
-                Button {
-                    print("Edit")
+        Text(habit.habito?.nombre ?? "Hábito")
+            .swipeActions(allowsFullSwipe: false) {
+                
+                Button(role: .destructive) {
+                    deleteHabit()
                 } label: {
-                    Label("Edit", systemImage: "pencil")
+                    Label("Eliminar", systemImage: "trash.fill")
                 }
-                .tint(.yellow)
+                
+                NavigationLink {
+                    // Implement Navigation for editing habit
+                } label: {
+                    Button {
+                        print("Editar")
+                    } label: {
+                        Label("Editar", systemImage: "pencil")
+                    }
+                    .tint(.yellow)
+                }
             }
-            
+    }
+
+    private func deleteHabit() {
+        Task {
+            do {
+                // Delete the habit from the 'usuario_habito' table based on the habit's idhabito and user idusuario
+                try await client.from("usuario_habito")
+                    .delete()
+                    .eq("idhabito", value: habit.idhabito)
+                    .eq("idusuario", value: user.idusuario) // Ensure you're deleting the correct user's habit
+                    .execute()
+                print("Hábito eliminado exitosamente")
+                
+            } catch {
+                print("Error al eliminar el hábito: \(error.localizedDescription)")
+            }
         }
     }
 }
 
 #Preview {
-    NavigationStack{
-        List{
+    NavigationStack {
+        List {
             HabitListItem(habit: HabitUser(recurrencia: "dia", frecuencia: 7, cantidad: "jask", idhabito: 1, fechainicio: "Date()", fechafinal: nil, habito: Habit(idhabito: 1, nombre: "")))
         }
     }

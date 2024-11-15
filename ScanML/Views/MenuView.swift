@@ -11,11 +11,12 @@ import Intents
 struct MenuView: View {
     
     //@Binding var user : User
-    //@EnvironmentObject var user: User
+    @EnvironmentObject var user: User
     
     var body: some View {
         TabView{
-            DatosView().tabItem{
+            DatosView()
+                .tabItem{
                 Label("Datos", systemImage: "chart.bar.fill")
             }.navigationBarTitle("")
                 .navigationBarHidden(true)

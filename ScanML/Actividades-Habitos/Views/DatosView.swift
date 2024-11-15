@@ -96,8 +96,9 @@ struct DatosView: View {
                         loading = true
                         do{
                             habits = try await client.from("usuario_habito")
-                                .select("recurrencia, frecuencia, cantidad, idhabito, fechainicio, fechafinal, habito(idhabito, nombre)").execute().value
-                            print(user.idusuario)
+                                .select("recurrencia, frecuencia, cantidad, idhabito, fechainicio, fechafinal, habito(idhabito, nombre)")
+                                .eq("idusuario", value: user.idusuario).execute().value
+                            print("id usuario:  \(user.idusuario) /n email: \(user.email) ")
                         } catch{
                             print("Not possible")
                         }
@@ -238,5 +239,5 @@ struct DatosView: View {
 }
 
 #Preview {
-    DatosView().environmentObject(User(idusuario: 1, nombre: "Juan", apellido: "", email: "", contraseña: ""))
+    DatosView().environmentObject(User(idusuario: 2, nombre: "Juan", apellido: "", email: "", contraseña: ""))
 }

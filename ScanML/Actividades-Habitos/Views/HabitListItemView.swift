@@ -39,11 +39,10 @@ struct HabitListItem: View {
     private func deleteHabit() {
         Task {
             do {
-                // Delete the habit from the 'usuario_habito' table based on the habit's idhabito and user idusuario
                 try await client.from("usuario_habito")
                     .delete()
                     .eq("idhabito", value: habit.idhabito)
-                    .eq("idusuario", value: user.idusuario) // Ensure you're deleting the correct user's habit
+                    .eq("idusuario", value: user.idusuario)
                     .execute()
                 print("Hábito eliminado exitosamente")
                 

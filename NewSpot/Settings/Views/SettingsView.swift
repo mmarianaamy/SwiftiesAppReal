@@ -16,7 +16,12 @@ struct SettingsView: View {
                 
                 NavigationLink{PrivacyPolicyView()} label: {SettingRow(imagen: "lock", texto: "Privacidad")}.tint(Color.black)
                 
-                SettingRow(imagen: "person.2.badge.plus.fill", texto: "Invitar a un amigo")
+                NavigationLink {
+                    QRInviteView().navigationTitle("Invitar a un amigo")
+                } label: {
+                    SettingRow(imagen: "person.2.badge.plus.fill", texto: "Invitar a un amigo")
+                }.tint(Color.black)
+                
                 Spacer()
             }.padding(.top)
         }

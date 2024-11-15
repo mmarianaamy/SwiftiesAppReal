@@ -68,6 +68,7 @@
 		3A5EDA272CDD9A04007C4F67 /* Property List.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A5ED9DA2CDD9A04007C4F67 /* Property List.plist */; };
 		3A5EDA282CDD9A04007C4F67 /* Assets 2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A5ED9B42CDD9A04007C4F67 /* Assets 2.xcassets */; };
 		3AC8FDBF2CE3B9200049706D /* ShowInSafari.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC8FDBE2CE3B9200049706D /* ShowInSafari.swift */; };
+		3AD82BA62CE780BB00ED14CC /* SettingRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD82BA22CE780BB00ED14CC /* SettingRow.swift */; };
 		3AF907762CE4235700A95554 /* Escaneo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF907752CE4235700A95554 /* Escaneo.swift */; };
 		3AF907A12CE5233E00A95554 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF907A02CE5233E00A95554 /* Date+Extensions.swift */; };
 		FB5A05732B50817E00D09AD3 /* swiftiesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A05722B50817E00D09AD3 /* swiftiesApp.swift */; };
@@ -149,6 +150,7 @@
 		3A5ED9EE2CDD9A04007C4F67 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		3A5ED9EF2CDD9A04007C4F67 /* StepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperView.swift; sourceTree = "<group>"; };
 		3AC8FDBE2CE3B9200049706D /* ShowInSafari.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInSafari.swift; sourceTree = "<group>"; };
+		3AD82BA22CE780BB00ED14CC /* SettingRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRow.swift; sourceTree = "<group>"; };
 		3AF907752CE4235700A95554 /* Escaneo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Escaneo.swift; sourceTree = "<group>"; };
 		3AF907A02CE5233E00A95554 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		FB5A056F2B50817E00D09AD3 /* SwiftiesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftiesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -335,6 +337,7 @@
 			children = (
 				3A5ED9B52CDD9A04007C4F67 /* topView.swift */,
 				3AC8FDBE2CE3B9200049706D /* ShowInSafari.swift */,
+				3AD82BA22CE780BB00ED14CC /* SettingRow.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -754,6 +757,7 @@
 				3A5EDA0C2CDD9A04007C4F67 /* MapView.swift in Sources */,
 				3A5EDA0D2CDD9A04007C4F67 /* test.swift in Sources */,
 				3A5EDA0E2CDD9A04007C4F67 /* SimuladorView.swift in Sources */,
+				3AD82BA62CE780BB00ED14CC /* SettingRow.swift in Sources */,
 				3A5EDA0F2CDD9A04007C4F67 /* Double+Extensions.swift in Sources */,
 				3A5EDA102CDD9A04007C4F67 /* ActividadesModel.swift in Sources */,
 				3A5EDA112CDD9A04007C4F67 /* ViajesView.swift in Sources */,

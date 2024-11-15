@@ -7,18 +7,16 @@
 
 import SwiftUI
 
-
 struct LoginPage: View {
-    
     @State private var email = ""
     @State private var password = ""
     @State private var resultMessage = ""
-    @State private var isLoggedIn = false // State for navigation to ProfileView
+    @State private var isLoggedIn = false
+    @State private var showAlert = false
     
     @State var isLoading = false
     @Binding var logged: Bool
     @EnvironmentObject var user: User
-    
     
     var body: some View {
         ZStack {
@@ -44,8 +42,6 @@ struct LoginPage: View {
                     
                 }.padding()
                 
-                
-                
                 VStack(alignment: .leading) {
                     Text("Password").padding(.horizontal)
                     SecureField("Password", text: $password)
@@ -58,7 +54,6 @@ struct LoginPage: View {
                     
                         .autocorrectionDisabled()
                 }.padding()
-                
                 
                 Button("Iniciar Sesión") {
                     Task {
@@ -79,30 +74,35 @@ struct LoginPage: View {
                         .padding()
                 }
                 
-                // Navegación a SignUpView
-                NavigationLink(destination: SignUpView().navigationTitle("")
+                NavigationLink(destination: SignUpView(showAlert: $showAlert).navigationTitle("")
                     .navigationBarBackButtonHidden()
                     .toolbar(.hidden)
-) {
+                ) {
                     Text("¿No tienes una cuenta? Regístrate")
                         .foregroundStyle(Color.white)
                 }
-.padding()
+                .padding()
                 .navigationTitle("")
                 .navigationBarBackButtonHidden()
                 .toolbar(.hidden)
-
-                
-                // Navegación a MenuView al iniciar sesión
+   
                 NavigationLink(destination: MenuView(), isActive: $isLoggedIn) {
                     EmptyView()
                 }
                 
             }.zIndex(1)
                 .padding()
-        }.ignoresSafeArea()
+        }
+        .ignoresSafeArea()
+        .foregroundStyle(Color.white)
         
-            .foregroundStyle(Color.white)
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("Usuario Creado"),
+                message: Text("¡Ahora puedes iniciar sesión con tu cuenta!"),
+                dismissButton: .default(Text("OK"))
+            )
+        }
         
         if isLoading {
             Color.black.opacity(0.5).ignoresSafeArea()
@@ -115,7 +115,7 @@ struct LoginPage: View {
             try await supabase.auth.signIn(email: email, password: password)
             resultMessage = "Inicio de sesión exitoso con correo y contraseña."
             DispatchQueue.main.async {
-                self.isLoggedIn = true // Navigate to ProfileView on successful login
+                self.isLoggedIn = true
             }
             await user.changeValue(email: email)
             

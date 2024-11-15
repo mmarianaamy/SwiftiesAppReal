@@ -14,9 +14,12 @@ struct SignUpView: View {
     @State private var resultMessage = ""
     
     @State var isLoading = false
-    
+    @State private var showPasswordAlert = false
     
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var user: User
+
+    @Binding var showAlert: Bool
 
     var body: some View {
         ZStack {
@@ -62,8 +65,18 @@ struct SignUpView: View {
                 .padding()
                 
                 Button("Registrarme") {
-                    Task {
-                        resultMessage = await signUpWithURLSessionWithRetry(email: email, password: password)
+                    if isPasswordWeak(password) {
+                        showPasswordAlert = true
+                    } else {
+                        Task {
+                            resultMessage = await signUpWithURLSessionWithRetry(email: email, password: password)
+                            if resultMessage == "Registro exitoso" {
+                                DispatchQueue.main.async {
+                                    dismiss()
+                                    showAlert = true
+                                }
+                            }
+                        }
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -93,6 +106,19 @@ struct SignUpView: View {
         }
         .ignoresSafeArea()
         .foregroundStyle(Color.white)
+        .alert(isPresented: $showPasswordAlert) {
+            Alert(
+                title: Text("Contraseña débil"),
+                message: Text("Tu contraseña debe tener al menos 8 caracteres, incluyendo letras y números."),
+                dismissButton: .default(Text("OK"))
+            )
+        }
+    }
+
+    func isPasswordWeak(_ password: String) -> Bool {
+        let regex = "^(?=.*[A-Za-z])(?=.*\\d).{8,}$"
+        let predicate = NSPredicate(format: "SELF MATCHES %@", regex)
+        return !predicate.evaluate(with: password)
     }
 
     func signUpWithURLSessionWithRetry(email: String, password: String, maxRetries: Int = 3) async -> String {

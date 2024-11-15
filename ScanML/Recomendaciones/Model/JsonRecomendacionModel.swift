@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Sugerencia: Codable {
+struct Sugerencia: Decodable, Identifiable {
+    var id = UUID()
     let actividad: String
     let sugerencia: String
 
@@ -17,7 +18,7 @@ struct Sugerencia: Codable {
     }
 }
 
-struct Response: Codable {
+struct Response: Decodable {
     let sugerencias: [Sugerencia]
 
     enum CodingKeys: String, CodingKey {

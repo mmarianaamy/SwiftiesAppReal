@@ -24,11 +24,26 @@ struct RecomendacionesView: View {
             let habitsString = habits.compactMap { $0.habito?.nombre }.joined(separator: ", ")
             // MARK: Debug -----
             print(habitsString)
-            response = try await self.generativeModel.generateContent(
-                "Dame un máximo de 4 sugerencias pare reducir el impacto \(tipo) de una persona que tiene los siguientes habitos: \(habitsString). Deben de ser sugerencias que hagan sentido. No tienes que dar 4 obligatoriamente. Dámelo en formato JSON. No incluyas texto adicional. Unicamente regresa el diccionario. Empezando con { y terminando con }. El formato debe de ser una clave sugerencia. Cada elemento del arreglo es un objeto que tiene dos claves: actividad y sugerencia. Devuélvelo estrictamente en formato JSON sin caracteres de escape o de formato adicional."
-            )
+            if tipo == "Hídrico" {
+                response = try await self.generativeModel.generateContent(
+                    "Dame un máximo de 4 sugerencias pare reducir el impacto hidrico de una persona que tiene los siguientes habitos: \(habitsString). Deben de ser sugerencias que hagan sentido. No tienes que dar 4 obligatoriamente. Dámelo en formato JSON. No incluyas texto adicional. Unicamente regresa el diccionario. Empezando con { y terminando con }. El formato debe de ser una clave sugerencia. Cada elemento del arreglo es un objeto que tiene dos claves: actividad y sugerencia. Devuélvelo estrictamente en formato JSON sin caracteres de escape o de formato adicional. Enfocate en cosas que reduzcan la huella hidrica. Cosas relacionadas al agua. Las sugerencias deben incluir acciones como el ahorro de agua")
+                print("PROMPT AGUA")
+            }
+            else if tipo == "Energético" {
+                response = try await self.generativeModel.generateContent(
+                    "Dame un máximo de 4 sugerencias pare reducir el impacto electrico de una persona que tiene los siguientes habitos: \(habitsString). Deben de ser sugerencias que hagan sentido. No tienes que dar 4 obligatoriamente. Dámelo en formato JSON. No incluyas texto adicional. Unicamente regresa el diccionario. Empezando con { y terminando con }. El formato debe de ser una clave sugerencia. Cada elemento del arreglo es un objeto que tiene dos claves: actividad y sugerencia. Devuélvelo estrictamente en formato JSON sin caracteres de escape o de formato adicional. Las sugerencias deben centrarse en eficiencia energética. Solo incluye cosas de agua si directamente se relacionan con el consumo de electricidad")
+                print("PROMPT ELECTRICIDAD")
+            }
+            else if tipo == "Carbono"{
+                response = try await self.generativeModel.generateContent(
+                    "Dame un máximo de 4 sugerencias pare reducir la huella de carbono de una persona que tiene los siguientes habitos: \(habitsString). Deben de ser sugerencias que hagan sentido. No tienes que dar 4 obligatoriamente. Dámelo en formato JSON. No incluyas texto adicional. Unicamente regresa el diccionario. Empezando con { y terminando con }. El formato debe de ser una clave sugerencia. Cada elemento del arreglo es un objeto que tiene dos claves: actividad y sugerencia. Devuélvelo estrictamente en formato JSON sin caracteres de escape o de formato adicional. Las sugerencias deben centrarse reducir las emisiones de carbono de la persona. Solo incluye cosas de agua si directamente se relacionan con el consumo de electricidad")
+                print("PROMPT CARBONO")
+            }
+            
+                
             
             if let responseText = response?.text {
+                print("RESPUESTA: \(responseText)")
                 return responseText
             } else {
                 throw MyError.runtimeError("No response text available.")
@@ -61,7 +76,7 @@ struct RecomendacionesView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Text("hola")
+                Text("hola").hidden()
                     .task {
                         do {
                             habits = try await client.from("usuario_habito")
@@ -86,6 +101,7 @@ struct RecomendacionesView: View {
                                         let parsedResponse = try decoder.decode(Response.self, from: jsonData)
                                         sugerencias = parsedResponse.sugerencias
                                         print("Successfully decoded JSON.")
+                                        print("SUGERENCIAS: ", sugerencias)
                                     } else {
                                         print("Error: JSON structure is not valid.")
                                     }
@@ -95,7 +111,7 @@ struct RecomendacionesView: View {
                             } else {
                                 print("Error: Unable to convert string to data.")
                             }
-
+                            
                         } catch {
                             print("Error fetching habits: \(error)")
                         }
@@ -115,17 +131,17 @@ struct RecomendacionesView: View {
                     }
                     VStack(alignment: .leading, spacing: 10) {
                         if tipo == "Hídrico" {
-                            RecomendacionItemView(titulo: "Reduce el consumo de carne y lácteos", descripcion: "La producción de carne y lácteos requiere grandes cantidades de agua. Reducir su consumo ayuda a ahorrar agua.")
-                            RecomendacionItemView(titulo: "Toma duchas cortas (máximo 5 minutos)", descripcion: "Reducir el tiempo de ducha puede ahorrar una cantidad significativa de agua diaria.")
-                            RecomendacionItemView(titulo: "Instala inodoros de descarga dual", descripcion: "Los inodoros de descarga dual permiten elegir entre dos niveles de descarga, lo que reduce el uso innecesario de agua.")
-                            RecomendacionItemView(titulo: "Utiliza sistemas de riego por goteo", descripcion: "Los sistemas de riego por goteo son más eficientes que el riego tradicional, reduciendo el desperdicio de agua.")
+                            ForEach(sugerencias) { sugerencia in
+                                RecomendacionItemView(titulo: sugerencia.actividad, descripcion: sugerencia.sugerencia)
+                            }
                         } else if tipo == "Energético" {
-                            RecomendacionItemView(titulo: "Apaga las luces al salir de una habitación", descripcion: "Apagar las luces cuando no se usan reduce el consumo de electricidad y mejora la eficiencia energética.")
-                            RecomendacionItemView(titulo: "Usa electrodomésticos eficientes", descripcion: "Los electrodomésticos eficientes consumen menos energía, ayudando a reducir tu huella energética.")
-                            RecomendacionItemView(titulo: "Utiliza energía renovable", descripcion: "Optar por energía renovable como la solar o eólica reduce las emisiones de CO2 y depende menos de fuentes no renovables.")
+                            ForEach(sugerencias) { sugerencia in
+                                RecomendacionItemView(titulo: sugerencia.actividad, descripcion: sugerencia.sugerencia)
+                            }
                         } else if tipo == "Carbono" {
-                            RecomendacionItemView(titulo: "Utiliza transporte público o bicicleta", descripcion: "El transporte público y la bicicleta emiten menos CO2 que los vehículos privados, ayudando a reducir tu huella de carbono.")
-                            RecomendacionItemView(titulo: "Planta árboles para compensar emisiones", descripcion: "Los árboles absorben CO2, contribuyendo a compensar las emisiones de carbono generadas por otras actividades.")
+                            ForEach(sugerencias) { sugerencia in
+                                RecomendacionItemView(titulo: sugerencia.actividad, descripcion: sugerencia.sugerencia)
+                            }
                         }
                     }
                     .padding()

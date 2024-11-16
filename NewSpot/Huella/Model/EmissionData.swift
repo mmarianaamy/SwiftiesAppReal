@@ -38,11 +38,3 @@ extension [Emissions] {
     }
 }
 
-///test data
-
-var mockupDataTotalEmissions: [Emissions] = [
-    .init(type: "Energetica", emissions: .random(in: 6000...45000)),
-    .init(type: "Carbono", emissions: .random(in: 3500...45000)),
-    .init(type: "Hidrica", emissions: .random(in: 12000...45000)),
-]
-

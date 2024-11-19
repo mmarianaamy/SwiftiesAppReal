@@ -67,6 +67,7 @@
 		3A5EDA262CDD9A04007C4F67 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A5ED9D82CDD9A04007C4F67 /* Preview Assets.xcassets */; };
 		3A5EDA272CDD9A04007C4F67 /* Property List.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A5ED9DA2CDD9A04007C4F67 /* Property List.plist */; };
 		3A5EDA282CDD9A04007C4F67 /* Assets 2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A5ED9B42CDD9A04007C4F67 /* Assets 2.xcassets */; };
+		3A90A8162CECF6250028BEFD /* CustomMapViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A90A8152CECF6250028BEFD /* CustomMapViewRepresentable.swift */; };
 		3AC8FDBF2CE3B9200049706D /* ShowInSafari.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC8FDBE2CE3B9200049706D /* ShowInSafari.swift */; };
 		3AD82BA62CE780BB00ED14CC /* SettingRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD82BA22CE780BB00ED14CC /* SettingRow.swift */; };
 		3AF907762CE4235700A95554 /* Escaneo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF907752CE4235700A95554 /* Escaneo.swift */; };
@@ -149,6 +150,7 @@
 		3A5ED9ED2CDD9A04007C4F67 /* EditHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHabitView.swift; sourceTree = "<group>"; };
 		3A5ED9EE2CDD9A04007C4F67 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		3A5ED9EF2CDD9A04007C4F67 /* StepperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperView.swift; sourceTree = "<group>"; };
+		3A90A8152CECF6250028BEFD /* CustomMapViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMapViewRepresentable.swift; sourceTree = "<group>"; };
 		3AC8FDBE2CE3B9200049706D /* ShowInSafari.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowInSafari.swift; sourceTree = "<group>"; };
 		3AD82BA22CE780BB00ED14CC /* SettingRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRow.swift; sourceTree = "<group>"; };
 		3AF907752CE4235700A95554 /* Escaneo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Escaneo.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 		3A2EBFA32CDDC1A500998DFF /* Model */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Model; sourceTree = "<group>"; };
 		3A2EBFA52CDDC1A500998DFF /* Preview Content */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Preview Content"; sourceTree = "<group>"; };
 		3A2EBFB02CDDC1A500998DFF /* videos */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = videos; sourceTree = "<group>"; };
+		3A90A8172CECF6400028BEFD /* Managers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Managers; sourceTree = "<group>"; };
 		3AC8FDC02CE3C6170049706D /* TextRecognition */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TextRecognition; sourceTree = "<group>"; };
 		3AF907992CE51F0700A95554 /* SpecificGraphs */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SpecificGraphs; sourceTree = "<group>"; };
 		3AF907F92CE58EBA00A95554 /* AppIntents */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AppIntents; sourceTree = "<group>"; };
@@ -383,6 +386,7 @@
 			children = (
 				3A5ED9D42CDD9A04007C4F67 /* MapView.swift */,
 				3A5ED9D52CDD9A04007C4F67 /* ViajesView.swift */,
+				3A90A8152CECF6250028BEFD /* CustomMapViewRepresentable.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -390,6 +394,7 @@
 		3A5ED9D72CDD9A04007C4F67 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				3A90A8172CECF6400028BEFD /* Managers */,
 				3A5ED9D62CDD9A04007C4F67 /* Views */,
 			);
 			path = Map;
@@ -541,6 +546,7 @@
 				3A2EBFA32CDDC1A500998DFF /* Model */,
 				3A2EBFA52CDDC1A500998DFF /* Preview Content */,
 				3A2EBFB02CDDC1A500998DFF /* videos */,
+				3A90A8172CECF6400028BEFD /* Managers */,
 				3AC8FDC02CE3C6170049706D /* TextRecognition */,
 				3AF907992CE51F0700A95554 /* SpecificGraphs */,
 				3AF907F92CE58EBA00A95554 /* AppIntents */,
@@ -688,6 +694,7 @@
 				3A5ED9F52CDD9A04007C4F67 /* EmissionViewModel.swift in Sources */,
 				3A5ED9F62CDD9A04007C4F67 /* Supabase.swift in Sources */,
 				3A5ED9F72CDD9A04007C4F67 /* ProductStruct.swift in Sources */,
+				3A90A8162CECF6250028BEFD /* CustomMapViewRepresentable.swift in Sources */,
 				3AF907762CE4235700A95554 /* Escaneo.swift in Sources */,
 				3AF907A12CE5233E00A95554 /* Date+Extensions.swift in Sources */,
 				3A5ED9F82CDD9A04007C4F67 /* LeaderbordRow.swift in Sources */,
@@ -903,6 +910,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NewSpot/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "La app necesita acceso a la cámara";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This will let you calculate your impact from driving";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -934,6 +942,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NewSpot/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "La app necesita acceso a la cámara";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This will let you calculate your impact from driving";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

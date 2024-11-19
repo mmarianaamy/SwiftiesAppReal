@@ -15,6 +15,9 @@ struct QRInviteView: View {
     @State private var isScanning: Bool = false
     
     @State private var supabaseClient = SupabaseClient(supabaseURL: URL(string: "https://hyufiwwpfhtovhspewlc.supabase.co")!, supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5dWZpd3dwZmh0b3Zoc3Bld2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkyMDAzNDQsImV4cCI6MjA0NDc3NjM0NH0.Eol6hgROQO_G5CnGD6YBGTIMOMPKL6GX3xdMfpMlHmc")
+    
+    @State var friendships: [Friendships]  = []
+    
 
     var body: some View {
         VStack(spacing: 20) {
@@ -37,7 +40,7 @@ struct QRInviteView: View {
                 Text("Error al generar el código QR")
                     .foregroundColor(.red)
             }
-
+            
             if user.idusuario != 0 {
                 Text("Código: User\(user.idusuario)")
                     .font(.subheadline)
@@ -62,7 +65,7 @@ struct QRInviteView: View {
             )
         }
         .padding()
-        .onChange(of: scannedCode) { newValue in
+        .onChange(of: scannedCode) { newValue, _ in
             if !newValue.isEmpty {
                 print("Scanned code: \(newValue)")
 
@@ -75,15 +78,23 @@ struct QRInviteView: View {
                     
                     Task {
                         do {
-                            try await supabaseClient.from("amigos").insert([
-                                ["idusuario": currentUserId, "idamigo": userId]
-                            ]).execute()
                             
-                            try await supabaseClient.from("amigos").insert([
-                                ["idusuario": userId, "idamigo": currentUserId]
-                            ]).execute()
+                            friendships = try await supabaseClient.from("amigos").select("idusuario, idamigo")
+                                .eq("idusuario", value: user.idusuario)
+                                .eq("idamigo", value: userId).execute().value
+                            
+                            if !friendships.isEmpty {
+                                try await supabaseClient.from("amigos").insert([
+                                    ["idusuario": currentUserId, "idamigo": userId]
+                                ]).execute()
+                                
+                                try await supabaseClient.from("amigos").insert([
+                                    ["idusuario": userId, "idamigo": currentUserId]
+                                ]).execute()
 
-                            print("Friend added successfully")
+                                print("Friend added successfully")
+                            }
+
                         } catch {
                             print("Error adding friend: \(error.localizedDescription)")
                         }

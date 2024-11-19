@@ -12,7 +12,8 @@ struct MapView: View {
     var coordinate: CLLocationCoordinate2D
     
     var body: some View {
-        Map(position: .constant(.region(region)))
+        //Map(position: .constant(.region(region)))
+        CustomMapViewRepresentable()
     }
     
     private var region: MKCoordinateRegion {

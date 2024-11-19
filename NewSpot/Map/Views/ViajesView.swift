@@ -9,12 +9,12 @@ import SwiftUI
 import CoreLocation
 
 struct ViajeView: View {
-    
-    @State var selection = 0
+    @State private var showLocationSearchView: Bool = false
+    //@State var selection = 0
     
     var body: some View {
         
-        VStack {
+        /*VStack {
             
             MapView(coordinate: CLLocationCoordinate2D(latitude: 25.650102, longitude:  -100.29065))
                 .frame(height: 450)
@@ -39,6 +39,26 @@ struct ViajeView: View {
                     .padding(.vertical, 8)
             }
             .buttonStyle(.borderedProminent)
+        }*/
+        ZStack(alignment: .top) {
+            CustomMapViewRepresentable()
+                .ignoresSafeArea()
+            
+            if !showLocationSearchView{
+                LocationSearchActivationView()
+                    .padding(.top, 72)
+                    .onTapGesture {
+                        withAnimation(.spring()){
+                            showLocationSearchView.toggle()
+                        }
+                    }
+            } else {
+                LocationSearchView(showLocationSearchView: $showLocationSearchView)
+            }
+            
+            MapViewActionButton(showLocationSearchView: $showLocationSearchView)
+                .padding(.leading)
+                .padding(.top, 4)
         }
        
         

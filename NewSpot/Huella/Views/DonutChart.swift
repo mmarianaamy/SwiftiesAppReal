@@ -8,12 +8,57 @@
 import SwiftUI
 import Charts
 
+struct datostoDB : Codable {
+    var usuario_id : Int
+    var fechai : Date
+    var fechaii : Date
+    var huellabuscada : Int
+}
+
+struct datosFromDB : Codable {
+    var recurrencia : String
+    var frecuencia : Int
+    var cantidad : String
+    var idhuella : Int
+    var valorimpacto : Float
+    var idusuario_habito : Int
+    var total_impacto : Float
+}
+
+extension Date {
+    func startOfMonth() -> Date {
+        
+        let components = Calendar.current.dateComponents([.year, .month], from: self)
+        return Calendar.current.date(from: components)!
+    }
+    
+    func endOfMonth() -> Date {
+        return Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: self.startOfMonth())!
+    }
+}
+
+var mockupDataTotalEmissions: [Emissions] = [
+    .init(type: "Energetica", emissions: .random(in: 6000...45000)),
+    //.init(type: "Carbono", emissions: .random(in: 3500...45000)),
+    //.init(type: "Hidrica", emissions: .random(in: 12000...45000)),
+]
+
 struct DonutChart: View {
     @EnvironmentObject var user : User
     
     @State private var graphType: GraphType = .donut
     @State private var barSelection: String?
     @State private var pieSelection: Double?
+    @State var dataGot : [[datosFromDB]?] = []
+    
+    /*func sumarValores(){
+        for i in 0...dataGot[0]!.count{
+            print(dataGot[0]![i].total_impacto)
+        }
+        print(dataGot[0]!.count)
+        print("hi")
+    }*/
+    
     var body: some View {
         VStack {
             ZStack {
@@ -64,6 +109,20 @@ struct DonutChart: View {
             .frame(height: 300)
             .padding(.top, 10)
             .animation(.snappy, value: graphType)
+            .task{
+                do{
+                    for i in 1...3{
+                        let response: [datosFromDB]? = try await supabase
+                            .rpc("datos_fecha4", params: datostoDB(usuario_id: 1, fechai: Date().startOfMonth(), fechaii: Date().endOfMonth(), huellabuscada: i))
+                          .execute()
+                          .value
+                        dataGot.append(response)
+                    }
+                }catch{
+                    print()
+                }
+                sumarValores()
+            }
         }
         .padding()
         .onChange(of: pieSelection, initial: false) { oldValue, newValue in

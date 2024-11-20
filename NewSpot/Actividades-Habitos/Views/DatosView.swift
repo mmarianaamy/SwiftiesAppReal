@@ -130,7 +130,7 @@ struct DatosView: View {
                                     loading = true
                                     do {
                                         todayProducts = try await client.from("usuario_producto")
-                                            .select("idusuario, idproducto, cantidad, fecha, producto(idproducto, nombre, cantidad, unidad)")
+                                            .select("idup, idusuario, idproducto, cantidad, fecha, producto(idproducto, nombre, cantidad, unidad)")
                                             .eq("fecha", value: dates[current - 1])
                                             .eq("idusuario", value: user.idusuario).execute().value
                                     } catch {
@@ -147,18 +147,12 @@ struct DatosView: View {
                             if loading {
                                 ProgressView()
                             } else {
-                                ForEach($todayProducts, id: \.self) { product in
-                                    HStack {
-                                        Text(product.wrappedValue.producto.nombre)
-                                            .foregroundStyle(Color.white)
-                                            .padding(.leading)
-                                            .padding(.vertical, 5)
-                                        Spacer()
+                                List{
+                                    ForEach($todayProducts, id: \.self) { product in
+                                        ActListItem(usuarioProducto: product.wrappedValue)
                                     }
-                                    .background(Color.blue)
-                                    .padding(.vertical, 7)
-                                    .padding(.horizontal, 10)
-                                }
+                                }.listStyle(PlainListStyle())
+                                
                             }
                         }
                         .task {

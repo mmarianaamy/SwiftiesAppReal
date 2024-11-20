@@ -98,7 +98,7 @@ struct DetallesHoyView: View {
             DatosView()
         }
     }*/
-    @Previewable @StateObject var user = User() // Create an instance of User
+    @Previewable @StateObject var user = User(idusuario: 11) // Create an instance of User
     DatosView()
         .environmentObject(user)
 

@@ -15,6 +15,7 @@ struct Product : Decodable, Hashable{
 }
 
 struct UsuarioProduct : Decodable, Hashable {
+    var idup : Int
     var cantidad : Float
     var fecha : String
     var idusuario : Int

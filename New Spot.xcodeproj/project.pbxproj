@@ -80,6 +80,7 @@
 		FB5A05A52B50873700D09AD3 /* FontStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A05A42B50873700D09AD3 /* FontStyles.swift */; };
 		FB5A05B12B50FFC300D09AD3 /* CameraScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A05B02B50FFC300D09AD3 /* CameraScanView.swift */; };
 		FB5A05BE2B54820C00D09AD3 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = FB5A05BD2B54820C00D09AD3 /* YouTubePlayerKit */; };
+		FB67007C2CEE560100EBF697 /* ActListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB67007B2CEE55F700EBF697 /* ActListItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,6 +169,7 @@
 		FB5A05A32B5086C300D09AD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FB5A05A42B50873700D09AD3 /* FontStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontStyles.swift; sourceTree = "<group>"; };
 		FB5A05B02B50FFC300D09AD3 /* CameraScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraScanView.swift; sourceTree = "<group>"; };
+		FB67007B2CEE55F700EBF697 /* ActListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActListItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -270,6 +272,7 @@
 				3A29154B2CE70BC300A04541 /* DetallesActividadUpdate.swift */,
 				3A5ED9B02CDD9A04007C4F67 /* DetallesHoy.swift */,
 				3A5ED9B12CDD9A04007C4F67 /* HabitListItemView.swift */,
+				FB67007B2CEE55F700EBF697 /* ActListItem.swift */,
 				3AF907752CE4235700A95554 /* Escaneo.swift */,
 			);
 			path = Views;
@@ -754,6 +757,7 @@
 				3A90A8362CED314C0028BEFD /* LocationsSearchResultCell.swift in Sources */,
 				FB5A059D2B5081DC00D09AD3 /* MLMenuView.swift in Sources */,
 				1123D4052B6356A100CB8B16 /* ShowSignView.swift in Sources */,
+				FB67007C2CEE560100EBF697 /* ActListItem.swift in Sources */,
 				FB5A05A52B50873700D09AD3 /* FontStyles.swift in Sources */,
 				FB5A05732B50817E00D09AD3 /* swiftiesApp.swift in Sources */,
 			);

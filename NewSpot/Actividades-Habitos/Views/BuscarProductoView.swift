@@ -9,7 +9,7 @@ import SwiftUI
 import Supabase
 
 struct BuscarProductoView: View {
-        
+    
     @State var searchText : String = ""
     let products : [Product] = []
     
@@ -18,6 +18,10 @@ struct BuscarProductoView: View {
     @State var selected : Bool = false
     
     @State var productosGuardados : [Product] = []
+    
+    @EnvironmentObject var user: User
+    
+    var updating : Bool
     
     var searchResults: [Product] {
         if searchText.isEmpty{
@@ -32,7 +36,9 @@ struct BuscarProductoView: View {
     
     @State var isLoading : Bool = true
     @State var errorMessage : String = ""
-
+    
+    @State var prevProduct : Int = -1
+    
     var body: some View {
         ZStack{
             VStack{
@@ -42,15 +48,13 @@ struct BuscarProductoView: View {
                     .padding()
                     .autocorrectionDisabled().task{
                         do{
-                            print("here")
                             productosGuardados = try await client.from("producto")
                                 .select().execute().value
-                            print(productosGuardados)
-                            print("done")
                         } catch{
                             print("Not possible")
                         }
                         isLoading = false
+                        prevProduct = selectedProduct
                     }
                 if isLoading{
                     ProgressView()
@@ -59,7 +63,18 @@ struct BuscarProductoView: View {
                         ForEach(productosGuardados, id: \.self){product in
                             Button{
                                 selectedProduct = product.idproducto
-                                selected = true
+                                if updating{
+                                    Task{
+                                        do{
+                                            try supabase.from("usuario_producto").update(["idproducto" : selectedProduct]).eq("idusuario", value: user.idusuario).eq("idproducto", value: product.idproducto)
+                                            prevProduct = selectedProduct
+                                            print(selectedProduct)
+                                        } catch{
+                                            print("Not possible to update: \(error.localizedDescription)")
+                                        }
+                                    }
+                                }
+                                
                             } label: {
                                 HStack{
                                     Text(product.nombre)
@@ -74,7 +89,7 @@ struct BuscarProductoView: View {
                     }.padding()
                 }
             }
-            if selected {
+            if selectedProduct != -1 {
                 VStack{
                     Spacer()
                     Button{
@@ -82,7 +97,9 @@ struct BuscarProductoView: View {
                     }label: {
                         Text("Siguiente").foregroundStyle(Color.white).padding()
                     }.background(Color.background)
-                }.padding()
+                }.padding().task{
+                    print(selectedProduct)
+                }
             }
         }
     }

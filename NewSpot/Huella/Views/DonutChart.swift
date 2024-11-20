@@ -121,7 +121,7 @@ struct DonutChart: View {
                 }catch{
                     print()
                 }
-                sumarValores()
+                //sumarValores()
             }
         }
         .padding()

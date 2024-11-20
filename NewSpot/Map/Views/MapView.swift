@@ -13,7 +13,8 @@ struct MapView: View {
     
     var body: some View {
         //Map(position: .constant(.region(region)))
-        CustomMapViewRepresentable()
+        ///Ahorita ya no se usa esto. Solo puse EmptyView para que no marcara error, por si despues vuelvo a usar esto, pero probablemente se tendrá que borrar esta View entera
+        EmptyView()
     }
     
     private var region: MKCoordinateRegion {

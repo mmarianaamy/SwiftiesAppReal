@@ -171,6 +171,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		3A096ED12CEE7BF80076F97A /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
 		3A2914E22CE6E8D000A04541 /* View */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = View; sourceTree = "<group>"; };
 		3A2914E32CE6E8DA00A04541 /* Model */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Model; sourceTree = "<group>"; };
 		3A2914E42CE6E8E700A04541 /* ViewModel */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModel; sourceTree = "<group>"; };
@@ -401,6 +402,7 @@
 		3A5ED9D72CDD9A04007C4F67 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				3A096ED12CEE7BF80076F97A /* Models */,
 				3A90A82A2CED309E0028BEFD /* LocationSearch */,
 				3A90A8172CECF6400028BEFD /* Managers */,
 				3A5ED9D62CDD9A04007C4F67 /* Views */,
@@ -545,6 +547,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				3A096ED12CEE7BF80076F97A /* Models */,
 				3A2914E22CE6E8D000A04541 /* View */,
 				3A2914E32CE6E8DA00A04541 /* Model */,
 				3A2914E42CE6E8E700A04541 /* ViewModel */,

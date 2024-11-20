@@ -32,4 +32,3 @@ struct LocationSearchActivationView: View {
 #Preview {
     LocationSearchActivationView()
 }
-

@@ -1,3 +1,10 @@
+//
+//  RecomendacionesAIView.swift
+//  New Spot
+//
+//  Created by Jorge Salcedo on 10/11/24.
+//
+
 import SwiftUI
 import Supabase
 import GoogleGenerativeAI

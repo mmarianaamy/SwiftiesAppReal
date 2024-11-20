@@ -42,7 +42,7 @@ struct ViajeView: View {
         }*/
         ZStack(alignment: .top) {
             CustomMapViewRepresentable()
-                .ignoresSafeArea()
+                .ignoresSafeArea(.container, edges: .top)
             
             if !showLocationSearchView{
                 LocationSearchActivationView()

@@ -13,6 +13,7 @@ struct CustomMapViewRepresentable: UIViewRepresentable {
     let mapView = MKMapView()
     @EnvironmentObject var locationViewModel: LocationSearchViewModel
     let locationManager = LocationManager()
+    @Binding var mapState: MapViewState
     
     func makeUIView(context: Context) -> some UIView {
         mapView.delegate = context.coordinator
@@ -24,12 +25,26 @@ struct CustomMapViewRepresentable: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UIViewType, context: Context) {
-        if let selectedLocation = locationViewModel.selectedLocation{
-            print("Selected location in map view: \(selectedLocation)")
-            context.coordinator.addAndSelectAnnotation(withCoordinate: selectedLocation)
-            context.coordinator.configurePolyLine(withDestinationCoordinate: selectedLocation)
-            
+        print("Map State: \(mapState)")
+        switch mapState {
+        case .noInput:
+            context.coordinator.clearMapViewAndRecenterOnUserLocation()
+            break
+        case .searchingForLocation:
+            break
+        case .locationSelected:
+            if let selectedLocation = locationViewModel.selectedLocation{
+                print("Selected location in map view: \(selectedLocation)")
+                context.coordinator.addAndSelectAnnotation(withCoordinate: selectedLocation)
+                context.coordinator.configurePolyLine(withDestinationCoordinate: selectedLocation)
+            }
+            break
+        
         }
+        
+        //if mapState == .noInput{
+        //    context.coordinator.clearMapViewAndRecenterOnUserLocation()
+        //}
     }
     
     func makeCoordinator() -> MapCoordinator {
@@ -41,6 +56,8 @@ extension CustomMapViewRepresentable{
     class MapCoordinator: NSObject, MKMapViewDelegate{
         let parent: CustomMapViewRepresentable
         var userLocationCoordinate: CLLocationCoordinate2D?
+        var currentRegion: MKCoordinateRegion?
+        
         init(parent: CustomMapViewRepresentable) {
             self.parent = parent
             super.init()
@@ -48,6 +65,9 @@ extension CustomMapViewRepresentable{
         func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
             self.userLocationCoordinate = userLocation.coordinate
             let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
+            
+            self.currentRegion = region
+            
             parent.mapView.setRegion(region, animated: true)
         }
         
@@ -74,6 +94,13 @@ extension CustomMapViewRepresentable{
         ///I'm using getDestinationRoute inside of this. The route(s) have not been generated before this
         func configurePolyLine(withDestinationCoordinate coordinate: CLLocationCoordinate2D) {
             guard let userLocationCoordinate = self.userLocationCoordinate else { return }
+            ///Removes previous polylines. I don't know why the other one is not deleted previously. It should have been deleted, but deleting it here should work
+            ///Update: It didn't
+            ///Update2: It did
+            ////Update3: No it didn't
+            ///Final Update: It did
+            parent.mapView.removeOverlays(parent.mapView.overlays)
+            
             getDestinationRoute(from: userLocationCoordinate, to: coordinate) { route in
                 self.parent.mapView.addOverlay(route.polyline)
                 //MARK: Debug-
@@ -94,7 +121,7 @@ extension CustomMapViewRepresentable{
             request.source = MKMapItem(placemark: userPlacemark)
             request.destination = MKMapItem(placemark: destination)
             let directions = MKDirections(request: request)
-            ///This is calling an API. Apple uses it to generate the searchs behind scene, This is why mapkit doesn't work for generating custom routes, I would need to define my own method.
+            ///This is calling an API. Apple uses it to generate the searchs behind scene
             directions.calculate { response, error in
                 if let error = error {
                     print("Failed to get directions with error \(error.localizedDescription)")
@@ -106,6 +133,16 @@ extension CustomMapViewRepresentable{
             }
         }
         
+        
+        func clearMapViewAndRecenterOnUserLocation(){
+            parent.mapView.removeAnnotations(parent.mapView.annotations)
+            parent.mapView.removeOverlays(parent.mapView.overlays)
+            
+            ///Go back to user location in map region
+            if let currentRegion = currentRegion {
+                parent.mapView.setRegion(currentRegion, animated: true)
+            }
+        }
         
     }
 }

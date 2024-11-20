@@ -9,64 +9,64 @@ import SwiftUI
 import CoreLocation
 
 struct ViajeView: View {
-    @State private var showLocationSearchView: Bool = false
+    //@State private var showLocationSearchView: Bool = false
+    @State private var mapState = MapViewState.noInput
     //@State var selection = 0
     
     var body: some View {
         
         /*VStack {
-            
-            MapView(coordinate: CLLocationCoordinate2D(latitude: 25.650102, longitude:  -100.29065))
-                .frame(height: 450)
-            
-            
-            Text("Tu viaje de hoy")
-                .font(.largeTitle)
-                .bold()
-                .foregroundStyle(Color.primary)
-            Picker("Caminando, Bici, o Carro", selection: $selection) {
-                Text("Caminando").tag(0)
-                Text("Bici").tag(1)
-                Text("Carro").tag(2)
-            }
-            .pickerStyle(.segmented).padding()
-            
-            Button {
-                
-            } label: {
-                Text("Listo")
-                    .padding(.horizontal)
-                    .padding(.vertical, 8)
-            }
-            .buttonStyle(.borderedProminent)
-        }*/
+         
+         MapView(coordinate: CLLocationCoordinate2D(latitude: 25.650102, longitude:  -100.29065))
+         .frame(height: 450)
+         
+         
+         Text("Tu viaje de hoy")
+         .font(.largeTitle)
+         .bold()
+         .foregroundStyle(Color.primary)
+         Picker("Caminando, Bici, o Carro", selection: $selection) {
+         Text("Caminando").tag(0)
+         Text("Bici").tag(1)
+         Text("Carro").tag(2)
+         }
+         .pickerStyle(.segmented).padding()
+         
+         Button {
+         
+         } label: {
+         Text("Listo")
+         .padding(.horizontal)
+         .padding(.vertical, 8)
+         }
+         .buttonStyle(.borderedProminent)
+         }*/
         ZStack(alignment: .top) {
-            CustomMapViewRepresentable()
+            CustomMapViewRepresentable(mapState: $mapState)
                 .ignoresSafeArea(.container, edges: .top)
             
-            if !showLocationSearchView{
+            if mapState == .noInput{
                 LocationSearchActivationView()
                     .padding(.top, 72)
                     .onTapGesture {
                         withAnimation(.spring()){
-                            showLocationSearchView.toggle()
+                            //showLocationSearchView.toggle()
+                            mapState = .searchingForLocation
                         }
                     }
-            } else {
-                LocationSearchView(showLocationSearchView: $showLocationSearchView)
+            } else if mapState == .searchingForLocation{
+                LocationSearchView(mapState: $mapState)
             }
             
-            MapViewActionButton(showLocationSearchView: $showLocationSearchView)
+            MapViewActionButton(mapState: $mapState)
                 .padding(.leading)
                 .padding(.top, 4)
         }
-       
-        
-        
-        
     }
 }
 
 #Preview {
+    @Previewable @StateObject var locationViewModel = LocationSearchViewModel()
     ViajeView()
+        .environmentObject(locationViewModel)
 }

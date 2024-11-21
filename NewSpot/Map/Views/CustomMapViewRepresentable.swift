@@ -25,7 +25,8 @@ struct CustomMapViewRepresentable: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UIViewType, context: Context) {
-        print("Map State: \(mapState)")
+        print("Map State (debug from MapRepresentable in func updateUI): \(mapState)")
+        
         switch mapState {
         case .noInput:
             context.coordinator.clearMapViewAndRecenterOnUserLocation()
@@ -33,19 +34,18 @@ struct CustomMapViewRepresentable: UIViewRepresentable {
         case .searchingForLocation:
             break
         case .locationSelected:
-            if let selectedLocation = locationViewModel.selectedLocation{
+            if let selectedLocation = locationViewModel.selectedLocation {
                 print("Selected location in map view: \(selectedLocation)")
+                
+                // Only clear the map and reconfigure if the location is different
+                context.coordinator.clearMapView()
                 context.coordinator.addAndSelectAnnotation(withCoordinate: selectedLocation)
                 context.coordinator.configurePolyLine(withDestinationCoordinate: selectedLocation)
             }
             break
-        
         }
-        
-        //if mapState == .noInput{
-        //    context.coordinator.clearMapViewAndRecenterOnUserLocation()
-        //}
     }
+
     
     func makeCoordinator() -> MapCoordinator {
         return MapCoordinator(parent: self)
@@ -63,13 +63,29 @@ extension CustomMapViewRepresentable{
             super.init()
         }
         func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-            self.userLocationCoordinate = userLocation.coordinate
-            let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
-            
-            self.currentRegion = region
-            
-            parent.mapView.setRegion(region, animated: true)
+            // MARK: - Check if user location has moved
+
+            guard let previousLocation = userLocationCoordinate else {
+                // If it's the first update, save the user location and return
+                self.userLocationCoordinate = userLocation.coordinate
+                return
+            }
+
+            ///Calcular la distancia entre las ultimas 2 ubicaciones tomadas del usuario para determinar si se actualiza el mapa o no
+            let currentLocation = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+            let previousLocationInstance = CLLocation(latitude: previousLocation.latitude, longitude: previousLocation.longitude)
+            let distance = currentLocation.distance(from: previousLocationInstance)
+            if distance >= 60 {
+                self.userLocationCoordinate = userLocation.coordinate
+                print("distance was more than 300 meters")
+
+                let region = MKCoordinateRegion(center: currentLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+                self.currentRegion = region
+
+                parent.mapView.setRegion(region, animated: true)
+            }
         }
+
         
         func mapView(_ mapView: MKMapView, rendererFor overlay: any MKOverlay) -> MKOverlayRenderer {
             let polyline = MKPolylineRenderer(overlay: overlay)
@@ -80,6 +96,7 @@ extension CustomMapViewRepresentable{
         
         func addAndSelectAnnotation(withCoordinate coordinate: CLLocationCoordinate2D){
             parent.mapView.removeAnnotations(parent.mapView.annotations) ///Borrar anotaciones previas, para que solo se vea una a la vez
+            //clearMapView() ///No sé si esto arregla el problema de tener varias lineas al mismo tiempo. //No, no lo arregla.
             let annotatioooon = MKPointAnnotation()
             annotatioooon.coordinate = coordinate
             self.parent.mapView.addAnnotation(annotatioooon)
@@ -91,15 +108,24 @@ extension CustomMapViewRepresentable{
             
         }
         
+        var previousLocation: CLLocationCoordinate2D?
         ///I'm using getDestinationRoute inside of this. The route(s) have not been generated before this
         func configurePolyLine(withDestinationCoordinate coordinate: CLLocationCoordinate2D) {
             guard let userLocationCoordinate = self.userLocationCoordinate else { return }
-            ///Removes previous polylines. I don't know why the other one is not deleted previously. It should have been deleted, but deleting it here should work
-            ///Update: It didn't
-            ///Update2: It did
-            ////Update3: No it didn't
-            ///Final Update: It did
+            
+            // A tolerance value to handle small floating-point precision differences
+            let tolerance: Double = 0.000001
+            
+            // Check if the coordinates are equal within the tolerance
+            if let previousLocation = previousLocation,
+               abs(previousLocation.latitude - coordinate.latitude) < tolerance,
+               abs(previousLocation.longitude - coordinate.longitude) < tolerance {
+                return
+            }
+            
+            // Remove old polylines and annotations
             parent.mapView.removeOverlays(parent.mapView.overlays)
+            previousLocation = coordinate
             
             getDestinationRoute(from: userLocationCoordinate, to: coordinate) { route in
                 self.parent.mapView.addOverlay(route.polyline)
@@ -109,10 +135,15 @@ extension CustomMapViewRepresentable{
                 print("distance in meters: \(route.distance)")
                 print("expected travel time: \(route.expectedTravelTime)")
                 print("steps (huh?) \(route.steps)")
+                for (index, step) in route.steps.enumerated() {
+                    print("\(index): \(step.instructions)")
+                    print("\(index): \(step.distance)")
+                    }
                 //end debug
                 
             }
         }
+
         
         func getDestinationRoute(from userLocation: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D, completion: @escaping(MKRoute) -> Void ){
             let userPlacemark = MKPlacemark(coordinate: userLocation)
@@ -142,6 +173,11 @@ extension CustomMapViewRepresentable{
             if let currentRegion = currentRegion {
                 parent.mapView.setRegion(currentRegion, animated: true)
             }
+        }
+        
+        func clearMapView(){
+            parent.mapView.removeAnnotations(parent.mapView.annotations)
+            parent.mapView.removeOverlays(parent.mapView.overlays)
         }
         
     }

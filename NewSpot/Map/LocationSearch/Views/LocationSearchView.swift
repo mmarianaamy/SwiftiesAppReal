@@ -63,7 +63,9 @@ struct LocationSearchView: View {
                                 //.selectLocation(result.title)
                                 .selectLocation(result)
                                 //showLocationSearchView.toggle()
-                                mapState = .locationSelected
+                                if mapState != .locationSelected {
+                                        mapState = .locationSelected
+                                    }
                             }
                     }
                 }

@@ -144,6 +144,7 @@ extension CustomMapViewRepresentable{
                 print("distance in meters: \(route.distance)")
                 print("expected travel time: \(route.expectedTravelTime)")
                 print("steps (huh?) \(route.steps)")
+                self.locationResult.steps = route.steps //MARK: does it work? -
                 for (index, step) in route.steps.enumerated() {
                     print("\(index): \(step.instructions)")
                     print("\(index): \(step.distance)")

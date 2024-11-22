@@ -15,6 +15,7 @@ struct HuellaEnergeticaMes: View {
     @State private var barSelection: String?
     @State private var pieSelection: Double?
     @State private var loading : Bool = false
+    @EnvironmentObject var user : User
     var body: some View {
         VStack {
             HStack {
@@ -55,7 +56,7 @@ struct HuellaEnergeticaMes: View {
                     do{
                         var response: [datosFromDB]? = []
                         response = try await supabase
-                            .rpc("datos_fecha4", params: datostoDB(usuario_id: 1, fechai: startofmonth!, fechaii: (startofmonth?.endOfMonth())!, huellabuscada: 3))
+                            .rpc("datos_fecha4", params: datostoDB(usuario_id: user.idusuario, fechai: startofmonth!, fechaii: (startofmonth?.endOfMonth())!, huellabuscada: 3))
                             .execute()
                             .value
                         

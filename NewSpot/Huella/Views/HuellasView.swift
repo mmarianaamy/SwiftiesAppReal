@@ -120,5 +120,5 @@ struct HuellasView: View {
 }
 
 #Preview {
-    HuellasView().environmentObject(User(idusuario: 16))
+    HuellasView().environmentObject(User(idusuario: 11))
 }

@@ -121,7 +121,7 @@ struct DonutChart: View {
                         for i in 1...4{
                             var response: [datosFromDB]? = []
                             response = try await supabase
-                                .rpc("datos_fecha4", params: datostoDB(usuario_id: 1, fechai: Date().startOfMonth(), fechaii: Date().endOfMonth(), huellabuscada: i))
+                                .rpc("datos_fecha4", params: datostoDB(usuario_id: user.idusuario, fechai: Date().startOfMonth(), fechaii: Date().endOfMonth(), huellabuscada: i))
                                 .execute()
                                 .value
                             dataGot.append(response)

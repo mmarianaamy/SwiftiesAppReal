@@ -13,6 +13,8 @@ struct ViajeView: View {
     @State private var mapState = MapViewState.noInput
     //@State var selection = 0
     
+    @State var popup = true
+    
     var body: some View {
         
         /*VStack {
@@ -55,7 +57,11 @@ struct ViajeView: View {
                         }
                     }
             } else if mapState == .searchingForLocation{
-                LocationSearchView(mapState: $mapState)
+                LocationSearchView(mapState: $mapState).onAppear(){
+                    popup = true
+                }
+            } else if mapState == .locationSelected{
+                popupView(isPresented: $popup)
             }
             
             MapViewActionButton(mapState: $mapState)
@@ -67,6 +73,8 @@ struct ViajeView: View {
 
 #Preview {
     @Previewable @StateObject var locationViewModel = LocationSearchViewModel()
+    @Previewable @StateObject var locationResult = LocationResult()
     ViajeView()
         .environmentObject(locationViewModel)
+        .environmentObject(locationResult)
 }

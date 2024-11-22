@@ -93,7 +93,6 @@ struct DetallesActividadUpdate: View {
                             cantidad: String(cantidad),
                             fechainicio: Date()
                         )
-                        // Use `update()` for updating an existing record
                         try await client.from("usuario_habito")
                             .update(updatedHabit)
                             .eq("idhabito", value: habitid)

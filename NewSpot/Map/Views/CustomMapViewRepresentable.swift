@@ -10,9 +10,13 @@ import SwiftUI
 import MapKit
 
 struct CustomMapViewRepresentable: UIViewRepresentable {
+    
+    @EnvironmentObject var locationResult: LocationResult
+    
     let mapView = MKMapView()
     @EnvironmentObject var locationViewModel: LocationSearchViewModel
     let locationManager = LocationManager()
+    @Binding var mapState: MapViewState
     
     func makeUIView(context: Context) -> some UIView {
         mapView.delegate = context.coordinator
@@ -24,32 +28,71 @@ struct CustomMapViewRepresentable: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UIViewType, context: Context) {
-        if let selectedLocation = locationViewModel.selectedLocation{
-            print("Selected location in map view: \(selectedLocation)")
-            context.coordinator.addAndSelectAnnotation(withCoordinate: selectedLocation)
-            context.coordinator.configurePolyLine(withDestinationCoordinate: selectedLocation)
-            
+        print("Map State (debug from MapRepresentable in func updateUI): \(mapState)")
+        
+        switch mapState {
+        case .noInput:
+            context.coordinator.clearMapViewAndRecenterOnUserLocation()
+            break
+        case .searchingForLocation:
+            break
+        case .locationSelected:
+            if let selectedLocation = locationViewModel.selectedLocation {
+                print("Selected location in map view: \(selectedLocation)")
+                
+                // Only clear the map and reconfigure if the location is different
+                context.coordinator.clearMapView()
+                context.coordinator.addAndSelectAnnotation(withCoordinate: selectedLocation)
+                context.coordinator.configurePolyLine(withDestinationCoordinate: selectedLocation)
+            }
+            break
         }
     }
+
     
     func makeCoordinator() -> MapCoordinator {
-        return MapCoordinator(parent: self)
+        return MapCoordinator(parent: self, locationResult: locationResult)
     }
 }
 
 extension CustomMapViewRepresentable{
     class MapCoordinator: NSObject, MKMapViewDelegate{
+        
+        var locationResult: LocationResult
+        
         let parent: CustomMapViewRepresentable
         var userLocationCoordinate: CLLocationCoordinate2D?
-        init(parent: CustomMapViewRepresentable) {
+        var currentRegion: MKCoordinateRegion?
+        
+        init(parent: CustomMapViewRepresentable, locationResult: LocationResult) {
             self.parent = parent
+            self.locationResult = locationResult
             super.init()
         }
         func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-            self.userLocationCoordinate = userLocation.coordinate
-            let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
-            parent.mapView.setRegion(region, animated: true)
+            // MARK: - Check if user location has moved
+
+            guard let previousLocation = userLocationCoordinate else {
+                // If it's the first update, save the user location and return
+                self.userLocationCoordinate = userLocation.coordinate
+                return
+            }
+
+            ///Calcular la distancia entre las ultimas 2 ubicaciones tomadas del usuario para determinar si se actualiza el mapa o no
+            let currentLocation = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+            let previousLocationInstance = CLLocation(latitude: previousLocation.latitude, longitude: previousLocation.longitude)
+            let distance = currentLocation.distance(from: previousLocationInstance)
+            if distance >= 200 {
+                self.userLocationCoordinate = userLocation.coordinate
+                print("distance was more than 300 meters")
+
+                let region = MKCoordinateRegion(center: currentLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+                self.currentRegion = region
+
+                parent.mapView.setRegion(region, animated: true)
+            }
         }
+
         
         func mapView(_ mapView: MKMapView, rendererFor overlay: any MKOverlay) -> MKOverlayRenderer {
             let polyline = MKPolylineRenderer(overlay: overlay)
@@ -60,6 +103,7 @@ extension CustomMapViewRepresentable{
         
         func addAndSelectAnnotation(withCoordinate coordinate: CLLocationCoordinate2D){
             parent.mapView.removeAnnotations(parent.mapView.annotations) ///Borrar anotaciones previas, para que solo se vea una a la vez
+            //clearMapView() ///No sé si esto arregla el problema de tener varias lineas al mismo tiempo. //No, no lo arregla.
             let annotatioooon = MKPointAnnotation()
             annotatioooon.coordinate = coordinate
             self.parent.mapView.addAnnotation(annotatioooon)
@@ -71,21 +115,50 @@ extension CustomMapViewRepresentable{
             
         }
         
+        var previousLocation: CLLocationCoordinate2D?
         ///I'm using getDestinationRoute inside of this. The route(s) have not been generated before this
         func configurePolyLine(withDestinationCoordinate coordinate: CLLocationCoordinate2D) {
             guard let userLocationCoordinate = self.userLocationCoordinate else { return }
+            
+            // A tolerance value to handle small floating-point precision differences
+            let tolerance: Double = 0.000001
+            
+            // Check if the coordinates are equal within the tolerance
+            if let previousLocation = previousLocation,
+               abs(previousLocation.latitude - coordinate.latitude) < tolerance,
+               abs(previousLocation.longitude - coordinate.longitude) < tolerance {
+                return
+            }
+            
+            // Remove old polylines and annotations
+            parent.mapView.removeOverlays(parent.mapView.overlays)
+            previousLocation = coordinate
+            
             getDestinationRoute(from: userLocationCoordinate, to: coordinate) { route in
-                self.parent.mapView.addOverlay(route.polyline)
+                DispatchQueue.main.async {
+                    self.parent.mapView.addOverlay(route.polyline)
+                }
                 //MARK: Debug-
                 print("route description: \(route.description)")
                 print("advisory notices: \(route.advisoryNotices)")
                 print("distance in meters: \(route.distance)")
                 print("expected travel time: \(route.expectedTravelTime)")
                 print("steps (huh?) \(route.steps)")
+                self.locationResult.steps = route.steps //MARK: does it work? -
+                for (index, step) in route.steps.enumerated() {
+                    print("\(index): \(step.instructions)")
+                    print("\(index): \(step.distance)")
+                    }
                 //end debug
+                
+                self.locationResult.eta = route.expectedTravelTime
+                self.locationResult.distance = route.distance
+                print("locationResult title from the map representable:  \(self.locationResult.title ?? "")")
+                print("locationResult eta from the map representable: \(self.locationResult.eta ?? 0)")
                 
             }
         }
+
         
         func getDestinationRoute(from userLocation: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D, completion: @escaping(MKRoute) -> Void ){
             let userPlacemark = MKPlacemark(coordinate: userLocation)
@@ -94,7 +167,7 @@ extension CustomMapViewRepresentable{
             request.source = MKMapItem(placemark: userPlacemark)
             request.destination = MKMapItem(placemark: destination)
             let directions = MKDirections(request: request)
-            ///This is calling an API. Apple uses it to generate the searchs behind scene, This is why mapkit doesn't work for generating custom routes, I would need to define my own method.
+            ///This is calling an API. Apple uses it to generate the searchs behind scene
             directions.calculate { response, error in
                 if let error = error {
                     print("Failed to get directions with error \(error.localizedDescription)")
@@ -106,6 +179,21 @@ extension CustomMapViewRepresentable{
             }
         }
         
+        
+        func clearMapViewAndRecenterOnUserLocation(){
+            parent.mapView.removeAnnotations(parent.mapView.annotations)
+            parent.mapView.removeOverlays(parent.mapView.overlays)
+            
+            ///Go back to user location in map region
+            if let currentRegion = currentRegion {
+                parent.mapView.setRegion(currentRegion, animated: true)
+            }
+        }
+        
+        func clearMapView(){
+            parent.mapView.removeAnnotations(parent.mapView.annotations)
+            parent.mapView.removeOverlays(parent.mapView.overlays)
+        }
         
     }
 }

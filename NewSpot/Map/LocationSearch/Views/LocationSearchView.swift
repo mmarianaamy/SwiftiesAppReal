@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct LocationSearchView: View {
-    @Binding var showLocationSearchView: Bool
+    //@Binding var showLocationSearchView: Bool
     @State private var startLocation: String = ""
     @EnvironmentObject var viewModel: LocationSearchViewModel
+    @Binding var mapState: MapViewState
+    
+    @EnvironmentObject var locationResult: LocationResult
     var body: some View {
         VStack{
             ///header view
@@ -33,10 +36,13 @@ struct LocationSearchView: View {
                 }
                 
                 VStack{
-                    TextField("Ubicación inicial", text: $startLocation)
+                    TextField("Ubicación actual", text: $startLocation)
                         .frame(height: 32)
                         .background(Color(.systemGroupedBackground))
                         .padding(.trailing)
+                        .foregroundStyle(Color.blue)
+                        .disabled(true)
+                    
                     
                     TextField("Destino", text: $viewModel.queryFragment)
                         .frame(height: 32)
@@ -58,10 +64,17 @@ struct LocationSearchView: View {
                     ForEach(viewModel.results, id: \.self){ result in
                         LocationSearchResultCell(title: result.title, subtitle: result.subtitle)
                             .onTapGesture {
+                                print("location selected: \(result.title)")
+                                locationResult.title = result.title
+                                locationResult.subtitle = result.subtitle
+                                print("LocationSearcgView locationModel title: \(locationResult.title ?? "")")
                                 viewModel
                                 //.selectLocation(result.title)
                                 .selectLocation(result)
-                                showLocationSearchView.toggle()
+                                //showLocationSearchView.toggle()
+                                if mapState != .locationSelected {
+                                        mapState = .locationSelected
+                                    }
                             }
                     }
                 }
@@ -71,6 +84,5 @@ struct LocationSearchView: View {
 }
 
 #Preview {
-    LocationSearchView(showLocationSearchView: .constant(false))
+    LocationSearchView(mapState: .constant(.searchingForLocation))
 }
-

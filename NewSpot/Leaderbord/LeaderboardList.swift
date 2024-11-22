@@ -19,9 +19,26 @@ struct LeaderboardList: View {
     var body: some View {
         
         VStack{
+            
+            // Encabezados de la tabla
+            HStack {
+                Text("Puesto")
+                    .font(.headline)
+                    .frame(width: 60, alignment: .leading)
+                Text("Nombre")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text("# Hábitos")
+                    .font(.headline)
+                    .frame(width: 100, alignment: .trailing)
+            }
+            .padding(.horizontal)
+            
+            Divider() // Línea separadora
+
             ScrollView {
                 LazyVStack(spacing: 10) {
-                    if loading {
+                    /*if loading {
                         ProgressView()
                     }  else if users.isEmpty {
                         Text("Es agradable tener a alguien a tu lado. ¡Invita amigos!")
@@ -32,12 +49,29 @@ struct LeaderboardList: View {
                             LeaderbordRow(position: 0, name: String(user.idamigo), points: 0, prevPosition: 0)
                                 .padding(.horizontal)
                         }
+                    }*/
+                    if loading {
+                        ProgressView()
+                    } else if users.isEmpty {
+                        Text("Es agradable tener a alguien a tu lado. ¡Invita amigos!")
+                            .foregroundColor(.gray)
+                            .padding()
+                    } else {
+                        ForEach(users, id: \.id) { user in
+                            LeaderbordRow(
+                                position: users.firstIndex(of: user)! + 1, // Calcula la posición
+                                name: user.username,
+                                points: user.habitsCount,
+                                prevPosition: 0 // Opcional si tienes lógica para el historial
+                            )
+                            .padding(.horizontal)
+                        }
                     }
                 }
                 .accentColor(.primary)
                 .padding(.top)
                 .task{
-                    loading = true
+                    /*loading = true
                     do{
                         let usersBD : [LeaderboardUser]? = try await supabase.from("amigos").select("*").eq("idusuario", value: user.idusuario).execute().value
                         print(usersBD)
@@ -46,10 +80,39 @@ struct LeaderboardList: View {
                     } catch{
                         print("Not possible")
                     }
-                    loading = false
+                    loading = false*/
+                    await fetchLeaderboardData()
                     
                 }
             }//.background(StaticGradientView())
+        }
+    }
+    /*func fetchLeaderboardData() async {
+        loading = true
+        defer { loading = false }
+        
+        do {
+            let response: [LeaderboardUser] = try await supabase
+                .rpc("fetch_leaderboard") // O usa una consulta select si no tienes RPC
+                .execute().value ?? []
+            self.users = response
+        } catch {
+            print("Error al obtener datos: \(error)")
+        }
+    }*/
+    func fetchLeaderboardData() async {
+        loading = true
+        defer { loading = false }
+        
+        do {
+            let response: [LeaderboardUser] = try await supabase
+                .rpc("fetch_leaderboard", params: ["user_id": user.idusuario])
+                .execute()
+                .value ?? []
+            
+            self.users = response
+        } catch {
+            print("Error al obtener datos: \(error)")
         }
     }
 }

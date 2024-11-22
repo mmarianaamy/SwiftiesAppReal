@@ -1,3 +1,10 @@
+//
+//  RecomendacionesAIView.swift
+//  New Spot
+//
+//  Created by Jorge Salcedo on 10/11/24.
+//
+
 import SwiftUI
 import Supabase
 import GoogleGenerativeAI
@@ -141,6 +148,12 @@ struct RecomendacionesView: View {
                             }
                     }*/
                     VStack(alignment: .leading, spacing: 10) {
+                        
+                        if sugerencias.count <= 0 {
+                            Text("No se encontraron recomendaciones. Puedes intentar refrescar la pagina o añadir más habitos")
+                                .foregroundColor(.secondary)
+                        }
+                        
                         if tipo == "Hídrico" {
                             ForEach(sugerencias) { sugerencia in
                                 RecomendacionItemView(titulo: sugerencia.actividad, descripcion: sugerencia.sugerencia)

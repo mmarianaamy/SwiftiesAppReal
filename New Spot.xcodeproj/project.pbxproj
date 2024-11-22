@@ -919,7 +919,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"NewSpot/Preview Content\"";
-				DEVELOPMENT_TEAM = 69JN5N9WFY;
+				DEVELOPMENT_TEAM = 8N4HFZ65DG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NewSpot/Info.plist;
@@ -935,7 +935,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = itesm.prueba.com;
+				PRODUCT_BUNDLE_IDENTIFIER = com.App.act11;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -951,7 +951,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"NewSpot/Preview Content\"";
-				DEVELOPMENT_TEAM = 69JN5N9WFY;
+				DEVELOPMENT_TEAM = 8N4HFZ65DG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NewSpot/Info.plist;
@@ -967,7 +967,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = itesm.prueba.com;
+				PRODUCT_BUNDLE_IDENTIFIER = com.App.act11;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

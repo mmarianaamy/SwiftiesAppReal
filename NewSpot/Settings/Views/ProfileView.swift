@@ -71,23 +71,54 @@ struct ProfileView: View {
     func getInitialProfile() async {
         do {
             let currentUser = try await supabase.auth.session.user
+            ///
+            debugPrint("Usuario autenticado ID: \(currentUser.id)")
+            debugPrint("Usuario autenticado email: \(currentUser.email ?? "")")
+            ///
             
             // Establece el email del usuario autenticado en el campo de solo lectura
-            self.email = currentUser.email!
+            //self.email = currentUser.email!
 
-            let usuario: Usuario = try await supabase
+            /*let usuario: Usuario = try await supabase
                 .from("usuario")
                 .select()
-                .eq("auth_user_id", value: currentUser.id)
+                ///
+                .eq("email", value: currentUser.email)
+            ///
+                //.eq("auth_user_id", value: currentUser.id)
+                //.single()
+                .execute()
+                .value*/
+            
+            // Recuperar datos del usuario
+            let usuario: Usuario? = try await supabase
+                .from("usuario")
+                .select()
+                .eq("auth_user_id", value: currentUser.id) // Asegúrate de usar este campo como filtro
                 .single()
                 .execute()
                 .value
+            
+            if let usuario = usuario {
+                self.nombre = usuario.nombre ?? ""
+                self.apellido = usuario.apellido ?? ""
+                debugPrint("Datos recuperados: \(usuario)")
+            } else {
+                debugPrint("No se encontraron datos para el usuario.")
+            }
+            
+            ///
+            /*debugPrint("Datos recuperados: \(usuario)")
+            ///
 
-            self.nombre = usuario.nombre ?? ""
-            self.apellido = usuario.apellido ?? ""
+            self.nombre = usuario.nombre
+            self.apellido = usuario.apellido
+            //self.nombre = usuario.nombre ?? ""
+            //self.apellido = usuario.apellido ?? ""*/
 
         } catch {
-        debugPrint(error)
+            debugPrint("Error al obtener el perfil: \(error)")
+            //debugPrint(error)
         }
     }
 

@@ -6,12 +6,31 @@
 //
 
 import SwiftUI
+import Supabase
 
 struct LoginPage: View {
+    enum AlertType: Identifiable {
+        case userNotFound
+        case incorrectPassword
+        case genericError(String)
+
+        var id: String {
+            switch self {
+            case .userNotFound:
+                return "userNotFound"
+            case .incorrectPassword:
+                return "incorrectPassword"
+            case .genericError:
+                return "genericError"
+            }
+        }
+    }
+    
     @State private var email = ""
     @State private var password = ""
     @State private var resultMessage = ""
     @State private var isLoggedIn = false
+    @State private var activeAlert: AlertType? = nil
     @State private var showAlert = false
     
     @State var isLoading = false
@@ -27,7 +46,7 @@ struct LoginPage: View {
                 Text("New Spot").font(.largeTitle)
                 
                 VStack(alignment: .leading) {
-                    Text("Username").padding(.horizontal)
+                    Text("Email").padding(.horizontal)
                     TextField("Email", text: $email)
                         .textContentType(.emailAddress)
                         .textInputAutocapitalization(.never)
@@ -96,12 +115,34 @@ struct LoginPage: View {
         .ignoresSafeArea()
         .foregroundStyle(Color.white)
         
-        .alert(isPresented: $showAlert) {
-            Alert(
-                title: Text("Usuario Creado"),
-                message: Text("¡Ahora puedes iniciar sesión con tu cuenta!"),
-                dismissButton: .default(Text("OK"))
-            )
+        .alert(item: $activeAlert) { alertType in
+            switch alertType {
+            case .userNotFound:
+                return Alert(
+                    title: Text("Usuario no encontrado"),
+                    message: Text("No encontramos una cuenta con este correo. ¿Deseas crear una?"),
+                    primaryButton: .default(Text("Crear cuenta")) {
+                        // Navega a la vista de registro
+                        DispatchQueue.main.async {
+                            self.logged = false
+                            self.showAlert = true
+                        }
+                    },
+                    secondaryButton: .cancel(Text("Cancelar"))
+                )
+            case .incorrectPassword:
+                return Alert(
+                    title: Text("Contraseña incorrecta"),
+                    message: Text("La contraseña ingresada es incorrecta. Por favor, inténtalo de nuevo."),
+                    dismissButton: .default(Text("OK"))
+                )
+            case .genericError(let message):
+                return Alert(
+                    title: Text("Error"),
+                    message: Text(message),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
         }
         
         if isLoading {
@@ -118,9 +159,20 @@ struct LoginPage: View {
                 self.isLoggedIn = true
             }
             await user.changeValue(email: email)
-            
+        } catch let error as Auth.AuthError {
+            // Capturamos el código de error específico
+            let errorCode = error.errorCode.rawValue.lowercased()
+            let errorMessage = error.message.lowercased()
+
+            // Manejo de errores específicos
+            if errorCode == "invalid_credentials" || errorMessage.contains("invalid login credentials") {
+                activeAlert = .genericError("El correo o la contraseña son incorrectos. Por favor, verifica tus datos e inténtalo nuevamente.")
+            } else {
+                activeAlert = .genericError("Ocurrió un error inesperado. Por favor, intenta más tarde.")
+            }
         } catch {
-            resultMessage = "Error al iniciar sesión: \(error.localizedDescription)"
+            // Manejo de otros errores genéricos
+            activeAlert = .genericError("Ocurrió un error inesperado. Por favor, intenta más tarde.")
         }
     }
 }

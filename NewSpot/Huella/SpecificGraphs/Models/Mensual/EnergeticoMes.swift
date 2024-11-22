@@ -42,12 +42,5 @@ extension [EnergeticoMes] {
     }
 }
 
-var energeticoMes: [EnergeticoMes] = [
-    .init(date: .createDate(1, 1, 2024), emissions: .random(in: 6000...45000)),
-    .init(date: .createDate(1, 2, 2024), emissions: .random(in: 6000...45000)),
-    .init(date: .createDate(1, 3, 2024), emissions: .random(in: 6000...45000)),
-    .init(date: .createDate(1, 4, 2024), emissions: .random(in: 6000...45000)),
-    .init(date: .createDate(1, 5, 2024), emissions: .random(in: 6000...45000)),
-    .init(date: .createDate(1, 6, 2024), emissions: .random(in: 6000...45000))
-]
+
 

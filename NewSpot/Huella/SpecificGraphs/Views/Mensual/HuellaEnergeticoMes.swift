@@ -8,10 +8,13 @@
 import SwiftUI
 import Charts
 
+var energeticoMes: [EnergeticoMes] = []
+
 struct HuellaEnergeticaMes: View {
     @State private var graphType: GraphType = .bar
     @State private var barSelection: String?
     @State private var pieSelection: Double?
+    @State private var loading : Bool = false
     var body: some View {
         VStack {
             HStack {
@@ -44,6 +47,33 @@ struct HuellaEnergeticaMes: View {
                 }
             }
             .padding(.vertical)
+            .task{
+                loading = true
+                for i in 0...5 {
+                    var num = 0.0
+                    let startofmonth = Calendar.current.date(byAdding: DateComponents(month: -i), to: Date().startOfMonth())
+                    do{
+                        var response: [datosFromDB]? = []
+                        response = try await supabase
+                            .rpc("datos_fecha4", params: datostoDB(usuario_id: 1, fechai: startofmonth!, fechaii: (startofmonth?.endOfMonth())!, huellabuscada: 3))
+                            .execute()
+                            .value
+                        
+                        for resp in response!{
+                            let r = (resp.recurrencia == "Dia" ? 30 : (resp.recurrencia == "Semana" ? 4 : 30))
+                            num += Double(resp.total_impacto) * Double(r)
+                        }
+                    }catch{
+                        print("nope")
+                    }
+                    energeticoMes.append(.init(date: startofmonth!, emissions: num))
+                }
+                loading = false
+            }
+            
+            if loading {
+                ProgressView()
+            }
             
             Chart {
                 ForEach(energeticoMes.sorted(by: { graphType == .bar ? false : $0.emissions > $1.emissions })) { emission in

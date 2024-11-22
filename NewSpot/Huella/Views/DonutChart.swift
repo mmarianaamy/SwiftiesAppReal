@@ -60,7 +60,7 @@ struct DonutChart: View {
             .init(type: "Hidrica", emissions: (store[0] / 100)),
             .init(type: "Carbono", emissions: store[1]),
             .init(type: "Energetica", emissions: store[2]),
-            .init(type: "Residuos", emissions: store[3])
+            //.init(type: "Residuos", emissions: store[3])
         ]
         isLoading = false
     }
@@ -201,5 +201,5 @@ struct DonutChart: View {
 }
 
 #Preview {
-    DonutChart()
+    DonutChart().environmentObject(User(idusuario: 11))
 }

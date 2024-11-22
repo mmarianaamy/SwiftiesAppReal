@@ -50,7 +50,7 @@ struct HuellaHidricaMes: View {
                 loading = true
                 for i in 0...5 {
                     var num = 0.0
-                    let startofmonth = Calendar.current.date(byAdding: DateComponents(month: -i), to: Date().startOfMonth())
+                    let startofmonth = Calendar.current.date(byAdding: DateComponents(month: i-5), to: Date().startOfMonth())
                     do{
                         var response: [datosFromDB]? = []
                         response = try await supabase

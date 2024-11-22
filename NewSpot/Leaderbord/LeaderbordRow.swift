@@ -71,7 +71,7 @@ struct LeaderbordRow: View {
              */
 
             .padding()
-            .background(RoundedRectangle(cornerRadius: 0).stroke(Color.gray).fill(Color.white))
+            .background(RoundedRectangle(cornerRadius: 20).stroke(Color.gray).fill(Color.white))
             .padding()
             .padding(.horizontal, -20)
             .padding(.vertical, -10)

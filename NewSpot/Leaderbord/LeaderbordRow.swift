@@ -10,9 +10,9 @@ import SwiftUI
 struct LeaderbordRow: View {
     
     /*var position: Int
-    var name: String
-    var points: Double
-    var prevPosition: Int*/
+     var name: String
+     var points: Double
+     var prevPosition: Int*/
     
     let position: Int
     let name: String
@@ -69,6 +69,7 @@ struct LeaderbordRow: View {
              position == 3 ? RoundedRectangle(cornerRadius: 20).stroke(Color.gray).fill(Color.customBlue3) :
              RoundedRectangle(cornerRadius: 20).stroke(Color.gray).fill(Color.customBlue4))
              */
+
             .padding()
             .background(RoundedRectangle(cornerRadius: 0).stroke(Color.gray).fill(Color.white))
             .padding()

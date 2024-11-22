@@ -5,25 +5,34 @@ struct AgregarCompraView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @State var page: Int = 0
-    @State var selectedProduct: Int = -1
+    @State var selectedProduct: Int
     @State var count: Int = 1
     @EnvironmentObject var user: User
+    var updating : Bool = false
     
     let client = SupabaseClient(supabaseURL: URL(string: "https://hyufiwwpfhtovhspewlc.supabase.co")!, supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5dWZpd3dwZmh0b3Zoc3Bld2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkyMDAzNDQsImV4cCI6MjA0NDc3NjM0NH0.Eol6hgROQO_G5CnGD6YBGTIMOMPKL6GX3xdMfpMlHmc")
 
+    init(selectedProduct: Int = -1, updating : Bool = false){
+        self.selectedProduct = selectedProduct
+        self.updating = updating
+        print(selectedProduct)
+    }
+    
     var body: some View {
         VStack {
-            HStack {
-                Button {
-                    presentationMode.wrappedValue.dismiss()
-                } label: {
-                    Text("Salir")
-                }
-                Spacer()
-            }.padding()
+            if !updating{
+                HStack {
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Salir")
+                    }
+                    Spacer()
+                }.padding()
+            }
             
             if page == 0 {
-                BuscarProductoView(selectedProduct: $selectedProduct, page: $page)
+                BuscarProductoView(selectedProduct: $selectedProduct, updating: updating, page: $page)
             } else {
                 VStack {
                     Text("Ingresa cantidad")
@@ -45,11 +54,13 @@ struct AgregarCompraView: View {
                     }
                 }
                 
-                Button {
-                    addProduct()
-                    presentationMode.wrappedValue.dismiss()
-                } label: {
-                    Text("Listo")
+                if !updating{
+                    Button {
+                        addProduct()
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Listo")
+                    }
                 }
             }
             Spacer()
@@ -58,7 +69,6 @@ struct AgregarCompraView: View {
     
     private func addProduct() {
         guard selectedProduct != -1 else {
-            print("No product selected.")
             return
         }
         
@@ -79,7 +89,6 @@ struct AgregarCompraView: View {
                         "fecha": formattedDate
                     ]).execute()
 
-                print("Producto agregado exitosamente")
             } catch {
                 print("Error al agregar el producto: \(error.localizedDescription)")
             }
@@ -92,5 +101,5 @@ struct AgregarCompraView: View {
 }
 
 #Preview {
-    AgregarCompraView(page: 0)
+    AgregarCompraView()
 }

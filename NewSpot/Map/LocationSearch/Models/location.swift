@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MapKit
 
 
 class LocationResult: ObservableObject{
@@ -13,6 +14,8 @@ class LocationResult: ObservableObject{
     @Published var subtitle: String?
     @Published var eta: Double?
     @Published var distance: Double?
+    @Published var steps: [MKRoute.Step]?
+    
     
     public func getTile(){
         print("location model title result: \(title ?? "empty")")

@@ -37,11 +37,7 @@ extension Date {
     }
 }
 
-var mockupDataTotalEmissions: [Emissions] = [
-    .init(type: "Energetica", emissions: .random(in: 6000...45000)),
-    //.init(type: "Carbono", emissions: .random(in: 3500...45000)),
-    //.init(type: "Hidrica", emissions: .random(in: 12000...45000)),
-]
+var mockupDataTotalEmissions: [Emissions] = []
 
 struct DonutChart: View {
     @EnvironmentObject var user : User
@@ -50,14 +46,24 @@ struct DonutChart: View {
     @State private var barSelection: String?
     @State private var pieSelection: Double?
     @State var dataGot : [[datosFromDB]?] = []
+    @State var isLoading : Bool = false
     
-    /*func sumarValores(){
-        for i in 0...dataGot[0]!.count{
-            print(dataGot[0]![i].total_impacto)
+    func sumarValores(){
+        isLoading = true
+        var store = [0.0, 0.0, 0.0, 0.0]
+        for l in 0...3{
+            for i in dataGot[l]!{
+                store[l] += (Double(i.total_impacto) * (i.recurrencia == "Dia" ? 30 : (i.recurrencia == "Semana" ? 4 : 30)))
+            }
         }
-        print(dataGot[0]!.count)
-        print("hi")
-    }*/
+        mockupDataTotalEmissions = [
+            .init(type: "Hidrica", emissions: (store[0] / 100)),
+            .init(type: "Carbono", emissions: store[1]),
+            .init(type: "Energetica", emissions: store[2]),
+            .init(type: "Residuos", emissions: store[3])
+        ]
+        isLoading = false
+    }
     
     var body: some View {
         VStack {
@@ -75,53 +81,58 @@ struct DonutChart: View {
                 }
             }
             .padding(.vertical)
-            Chart {
-                ForEach(mockupDataTotalEmissions.sorted(by: { graphType == .bar ? false : $0.emissions > $1.emissions })) { download in
-                    
-                    SectorMark(
-                        angle: .value("Downloads", download.emissions),
-                        innerRadius: .ratio(graphType == .donut ? 0.61 : 0),
-                        angularInset: graphType == .donut ? 6 : 1
-                    )
-                    .cornerRadius(8)
-                    .foregroundStyle(by: .value("Month", download.type))
-                    /// Fading Out All other Content, expect for the current selection
-                    .opacity(barSelection == nil ? 1 : (barSelection == download.type ? 1 : 0.4))
-                }
-                
-                if let barSelection {
-                    RuleMark(x: .value("Month", barSelection))
-                        .foregroundStyle(.gray.opacity(0.35))
-                        .zIndex(-10)
-                        .offset(yStart: -10)
-                        .annotation(
-                            position: .top,
-                            spacing: 0,
-                            overflowResolution: .init(x: .fit, y: .disabled)) {
-                                if let emissions = mockupDataTotalEmissions.findDownloads(barSelection) {
-                                    ChartPopOverView(emissions, barSelection)
-                                }
-                            }
-                }
-            }
-            .chartAngleSelection(value: $pieSelection)
-            .chartLegend(position: .bottom, alignment: graphType == .bar ? .leading : .center, spacing: 25)
-            .frame(height: 300)
-            .padding(.top, 10)
-            .animation(.snappy, value: graphType)
-            .task{
-                do{
-                    for i in 1...3{
-                        let response: [datosFromDB]? = try await supabase
-                            .rpc("datos_fecha4", params: datostoDB(usuario_id: 1, fechai: Date().startOfMonth(), fechaii: Date().endOfMonth(), huellabuscada: i))
-                          .execute()
-                          .value
-                        dataGot.append(response)
+            if !isLoading{
+                Chart {
+                    ForEach(mockupDataTotalEmissions.sorted(by: { graphType == .bar ? false : $0.emissions > $1.emissions })) { download in
+                        
+                        SectorMark(
+                            angle: .value("Downloads", download.emissions),
+                            innerRadius: .ratio(graphType == .donut ? 0.61 : 0),
+                            angularInset: graphType == .donut ? 6 : 1
+                        )
+                        .cornerRadius(8)
+                        .foregroundStyle(by: .value("Month", download.type))
+                        /// Fading Out All other Content, expect for the current selection
+                        .opacity(barSelection == nil ? 1 : (barSelection == download.type ? 1 : 0.4))
                     }
-                }catch{
-                    print()
+                    
+                    if let barSelection {
+                        RuleMark(x: .value("Month", barSelection))
+                            .foregroundStyle(.gray.opacity(0.35))
+                            .zIndex(-10)
+                            .offset(yStart: -10)
+                            .annotation(
+                                position: .top,
+                                spacing: 0,
+                                overflowResolution: .init(x: .fit, y: .disabled)) {
+                                    if let emissions = mockupDataTotalEmissions.findDownloads(barSelection) {
+                                        ChartPopOverView(emissions, barSelection)
+                                    }
+                                }
+                    }
                 }
-                //sumarValores()
+                .chartAngleSelection(value: $pieSelection)
+                .chartLegend(position: .bottom, alignment: graphType == .bar ? .leading : .center, spacing: 25)
+                .frame(height: 300)
+                .padding(.top, 10)
+                .animation(.snappy, value: graphType)
+                .task{
+                    do{
+                        for i in 1...4{
+                            var response: [datosFromDB]? = []
+                            response = try await supabase
+                                .rpc("datos_fecha4", params: datostoDB(usuario_id: 1, fechai: Date().startOfMonth(), fechaii: Date().endOfMonth(), huellabuscada: i))
+                                .execute()
+                                .value
+                            dataGot.append(response)
+                        }
+                    }catch{
+                        print("nope")
+                    }
+                    sumarValores()
+                }
+            }else{
+                ProgressView()
             }
         }
         .padding()
@@ -149,7 +160,7 @@ struct DonutChart: View {
                         .fontWeight(.semibold)
                         .font(.title3)
                         .textScale(.secondary)
-                    Text(type == "Hidrica" ? "L" : type == "Energetica" ? "kW" : type == "Carbono" ? "CO2e" : "t")
+                    Text(type == "Hidrica" ? "hL" : type == "Energetica" ? "kW" : type == "Carbono" ? "CO2e" : "t")
                         .font(.title3)
                         .textScale(.secondary)
                 } else {

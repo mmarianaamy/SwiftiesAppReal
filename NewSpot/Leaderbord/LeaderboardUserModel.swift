@@ -22,6 +22,8 @@ struct LeaderboardUser: Hashable, Decodable {
 struct LeaderboardUser: Identifiable, Codable, Hashable {
     let id: Int
     let username: String
-    let habitsCount: Int
+    let surname: String
+    let habits_count: Int
+    var is_current_user: Bool = false
 }
 

@@ -61,8 +61,10 @@ struct LeaderboardList: View {
                             LeaderbordRow(
                                 position: users.firstIndex(of: user)! + 1, // Calcula la posición
                                 name: user.username,
-                                points: user.habitsCount,
-                                prevPosition: 0 // Opcional si tienes lógica para el historial
+                                surname: user.surname, 
+                                points: user.habits_count,
+                                prevPosition: 0,
+                                is_current_user: user.is_current_user
                             )
                             .padding(.horizontal)
                         }
@@ -105,10 +107,19 @@ struct LeaderboardList: View {
         defer { loading = false }
         
         do {
-            let response: [LeaderboardUser] = try await supabase
+            var response: [LeaderboardUser] = try await supabase
+            //let response: [LeaderboardUser] = try await supabase
                 .rpc("fetch_leaderboard", params: ["user_id": user.idusuario])
                 .execute()
                 .value ?? []
+            
+            // Marcar al usuario actual en el ranking
+            for i in 0..<response.count {
+                if response[i].id == user.idusuario {
+                    response[i].is_current_user = true
+                }
+            }
+            ///
             
             self.users = response
         } catch {

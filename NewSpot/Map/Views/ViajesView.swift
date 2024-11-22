@@ -61,7 +61,8 @@ struct ViajeView: View {
                     popup = true
                 }
             } else if mapState == .locationSelected{
-                popupView(isPresented: $popup)
+                popupView(isPresented: $popup, mapState: $mapState)
+                
             }
             
             MapViewActionButton(mapState: $mapState)

@@ -16,18 +16,23 @@ struct LeaderbordRow: View {
     
     let position: Int
     let name: String
+    let surname: String
     let points: Int
     let prevPosition: Int
+    ///
+    let is_current_user: Bool
     
     var body: some View {
         VStack {
             HStack{
                 Text("\(position)")
                     .bold()
-                    .frame(width: 30, alignment: .leading)
-                Text(name)
+                    .frame(width: 60, alignment: .leading)
+                Text(is_current_user ? "Yo (\(name) \(surname))" : "\(name) \(surname)") // Mostrar "Yo" si es el usuario actual
+                //Text("\(name) \(surname)")
                     .font(.headline)
-                Spacer()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                //Spacer()
                 Text("\(points) hábitos")
                     .foregroundColor(.gray)
                 /*if prevPosition < position {
@@ -64,21 +69,21 @@ struct LeaderbordRow: View {
              position == 3 ? RoundedRectangle(cornerRadius: 20).stroke(Color.gray).fill(Color.customBlue3) :
              RoundedRectangle(cornerRadius: 20).stroke(Color.gray).fill(Color.customBlue4))
              */
+
             .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 20
-                                )
-                .stroke(Color.gray)
-                .fill(Color.white))
+            .background(RoundedRectangle(cornerRadius: 0).stroke(Color.gray).fill(Color.white))
+            .padding()
+            .padding(.horizontal, -20)
+            .padding(.vertical, -10)
         }
     }
 }
-
-/*#Preview {
- LeaderbordRow(position: 1, name: "Test", points: 32, prevPosition: 1)
- }*/
-
+    
+    /*#Preview {
+     LeaderbordRow(position: 1, name: "Test", points: 32, prevPosition: 1)
+     }*/
+    
 
 #Preview {
-    LeaderboardList().environmentObject(User(idusuario: 11))
+LeaderboardList().environmentObject(User(idusuario: 11))
 }

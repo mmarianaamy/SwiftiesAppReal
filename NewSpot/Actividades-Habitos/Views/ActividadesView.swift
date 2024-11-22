@@ -36,18 +36,20 @@ struct ActividadesView: View {
                 }
             
             NavigationSplitView {
-                ForEach($actividades, id: \.self) { actividad in
-                    NavigationLink {
-                        if(actividad.nombre.wrappedValue == "Otro"){
-                            DetallesActividadView(habito: Habit(idhabito: 1, nombre: ""))
-                        }else{
-                            DetallesActividadView(habito: actividad.wrappedValue)
+                ScrollView{
+                    ForEach($actividades, id: \.self) { actividad in
+                        NavigationLink {
+                            if(actividad.nombre.wrappedValue == "Otro"){
+                                DetallesActividadView(habito: Habit(idhabito: 1, nombre: ""))
+                            }else{
+                                DetallesActividadView(habito: actividad.wrappedValue)
+                            }
+                        } label: { ActividadView(opcion: actividad.nombre.wrappedValue)
+                                .padding(.bottom, 6)
+                                .padding(.horizontal, 20)
+                                .tint(.primary)
+                            
                         }
-                    } label: { ActividadView(opcion: actividad.nombre.wrappedValue)
-                            .padding(.bottom, 6)
-                            .padding(.horizontal, 20)
-                            .tint(.black)
-                        
                     }
                 }
                 Spacer()

@@ -10,6 +10,9 @@ import SwiftUI
 import MapKit
 
 struct CustomMapViewRepresentable: UIViewRepresentable {
+    
+    @EnvironmentObject var locationResult: LocationResult
+    
     let mapView = MKMapView()
     @EnvironmentObject var locationViewModel: LocationSearchViewModel
     let locationManager = LocationManager()
@@ -48,18 +51,22 @@ struct CustomMapViewRepresentable: UIViewRepresentable {
 
     
     func makeCoordinator() -> MapCoordinator {
-        return MapCoordinator(parent: self)
+        return MapCoordinator(parent: self, locationResult: locationResult)
     }
 }
 
 extension CustomMapViewRepresentable{
     class MapCoordinator: NSObject, MKMapViewDelegate{
+        
+        var locationResult: LocationResult
+        
         let parent: CustomMapViewRepresentable
         var userLocationCoordinate: CLLocationCoordinate2D?
         var currentRegion: MKCoordinateRegion?
         
-        init(parent: CustomMapViewRepresentable) {
+        init(parent: CustomMapViewRepresentable, locationResult: LocationResult) {
             self.parent = parent
+            self.locationResult = locationResult
             super.init()
         }
         func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
@@ -75,7 +82,7 @@ extension CustomMapViewRepresentable{
             let currentLocation = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
             let previousLocationInstance = CLLocation(latitude: previousLocation.latitude, longitude: previousLocation.longitude)
             let distance = currentLocation.distance(from: previousLocationInstance)
-            if distance >= 60 {
+            if distance >= 200 {
                 self.userLocationCoordinate = userLocation.coordinate
                 print("distance was more than 300 meters")
 
@@ -128,7 +135,9 @@ extension CustomMapViewRepresentable{
             previousLocation = coordinate
             
             getDestinationRoute(from: userLocationCoordinate, to: coordinate) { route in
-                self.parent.mapView.addOverlay(route.polyline)
+                DispatchQueue.main.async {
+                    self.parent.mapView.addOverlay(route.polyline)
+                }
                 //MARK: Debug-
                 print("route description: \(route.description)")
                 print("advisory notices: \(route.advisoryNotices)")
@@ -140,6 +149,11 @@ extension CustomMapViewRepresentable{
                     print("\(index): \(step.distance)")
                     }
                 //end debug
+                
+                self.locationResult.eta = route.expectedTravelTime
+                self.locationResult.distance = route.distance
+                print("locationResult title from the map representable:  \(self.locationResult.title ?? "")")
+                print("locationResult eta from the map representable: \(self.locationResult.eta ?? 0)")
                 
             }
         }

@@ -14,7 +14,7 @@ struct LocationSearchActivationView: View {
                 .fill(Color.black)
                 .frame(width: 8, height: 8)
                 .padding(.horizontal)*/
-            Text("Añadir ruta manualmente")
+            Text("Buscar dirección")
                 .foregroundStyle(Color(.darkGray))
                 .padding(.leading)
             Spacer()

@@ -148,6 +148,12 @@ struct RecomendacionesView: View {
                             }
                     }*/
                     VStack(alignment: .leading, spacing: 10) {
+                        
+                        if sugerencias.count <= 0 {
+                            Text("No se encontraron recomendaciones. Puedes intentar refrescar la pagina o añadir más habitos")
+                                .foregroundColor(.secondary)
+                        }
+                        
                         if tipo == "Hídrico" {
                             ForEach(sugerencias) { sugerencia in
                                 RecomendacionItemView(titulo: sugerencia.actividad, descripcion: sugerencia.sugerencia)

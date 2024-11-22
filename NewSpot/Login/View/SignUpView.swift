@@ -183,10 +183,6 @@ struct SignUpView: View {
                     }
                     .foregroundColor(.white)
                     .padding()
-                    Button("Probar alerta de correo duplicado") {
-                        duplicatedEmailMessage = "Este es un mensaje de prueba para correo duplicado."
-                        showEmailAlreadyExistsAlert = true
-                    }
                 }
             }
         }

@@ -21,10 +21,12 @@ struct LocationSearchResultCell: View {
             VStack(alignment: .leading, spacing: 4){
                 Text(title)
                     .font(.body)
+                    .foregroundStyle(.primary)
                 //Text("123 avenue de la république")
                 Text(subtitle)
                     .font(.body)
                     .foregroundStyle(.secondary)
+                    .foregroundStyle(.primary)
                 Divider()
             }
             .padding(.leading, 8)

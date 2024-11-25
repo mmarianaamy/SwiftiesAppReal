@@ -79,7 +79,7 @@ struct LocationSearchView: View {
                     }
                 }
             }
-        }.background(Color.white)
+        }.background(Color.primary.colorInvert())
     }
 }
 

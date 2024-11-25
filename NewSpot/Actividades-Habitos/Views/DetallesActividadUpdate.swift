@@ -37,7 +37,7 @@ struct DetallesActividadUpdate: View {
                 )
                 .padding(.horizontal)
                 .padding(.vertical, 5)
-                .foregroundStyle(.black)
+                .foregroundStyle(.primary)
                 .background(Color.gray.opacity(0.2))
                 .containerShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
 
@@ -75,7 +75,7 @@ struct DetallesActividadUpdate: View {
                     .background(Color.gray.opacity(0.2))
                     .frame(width: 70)
                     .containerShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                    .tint(.black)
+                    .tint(.primary)
                 }.padding(.top)
             }
             .padding(.horizontal)

@@ -12,7 +12,7 @@ import Vision
 class PredictionStatus: ObservableObject {
     @Published var modelUrl = URL(fileURLWithPath: "")
     // TODO - replace with the name of your classifier
-    @Published var modelObject = Clasificador()
+    @Published var modelObject = mlmodelfinalfinal2finalv3final()
     @Published var topLabel = ""
     @Published var topConfidence = ""
     

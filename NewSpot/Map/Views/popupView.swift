@@ -118,6 +118,7 @@ struct popupView: View {
                     isShowingRoute.toggle()
                     //MARK: To do ---
                     // hacer que se guarde el valor en la base de datos
+                    
                     ///Debug
                     /*for (index, step) in locationResult.steps!.enumerated() {
                      print("popupview -\(index): \(step.instructions)")
@@ -138,15 +139,10 @@ struct popupView: View {
                 
                 Button {
                     print("ruta cancelada")
-                    //MARK: TO DO -
-                    //quiero regresar al estado .noInput?(se ve feo)
-                    //mapState = .noInput
-                    
                     //Task{try? await Task.sleep(nanoseconds: 0_350_000_000)}
                     
                     withAnimation(.spring()){
                         actionForState(mapState)}
-                    
                     isPresented.toggle()
                     
                 } label: {

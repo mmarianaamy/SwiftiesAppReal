@@ -82,7 +82,7 @@ struct BuscarProductoView: View {
                                         Divider()
                                         Text(String(product.cantidad) + product.unidad)
                                     }
-                                }.padding().frame(maxWidth: .infinity).border(product.idproducto == selectedProduct ? Color.blue : Color.gray).foregroundStyle(Color.black)
+                                }.padding().frame(maxWidth: .infinity).border(product.idproducto == selectedProduct ? Color.blue : Color.gray).foregroundStyle(Color.primary)
                             }
                             
                         }

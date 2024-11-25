@@ -29,6 +29,7 @@ struct HuellaCO2Mes: View {
                 Spacer()
             }.task{
                 loading = true
+                co2Mes.removeAll()
                 for i in 0...5 {
                     var num = 0.0
                     let startofmonth = Calendar.current.date(byAdding: DateComponents(month: i-5), to: Date().startOfMonth())
@@ -46,6 +47,7 @@ struct HuellaCO2Mes: View {
                     }catch{
                         print("nope")
                     }
+                    
                     co2Mes.append(.init(date: startofmonth!, emissions: num))
                 }
                 loading = false

@@ -28,10 +28,12 @@ struct LeaderbordRow: View {
                 Text("\(position)")
                     .bold()
                     .frame(width: 60, alignment: .leading)
+                    .foregroundStyle(.black)
                 Text(is_current_user ? "Yo (\(name) \(surname))" : "\(name) \(surname)") // Mostrar "Yo" si es el usuario actual
                 //Text("\(name) \(surname)")
                     .font(.headline)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .foregroundStyle(.black)
                 //Spacer()
                 Text("\(points) hábitos")
                     .foregroundColor(.gray)

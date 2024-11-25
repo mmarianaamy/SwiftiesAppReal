@@ -50,6 +50,7 @@ struct HuellaEnergeticaMes: View {
             .padding(.vertical)
             .task{
                 loading = true
+                co2Mes.removeAll()
                 for i in 0...5 {
                     var num = 0.0
                     let startofmonth = Calendar.current.date(byAdding: DateComponents(month: i-5), to: Date().startOfMonth())

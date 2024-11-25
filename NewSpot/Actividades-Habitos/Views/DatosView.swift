@@ -155,6 +155,7 @@ struct DatosView: View {
                                 
                             }
                         }
+                        Spacer()
                         .task {
                             loading = true
                             do {

@@ -14,16 +14,4 @@ struct SimulatedGraphModel: Identifiable {
     var animate: Bool = false
 }
 
-// Sample Data for Weekly, Monthly, and Yearly Views
-var weeklyAnalytics2: [SimulatedGraphModel] = (0..<7).map { i in
-    SimulatedGraphModel(date: Date().daysAgo(i), views: .random(in: 1200...7000))
-}.reversed()
-
-var monthlyAnalytics2: [SimulatedGraphModel] = (0..<30).map { i in
-    SimulatedGraphModel(date: Date().daysAgo(i), views: .random(in: 1200...7000))
-}.reversed()
-
-var yearlyAnalytics2: [SimulatedGraphModel] = (0..<12).map { i in
-    SimulatedGraphModel(date: Date().monthsAgo(i), views: .random(in: 38000...70000))
-}.reversed()
 

@@ -4,11 +4,12 @@ struct Recomendaciones: View {
     @State var selectedTab = "Hídrico"
     @State var boton = "Simulador"
     @Binding var hideBar: Bool
+    @State var emissionVM = EmissionViewModel()
+    @State var isTaskCompleted: Bool = false // Track task completion
 
     var body: some View {
-        VStack{
-            
-            if(boton == "Simulador"){
+        VStack {
+            if boton == "Simulador" {
                 VStack {
                     topView(title: "Recomendaciones")
                     Picker("Recomendaciones", selection: $selectedTab) {
@@ -18,41 +19,36 @@ struct Recomendaciones: View {
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     .padding()
+
                     if selectedTab == "Hídrico" {
-                        RecomendacionesView(tipo: "Hídrico")
+                        RecomendacionesView(tipo: "Hídrico", emissionVM: $emissionVM, isTaskCompleted: $isTaskCompleted)
                     } else if selectedTab == "Energético" {
-                        RecomendacionesView(tipo: "Energético")
+                        RecomendacionesView(tipo: "Energético", emissionVM: $emissionVM, isTaskCompleted: $isTaskCompleted)
                     } else if selectedTab == "Carbono" {
-                        RecomendacionesView(tipo: "Carbono")
-                    } 
+                        RecomendacionesView(tipo: "Carbono", emissionVM: $emissionVM, isTaskCompleted: $isTaskCompleted)
+                    }
                     
                     Spacer()
-                    
                 }
-            }else{
-                SimuladorView()
+            } else {
+                SimuladorView(emissionVM: $emissionVM)
             }
             
-            Button{
-                if(boton == "Simulador"){
+            Button {
+                if boton == "Simulador" {
                     boton = "Listo"
-                }else{
+                } else {
                     boton = "Simulador"
                 }
             } label: {
                 Text(boton)
                     .foregroundStyle(Color.white)
                     .padding()
-                    .background(Color.blue)
+                    .background(isTaskCompleted ? Color.blue : Color.gray) // Change button color based on task status
                     .cornerRadius(10)
                     .padding(.top, 40)
             }
+            .disabled(!isTaskCompleted) // Disable button if task is not completed
         }
-    }
-}
-
-struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-        Recomendaciones(hideBar: .constant(true))
     }
 }

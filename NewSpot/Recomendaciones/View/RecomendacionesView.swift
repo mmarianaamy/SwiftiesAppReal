@@ -14,6 +14,8 @@ struct RecomendacionesView: View {
     @EnvironmentObject var user: User
     @State var habits: [HabitUser] = []
     @State var sugerencias: [Sugerencia] = []
+    @Binding var emissionVM: EmissionViewModel
+    @Binding var isTaskCompleted: Bool // Track completion status
     
     // MARK: BD
     let client = SupabaseClient(supabaseURL: URL(string: "https://hyufiwwpfhtovhspewlc.supabase.co")!, supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh5dWZpd3dwZmh0b3Zoc3Bld2xjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkyMDAzNDQsImV4cCI6MjA0NDc3NjM0NH0.Eol6hgROQO_G5CnGD6YBGTIMOMPKL6GX3xdMfpMlHmc")
@@ -44,14 +46,14 @@ struct RecomendacionesView: View {
             }
             else if tipo == "Energético" {
                 response = try await self.generativeModel.generateContent(
-                    "Dame un máximo de 4 sugerencias pare reducir el impacto electrico de una persona que tiene los siguientes habitos: \(habitsString). Deben de ser sugerencias que hagan sentido. No tienes que dar 4 obligatoriamente. Dámelo en formato JSON. No incluyas texto adicional. Unicamente regresa el diccionario. Empezando con { y terminando con }. El formato debe de ser una clave sugerencia. Cada elemento del arreglo es un objeto que tiene dos claves: actividad y sugerencia. Devuélvelo estrictamente en formato JSON sin caracteres de escape o de formato adicional. Las sugerencias deben centrarse en eficiencia energética. Solo incluye cosas de agua si directamente se relacionan con el consumo de electricidad")
+                    "Dame un máximo de 4 sugerencias para reducir el impacto electrico de una persona que tiene los siguientes habitos: \(habitsString). Deben de ser sugerencias que hagan sentido. No tienes que dar 4 obligatoriamente. Dámelo en formato JSON. No incluyas texto adicional. Unicamente regresa el diccionario. Empezando con { y terminando con }. El formato debe de ser una clave sugerencia. Cada elemento del arreglo es un objeto que tiene dos claves: actividad y sugerencia. Devuélvelo estrictamente en formato JSON sin caracteres de escape o de formato adicional. Las sugerencias deben centrarse en eficiencia energética. Solo incluye acciones de impacto hidrico si  directamente se relacionan con el consumo de electricidad")
                 print("PROMPT ELECTRICIDAD")
                 print(
-                    " \n Dame un máximo de 4 sugerencias pare reducir el impacto electrico de una persona que tiene los siguientes habitos: \(habitsString). Deben de ser sugerencias que hagan sentido. No tienes que dar 4 obligatoriamente. Dámelo en formato JSON. No incluyas texto adicional. Unicamente regresa el diccionario. Empezando con { y terminando con }. El formato debe de ser una clave sugerencia. Cada elemento del arreglo es un objeto que tiene dos claves: actividad y sugerencia. Devuélvelo estrictamente en formato JSON sin caracteres de escape o de formato adicional. Las sugerencias deben centrarse en eficiencia energética. Solo incluye cosas de agua si directamente se relacionan con el consumo de electricidad \n")
+                    " \n Dame un máximo de 4 sugerencias para reducir el impacto electrico de una persona que tiene los siguientes habitos: \(habitsString). Deben de ser sugerencias que hagan sentido. No tienes que dar 4 obligatoriamente. Dámelo en formato JSON. No incluyas texto adicional. Unicamente regresa el diccionario. Empezando con { y terminando con }. El formato debe de ser una clave sugerencia. Cada elemento del arreglo es un objeto que tiene dos claves: actividad y sugerencia. Devuélvelo estrictamente en formato JSON sin caracteres de escape o de formato adicional. Las sugerencias deben centrarse en eficiencia energética. Solo incluye acciones de impacto hidrico si  directamente se relacionan con el consumo de electricidad \n")
             }
             else if tipo == "Carbono"{
                 response = try await self.generativeModel.generateContent(
-                    "Dame un máximo de 4 sugerencias pare reducir la huella de carbono de una persona que tiene los siguientes habitos: \(habitsString). Deben de ser sugerencias que hagan sentido. No tienes que dar 4 obligatoriamente. Dámelo en formato JSON. No incluyas texto adicional. Unicamente regresa el diccionario. Empezando con { y terminando con }. El formato debe de ser una clave sugerencia. Cada elemento del arreglo es un objeto que tiene dos claves: actividad y sugerencia. Devuélvelo estrictamente en formato JSON sin caracteres de escape o de formato adicional. Las sugerencias deben centrarse reducir las emisiones de carbono de la persona. Solo incluye cosas de agua si directamente se relacionan con el consumo de electricidad")
+                    "Dame un máximo de 4 sugerencias pare reducir la huella de carbono de una persona que tiene los siguientes habitos: \(habitsString). Deben de ser sugerencias que hagan sentido. No tienes que dar 4 obligatoriamente. Dámelo en formato JSON. No incluyas texto adicional. Unicamente regresa el diccionario. Empezando con { y terminando con }. El formato debe de ser una clave sugerencia. Cada elemento del arreglo es un objeto que tiene dos claves: actividad y sugerencia. Devuélvelo estrictamente en formato JSON sin caracteres de escape o de formato adicional. Las sugerencias deben centrarse reducir las emisiones de carbono de la persona. Solo incluye cosas relacionadas al consumo de agua si directamente se relacionan con la huella de CO2")
                 print("PROMPT CARBONO")
             }
             
@@ -93,12 +95,18 @@ struct RecomendacionesView: View {
             VStack {
                 Text("hola").hidden()
                     .task {
+                        isTaskCompleted = false
                         do {
                             habits = try await client.from("usuario_habito")
                                 .select("recurrencia, frecuencia, cantidad, idhabito, fechainicio, fechafinal, habito(idhabito, nombre)")
                                 .eq("idusuario", value: user.idusuario).execute().value
                             
                             print("\n Fetched habits as appear on the database: \n \(habits)")
+                            //emissionVM.$habits.wrappedValue = habits
+                            emissionVM.habits = habits
+                            await emissionVM.fetchHabitsSemanal()
+                            
+                            isTaskCompleted = true 
                             
                             // Fetching AI response
                             let textResponse = await respond()
@@ -177,7 +185,8 @@ struct RecomendacionesView: View {
 
 struct RecomendacionesView_Previews: PreviewProvider {
     static var previews: some View {
-        RecomendacionesView(tipo: "Hídrico")
+        @Previewable @State var emissionVM = EmissionViewModel()
+        RecomendacionesView(tipo: "Hídrico", emissionVM: $emissionVM, isTaskCompleted: .constant(false))
             .environmentObject(User(idusuario: 16, nombre: "teeeeest", apellido: "Doe", email: "test@test.com", contraseña: "test"))
     }
 }

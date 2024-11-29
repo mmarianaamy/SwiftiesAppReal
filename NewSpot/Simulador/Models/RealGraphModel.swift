@@ -24,16 +24,3 @@ extension Date {
     }
 }
 
-// Sample Data for Weekly, Monthly, and Yearly Views
-var weeklyAnalytics: [RealGraphModel] = (0..<7).map { i in
-    RealGraphModel(date: Date().daysAgo(i), views: .random(in: 1500...10000))
-}.reversed()
-
-var monthlyAnalytics: [RealGraphModel] = (0..<30).map { i in
-    RealGraphModel(date: Date().daysAgo(i), views: .random(in: 1500...10000))
-}.reversed()
-
-var yearlyAnalytics: [RealGraphModel] = (0..<12).map { i in
-    RealGraphModel(date: Date().monthsAgo(i), views: .random(in: 50000...100000))
-}.reversed()
-

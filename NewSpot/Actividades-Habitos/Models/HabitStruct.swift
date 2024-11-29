@@ -21,7 +21,7 @@ struct Event: Identifiable{
 struct HabitUser : Decodable, Hashable {
     var recurrencia : String
     var frecuencia : Int
-    var cantidad : String
+    var cantidad : Int
     var idhabito : Int
     var fechainicio : String
     var fechafinal : String?

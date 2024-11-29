@@ -57,7 +57,7 @@ struct HabitListItem: View {
 #Preview {
     NavigationStack {
         List {
-            HabitListItem(habit: HabitUser(recurrencia: "dia", frecuencia: 7, cantidad: "jask", idhabito: 1, fechainicio: "Date()", fechafinal: nil, habito: Habit(idhabito: 1, nombre: "")))
+            HabitListItem(habit: HabitUser(recurrencia: "dia", frecuencia: 7, cantidad: 2, idhabito: 1, fechainicio: "Date()", fechafinal: nil, habito: Habit(idhabito: 1, nombre: "")))
         }
     }
 }

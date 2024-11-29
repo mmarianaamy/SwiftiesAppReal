@@ -10,6 +10,7 @@ import SwiftUI
 struct SimuladorView: View {
     @State var selection = 0
     @State var currentTab: String = "7 Days"
+    @Binding var emissionVM: EmissionViewModel
 
     var body: some View {
         VStack {
@@ -50,11 +51,12 @@ struct SimuladorView: View {
                 .pickerStyle(.segmented)
                 .padding(.leading, 20)
             }.padding(.horizontal)
+                
             
             ScrollView {
                 VStack {
-                    GraphRealView(currentTab: $currentTab)
-                    GraphSimulationView(currentTab: $currentTab)
+                    GraphRealView(currentTab: $currentTab, realVM: $emissionVM)
+                    GraphSimulationView(currentTab: $currentTab, fakeVM: $emissionVM)
                         .padding(.top, -20)
                     /*VStack(alignment: .leading) {
                         Text("¿Sabías que?")
@@ -75,8 +77,9 @@ struct SimuladorView: View {
     }
 }
 
-struct SimuladorView_Previews: PreviewProvider {
+/*struct SimuladorView_Previews: PreviewProvider {
     static var previews: some View {
         SimuladorView()
     }
 }
+*/

@@ -8,14 +8,17 @@
 import SwiftUI
 import Charts
 
+
 struct GraphRealView: View {
     @Environment(\.colorScheme) var scheme
-    @Binding var currentTab: String 
-    @State var sampleAnalytics: [RealGraphModel] = weeklyAnalytics
+    @Binding var currentTab: String
+    @Binding var realVM: EmissionViewModel
+    @State var sampleAnalytics: [RealGraphModel] = []
+    //@State var sampleAnalytics = realVM.weeklyAnalytics
     @State var currentActiveItem: RealGraphModel?
     @State var plotWidth: CGFloat = 0
     @State var isLineGraph: Bool = true  // Always true since we only want line graphs
-
+    
     var body: some View {
         VStack {
             VStack(alignment: .leading, spacing: 2) {
@@ -25,11 +28,11 @@ struct GraphRealView: View {
                     
                     // Removed Picker from here
                 }
-
+                
                 let totalValue = sampleAnalytics.reduce(0.0) { partialResult, item in
                     item.views + partialResult
                 }
-
+                
                 Text(totalValue.stringFormat)
                     .font(.largeTitle.bold())
                 
@@ -41,23 +44,26 @@ struct GraphRealView: View {
                     .fill((scheme == .dark ? Color.black : Color.white).shadow(.drop(radius: 2)))
             }
         }
+        .onAppear {
+                sampleAnalytics = realVM.weeklyAnalytics
+        }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .padding()
         .onChange(of: currentTab) {
             switch currentTab {
             case "7 Days":
-                sampleAnalytics = weeklyAnalytics
+                sampleAnalytics = realVM.weeklyAnalytics
             case "Month":
-                sampleAnalytics = monthlyAnalytics
+                sampleAnalytics = realVM.monthlyAnalytics
             case "Year":
-                sampleAnalytics = yearlyAnalytics
+                sampleAnalytics = realVM.yearlyAnalytics
             default:
-                sampleAnalytics = weeklyAnalytics
+                sampleAnalytics = realVM.weeklyAnalytics
             }
             animateGraph(fromChange: true)
         }
     }
-
+    
     @ViewBuilder
     func AnimatedChart() -> some View {
         let max = sampleAnalytics.max(by: { $0.views < $1.views })?.views ?? 0
@@ -82,13 +88,13 @@ struct GraphRealView: View {
                 }
             }
         }
-        .chartYScale(domain: 0...(max + 5000))
+        .chartYScale(domain: 0...(max + (max*0.6)))
         .frame(height: 200)
         .onAppear {
             animateGraph()
         }
     }
-
+    
     func animateGraph(fromChange: Bool = false) {
         for (index, _) in sampleAnalytics.enumerated() {
             DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * (fromChange ? 0.03 : 0.05)) {
@@ -100,9 +106,11 @@ struct GraphRealView: View {
     }
 }
 
-struct GraphsView_Previews: PreviewProvider {
-    static var previews: some View {
-        // Provide a dummy binding for the preview
-        GraphRealView(currentTab: .constant("7 Days"))
-    }
-}
+/*
+ struct GraphsView_Previews: PreviewProvider {
+ static var previews: some View {
+ // Provide a dummy binding for the preview
+ GraphRealView(currentTab: .constant("7 Days"))
+ }
+ }
+ */

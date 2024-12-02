@@ -182,7 +182,6 @@
 		3A2EBFA02CDDC1A500998DFF /* Foundation */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Foundation; sourceTree = "<group>"; };
 		3A2EBFA32CDDC1A500998DFF /* Model */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Model; sourceTree = "<group>"; };
 		3A2EBFA52CDDC1A500998DFF /* Preview Content */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Preview Content"; sourceTree = "<group>"; };
-		3A2EBFB02CDDC1A500998DFF /* videos */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = videos; sourceTree = "<group>"; };
 		3A90A8172CECF6400028BEFD /* Managers */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Managers; sourceTree = "<group>"; };
 		3A90A82A2CED309E0028BEFD /* LocationSearch */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LocationSearch; sourceTree = "<group>"; };
 		3AC8FDC02CE3C6170049706D /* TextRecognition */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TextRecognition; sourceTree = "<group>"; };
@@ -524,7 +523,6 @@
 				3A2EBFA02CDDC1A500998DFF /* Foundation */,
 				3A2EBFA32CDDC1A500998DFF /* Model */,
 				3A2EBFA52CDDC1A500998DFF /* Preview Content */,
-				3A2EBFB02CDDC1A500998DFF /* videos */,
 				FB5A05B02B50FFC300D09AD3 /* CameraScanView.swift */,
 				FB5A05A42B50873700D09AD3 /* FontStyles.swift */,
 				FB5A05A32B5086C300D09AD3 /* Info.plist */,
@@ -559,7 +557,6 @@
 				3A2EBFA02CDDC1A500998DFF /* Foundation */,
 				3A2EBFA32CDDC1A500998DFF /* Model */,
 				3A2EBFA52CDDC1A500998DFF /* Preview Content */,
-				3A2EBFB02CDDC1A500998DFF /* videos */,
 				3A90A8172CECF6400028BEFD /* Managers */,
 				3A90A82A2CED309E0028BEFD /* LocationSearch */,
 				3AC8FDC02CE3C6170049706D /* TextRecognition */,

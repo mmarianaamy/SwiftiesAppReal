@@ -51,6 +51,17 @@
                ReferencedContainer = "container:New Spot.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3AAF80482CFD379E00550B8E"
+               BuildableName = "New SpotTests S.xctest"
+               BlueprintName = "New SpotTests S"
+               ReferencedContainer = "container:New Spot.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

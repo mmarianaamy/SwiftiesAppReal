@@ -26,9 +26,10 @@ struct LoginPage: View {
         }
     }
     
+    @ObservedObject var state: LoginPageState
     @State private var email = ""
     @State private var password = ""
-    @State private var resultMessage = ""
+    @State var resultMessage = ""
     @State private var isLoggedIn = false
     @State private var activeAlert: AlertType? = nil
     @State private var showAlert = false
@@ -174,6 +175,16 @@ struct LoginPage: View {
             // Manejo de otros errores genéricos
             activeAlert = .genericError("Ocurrió un error inesperado. Por favor, intenta más tarde.")
         }
+    }
+}
+
+extension LoginPage {
+    func getEmail() -> String {
+        return email
+    }
+
+    func getPassword() -> String {
+        return password
     }
 }
 

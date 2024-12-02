@@ -55,11 +55,13 @@ class User: ObservableObject {
 struct ContentView: View {
     @State var logged = false
     @EnvironmentObject var user: User
+    @StateObject var state = LoginPageState()
     
     var body: some View {
         NavigationStack{
             if !logged {
-                LoginPage(logged: $logged) // Pass `logged` as a binding
+                //LoginPage(logged: $logged) // Pass `logged` as a binding
+                LoginPage(state: state, logged: $logged) 
             } else {
                 MenuView()
             }
